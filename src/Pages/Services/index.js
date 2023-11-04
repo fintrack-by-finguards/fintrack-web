@@ -151,6 +151,7 @@ const Services = () => {
             fontFamily: theme.primary.fontFamily,
             fontWeight: "800",
             fontSize: theme.primary.semiBig,
+            marginTop: "20px",
             color: theme.primary.main,
             [theme.breakpoints.down("md")]: { fontSize: theme.primary.medium },
           }}
