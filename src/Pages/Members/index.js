@@ -200,6 +200,7 @@ const Members = () => {
               fontWeight: "800",
               fontSize: "4vh",
               color: "white",
+              "&:hover": theme.primary.hoverDefault,
               [theme.breakpoints.down("md")]: {
                 fontSize: theme.primary.mediumMobile,
               },
@@ -214,6 +215,7 @@ const Members = () => {
               fontWeight: "800",
               fontSize: theme.primary.medium,
               color: theme.primary.sub,
+              "&:hover": theme.primary.hoverDefault,
               [theme.breakpoints.down("md")]: {
                 fontSize: theme.primary.smallMobile,
               },
@@ -241,6 +243,7 @@ const Members = () => {
                   fontWeight: "600",
                   fontSize: theme.primary.smallMobile,
                   color: "white",
+                  "&:hover": theme.primary.hoverDefault,
                   marginLeft: "10px",
                   [theme.breakpoints.down("md")]: {
                     fontSize: "1.2vh",

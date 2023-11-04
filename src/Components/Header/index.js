@@ -74,6 +74,7 @@ const Header = ({ menuItems, curNav, setCurNav }) => {
                 fontSize: theme.primary.medium,
                 color: theme.primary.main,
                 marginLeft: "10px",
+                "&:hover": theme.primary.hoverDefault,
               }}
             >
               FinTrack
@@ -199,6 +200,14 @@ const Header = ({ menuItems, curNav, setCurNav }) => {
                       fontFamily: theme.primary.fontFamily,
                       fontWeight: "600",
                       fontSize: theme.primary.semi,
+                      "&:hover": {
+                        cursor: "pointer",
+                        color: theme.primary.sub,
+                        borderBottom:
+                          curNav === item
+                            ? " "
+                            : `2px solid ${theme.primary.sub}`,
+                      },
                       color:
                         curNav === item
                           ? theme.primary.sub
@@ -230,6 +239,7 @@ const Header = ({ menuItems, curNav, setCurNav }) => {
                   <Box
                     sx={{
                       display: "flex",
+                      alignItems: "center",
                     }}
                     onClick={() => setCurNav("Đăng nhập")}
                   >
@@ -244,6 +254,7 @@ const Header = ({ menuItems, curNav, setCurNav }) => {
                         fontFamily: theme.primary.fontFamily,
                         fontWeight: "600",
                         fontSize: theme.primary.semi,
+                        "&:hover": theme.primary.hoverPointer,
                         color: "white",
                         marginLeft: "10px",
                       }}

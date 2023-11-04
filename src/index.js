@@ -16,6 +16,8 @@ const theme = createTheme({
     borderRadius: "8px",
     mediumMobile: "2.3vh",
     smallMobile: "1.5vh",
+    hoverPointer: { cursor: "pointer" },
+    hoverDefault: { cursor: "default" },
   },
   breakpoints: {
     values: {

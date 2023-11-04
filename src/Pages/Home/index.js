@@ -81,6 +81,7 @@ const Home = () => {
               fontSize: theme.primary.big,
               color: theme.primary.main,
               marginLeft: "10px",
+              "&:hover": theme.primary.hoverDefault,
               [theme.breakpoints.down("md")]: {
                 fontSize: theme.primary.medium,
               },
@@ -98,6 +99,7 @@ const Home = () => {
               [theme.breakpoints.down("md")]: {
                 fontSize: theme.primary.medium,
               },
+              "&:hover": theme.primary.hoverDefault,
             }}
           >
             KHÔNG KHÓ
@@ -114,6 +116,7 @@ const Home = () => {
               [theme.breakpoints.down("md")]: {
                 fontSize: theme.primary.medium,
               },
+              "&:hover": theme.primary.hoverDefault,
             }}
           >
             CÓ
@@ -128,6 +131,7 @@ const Home = () => {
               [theme.breakpoints.down("md")]: {
                 fontSize: theme.primary.medium,
               },
+              "&:hover": theme.primary.hoverDefault,
             }}
           >
             FINTRACK LO!
@@ -152,6 +156,7 @@ const Home = () => {
               fontWeight: "600",
               fontSize: theme.primary.medium,
               color: "white",
+              "&:hover": theme.primary.hoverDefault,
             }}
             textAlign="center"
           >

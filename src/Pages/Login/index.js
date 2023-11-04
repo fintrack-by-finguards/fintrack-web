@@ -165,6 +165,7 @@ const Login = ({ setCurNav }) => {
                 [theme.breakpoints.down("md")]: {
                   fontSize: theme.primary.mediumMobile,
                 },
+                "&:hover": theme.primary.hoverDefault,
               }}
             >
               Chào mừng quay trở lại!
@@ -180,6 +181,7 @@ const Login = ({ setCurNav }) => {
                   [theme.breakpoints.down("md")]: {
                     fontSize: theme.primary.smallMobile,
                   },
+                  "&:hover": theme.primary.hoverDefault,
                 }}
                 textAlign="left"
               >
@@ -233,6 +235,7 @@ const Login = ({ setCurNav }) => {
                   [theme.breakpoints.down("md")]: {
                     fontSize: theme.primary.smallMobile,
                   },
+                  "&:hover": theme.primary.hoverDefault,
                 }}
                 textAlign="left"
               >
@@ -250,6 +253,7 @@ const Login = ({ setCurNav }) => {
                   width: "100%",
                   height: "50px",
                   borderRadius: theme.primary.borderRadius,
+                  "&:hover": theme.primary.hoverDefault,
                   "& .MuiOutlinedInput-root": {
                     "& fieldset": {
                       borderRadius: theme.primary.borderRadius,
@@ -325,6 +329,7 @@ const Login = ({ setCurNav }) => {
                   color: "white",
                   fontFamily: theme.primary.fontFamily,
                   fontWeight: 500,
+                  "&:hover": theme.primary.hoverDefault,
                   [theme.breakpoints.down("md")]: {
                     fontSize: theme.primary.smallMobile,
                   },
@@ -359,6 +364,7 @@ const Login = ({ setCurNav }) => {
                   color: "white",
                   fontFamily: theme.primary.fontFamily,
                   fontWeight: 500,
+                  "&:hover": theme.primary.hoverDefault,
                   [theme.breakpoints.down("md")]: {
                     fontSize: theme.primary.smallMobile,
                     marginBottom: "10px",
@@ -412,6 +418,7 @@ const Login = ({ setCurNav }) => {
                 color: theme.primary.main,
                 fontFamily: theme.primary.fontFamily,
                 fontWeight: 800,
+                "&:hover": theme.primary.hoverDefault,
                 [theme.breakpoints.down("md")]: {
                   fontSize: theme.primary.mediumMobile,
                 },
@@ -449,6 +456,7 @@ const Login = ({ setCurNav }) => {
                 color: "white",
                 fontFamily: theme.primary.fontFamily,
                 fontWeight: 600,
+                "&:hover": theme.primary.hoverDefault,
                 [theme.breakpoints.down("md")]: {
                   fontSize: theme.primary.small,
                 },
@@ -465,6 +473,7 @@ const Login = ({ setCurNav }) => {
                   fontFamily: theme.primary.fontFamily,
                   fontWeight: 500,
                   marginBottom: "5px",
+                  "&:hover": theme.primary.hoverDefault,
                   [theme.breakpoints.down("md")]: {
                     fontSize: theme.primary.smallMobile,
                   },
@@ -510,6 +519,7 @@ const Login = ({ setCurNav }) => {
                   fontFamily: theme.primary.fontFamily,
                   fontWeight: 500,
                   marginBottom: "5px",
+                  "&:hover": theme.primary.hoverDefault,
                   [theme.breakpoints.down("md")]: {
                     fontSize: theme.primary.smallMobile,
                   },
@@ -569,6 +579,7 @@ const Login = ({ setCurNav }) => {
                   fontFamily: theme.primary.fontFamily,
                   fontWeight: 500,
                   marginBottom: "5px",
+                  "&:hover": theme.primary.hoverDefault,
                   [theme.breakpoints.down("md")]: {
                     fontSize: theme.primary.smallMobile,
                   },
@@ -649,6 +660,7 @@ const Login = ({ setCurNav }) => {
                   color: "white",
                   fontFamily: theme.primary.fontFamily,
                   fontWeight: 500,
+                  "&:hover": theme.primary.hoverDefault,
                   [theme.breakpoints.down("md")]: {
                     fontSize: theme.primary.smallMobile,
                   },
@@ -683,6 +695,7 @@ const Login = ({ setCurNav }) => {
                   color: "white",
                   fontFamily: theme.primary.fontFamily,
                   fontWeight: 500,
+                  "&:hover": theme.primary.hoverDefault,
                   [theme.breakpoints.down("md")]: {
                     fontSize: theme.primary.smallMobile,
                     marginBottom: "10px",
@@ -736,6 +749,7 @@ const Login = ({ setCurNav }) => {
                 color: theme.primary.main,
                 fontFamily: theme.primary.fontFamily,
                 fontWeight: 800,
+                "&:hover": theme.primary.hoverDefault,
                 [theme.breakpoints.down("md")]: {
                   fontSize: theme.primary.mediumMobile,
                 },

@@ -33,6 +33,7 @@ const Footer = () => {
             fontWeight: "400",
             fontSize: "theme.primary.small",
             color: "white",
+            "&:hover": theme.primary.hoverDefault,
             [theme.breakpoints.down("md")]: {
               fontSize: "11px",
               marginTop: "10px",
@@ -49,6 +50,7 @@ const Footer = () => {
               fontFamily: theme.primary.fontFamily,
               fontWeight: "600",
               fontSize: theme.primary.small,
+              "&:hover": theme.primary.hoverDefault,
               color: "white",
               [theme.breakpoints.down("md")]: {
                 fontSize: "11px",
@@ -66,6 +68,7 @@ const Footer = () => {
               fontSize: theme.primary.small,
               color: "white",
               marginLeft: "10px",
+              "&:hover": theme.primary.hoverDefault,
               [theme.breakpoints.down("md")]: {
                 fontSize: "11px",
                 marginTop: "5px",

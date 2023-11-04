@@ -152,6 +152,7 @@ const Services = () => {
             fontWeight: "800",
             fontSize: theme.primary.semiBig,
             marginTop: "20px",
+            "&:hover": theme.primary.hoverDefault,
             color: theme.primary.main,
             [theme.breakpoints.down("md")]: { fontSize: theme.primary.medium },
           }}
@@ -188,6 +189,7 @@ const Services = () => {
                   fontWeight: "700",
                   fontSize: theme.primary.medium,
                   color: "white",
+                  "&:hover": theme.primary.hoverDefault,
                   [theme.breakpoints.down("md")]: {
                     fontSize: theme.primary.mediumMobile,
                   },
@@ -204,6 +206,7 @@ const Services = () => {
                   marginTop: "10px",
                   marginLeft: "10px",
                   marginRight: "10px",
+                  "&:hover": theme.primary.hoverDefault,
                   [theme.breakpoints.down("md")]: {
                     fontSize: theme.primary.smallMobile,
                   },
@@ -280,6 +283,7 @@ const Services = () => {
                   fontWeight: "700",
                   fontSize: theme.primary.medium,
                   color: "white",
+                  "&:hover": theme.primary.hoverDefault,
                   [theme.breakpoints.down("md")]: {
                     fontSize: theme.primary.mediumMobile,
                   },
@@ -296,6 +300,7 @@ const Services = () => {
                   marginTop: "10px",
                   marginLeft: "10px",
                   marginRight: "10px",
+                  "&:hover": theme.primary.hoverDefault,
                   [theme.breakpoints.down("md")]: {
                     fontSize: theme.primary.smallMobile,
                   },
@@ -344,6 +349,7 @@ const Services = () => {
                   fontWeight: "700",
                   fontSize: theme.primary.medium,
                   color: "white",
+                  "&:hover": theme.primary.hoverDefault,
                   [theme.breakpoints.down("md")]: {
                     fontSize: theme.primary.mediumMobile,
                   },
@@ -360,6 +366,7 @@ const Services = () => {
                   marginTop: "10px",
                   marginLeft: "10px",
                   marginRight: "10px",
+                  "&:hover": theme.primary.hoverDefault,
                   [theme.breakpoints.down("md")]: {
                     fontSize: theme.primary.smallMobile,
                   },
@@ -440,6 +447,7 @@ const Services = () => {
                   fontWeight: "700",
                   fontSize: theme.primary.medium,
                   color: "white",
+                  "&:hover": theme.primary.hoverDefault,
                   [theme.breakpoints.down("md")]: {
                     fontSize: theme.primary.mediumMobile,
                   },
@@ -456,6 +464,7 @@ const Services = () => {
                   marginTop: "10px",
                   marginLeft: "10px",
                   marginRight: "10px",
+                  "&:hover": theme.primary.hoverDefault,
                   [theme.breakpoints.down("md")]: {
                     fontSize: theme.primary.smallMobile,
                   },
