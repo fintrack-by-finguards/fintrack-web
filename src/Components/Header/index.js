@@ -240,6 +240,7 @@ const Header = ({ menuItems, curNav, setCurNav }) => {
                     sx={{
                       display: "flex",
                       alignItems: "center",
+                      "&:hover": theme.primary.hoverPointer,
                     }}
                     onClick={() => setCurNav("Đăng nhập")}
                   >
@@ -254,7 +255,6 @@ const Header = ({ menuItems, curNav, setCurNav }) => {
                         fontFamily: theme.primary.fontFamily,
                         fontWeight: "600",
                         fontSize: theme.primary.semi,
-                        "&:hover": theme.primary.hoverPointer,
                         color: "white",
                         marginLeft: "10px",
                       }}
