@@ -86,6 +86,7 @@ const Members = () => {
         flexDirection: "column",
         justifyContent: "center",
         alignItems: "center",
+        minHeight: "75vh",
       }}
     >
       <Box

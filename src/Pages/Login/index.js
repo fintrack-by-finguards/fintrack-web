@@ -114,6 +114,8 @@ const Login = ({ setCurNav }) => {
       sx={{
         display: "flex",
         justifyContent: "center",
+        minHeight: "70vh",
+        marginTop: "100px",
       }}
     >
       <Grid
