@@ -115,7 +115,8 @@ const Login = ({ setCurNav }) => {
         display: "flex",
         justifyContent: "center",
         minHeight: "70vh",
-        marginTop: "100px",
+        marginTop: "50px",
+        marginBottom: "50px",
       }}
     >
       <Grid
@@ -157,6 +158,7 @@ const Login = ({ setCurNav }) => {
                   fontWeight: 500,
                   marginBottom: "5px",
                 }}
+                textAlign="left"
               >
                 Tên đăng nhập
               </Typography>
@@ -195,6 +197,7 @@ const Login = ({ setCurNav }) => {
                   fontWeight: 500,
                   marginBottom: "5px",
                 }}
+                textAlign="left"
               >
                 Mật khẩu
               </Typography>
@@ -392,6 +395,7 @@ const Login = ({ setCurNav }) => {
                   fontWeight: 500,
                   marginBottom: "5px",
                 }}
+                textAlign="left"
               >
                 Tên đăng nhập
               </Typography>
@@ -430,6 +434,7 @@ const Login = ({ setCurNav }) => {
                   fontWeight: 500,
                   marginBottom: "5px",
                 }}
+                textAlign="left"
               >
                 Mật khẩu
               </Typography>
@@ -482,6 +487,7 @@ const Login = ({ setCurNav }) => {
                   fontWeight: 500,
                   marginBottom: "5px",
                 }}
+                textAlign="left"
               >
                 Họ và tên
               </Typography>
