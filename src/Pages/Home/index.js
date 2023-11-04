@@ -1,15 +1,17 @@
 import React, { useState } from "react";
-import { Box, Typography, Container } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import Screen1 from "../../assets/Screen1.png";
 import Screen2 from "../../assets/Screen2.png";
 import Screen3 from "../../assets/Screen3.png";
+import Screen4 from "../../assets/Screen4.png";
+import Screen5 from "../../assets/Screen5.png";
 import AppStore from "../../assets/AppStore.png";
 import GooglePlay from "../../assets/GooglePlay.png";
 import ArrowCircleRightIcon from "@mui/icons-material/ArrowCircleRight";
 import ArrowCircleLeftIcon from "@mui/icons-material/ArrowCircleLeft";
 
-const screen = [Screen1, Screen2, Screen3];
+const screen = [Screen1, Screen2, Screen3, Screen4, Screen5];
 
 const Home = () => {
   const theme = useTheme();
@@ -22,14 +24,17 @@ const Home = () => {
   };
 
   return (
-    <Container
+    <Box
       sx={{
         backgroundColor: "white",
         marginTop: "50px",
         marginBottom: "30px",
         display: "flex",
         alignItems: "center",
-        height: "82vh",
+        minHeight: "82vh",
+        [theme.breakpoints.down("md")]: {
+          flexDirection: "column",
+        },
       }}
     >
       <Box
@@ -38,6 +43,9 @@ const Home = () => {
           width: "40%",
           flexDirection: "column",
           alignItems: "center",
+          [theme.breakpoints.down("md")]: {
+            width: "100%",
+          },
         }}
       >
         <img class="home-screen" src={screen[curScreen]} alt="" />
@@ -59,6 +67,10 @@ const Home = () => {
           flexDirection: "column",
           alignItems: "center",
           justifyContent: "space-around",
+          [theme.breakpoints.down("md")]: {
+            width: "100%",
+            marginTop: "30px",
+          },
         }}
       >
         <Box sx={{ display: "flex" }}>
@@ -69,6 +81,9 @@ const Home = () => {
               fontSize: theme.primary.big,
               color: theme.primary.main,
               marginLeft: "10px",
+              [theme.breakpoints.down("md")]: {
+                fontSize: theme.primary.medium,
+              },
             }}
           >
             TIẾT KIỆM
@@ -80,6 +95,9 @@ const Home = () => {
               fontSize: theme.primary.big,
               color: theme.primary.sub,
               marginLeft: "10px",
+              [theme.breakpoints.down("md")]: {
+                fontSize: theme.primary.medium,
+              },
             }}
           >
             KHÔNG KHÓ
@@ -93,6 +111,9 @@ const Home = () => {
               fontSize: theme.primary.big,
               color: theme.primary.sub,
               marginLeft: "10px",
+              [theme.breakpoints.down("md")]: {
+                fontSize: theme.primary.medium,
+              },
             }}
           >
             CÓ
@@ -104,6 +125,9 @@ const Home = () => {
               fontSize: theme.primary.big,
               color: theme.primary.main,
               marginLeft: "10px",
+              [theme.breakpoints.down("md")]: {
+                fontSize: theme.primary.medium,
+              },
             }}
           >
             FINTRACK LO!
@@ -117,6 +141,9 @@ const Home = () => {
             marginTop: "20px",
             borderRadius: theme.primary.borderRadius,
             padding: "20px",
+            [theme.breakpoints.down("md")]: {
+              width: "80%",
+            },
           }}
         >
           <Typography
@@ -126,16 +153,26 @@ const Home = () => {
               fontSize: theme.primary.medium,
               color: "white",
             }}
+            textAlign="center"
           >
             SẮP CÓ MẶT TẠI
           </Typography>
-          <Box sx={{ display: "flex", justifyContent: "space-around" }}>
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "space-around",
+              [theme.breakpoints.down("md")]: {
+                flexDirection: "column",
+                alignItems: "center",
+              },
+            }}
+          >
             <img class="home-download" src={AppStore} alt="" />
             <img class="home-download" src={GooglePlay} alt="" />
           </Box>
         </Box>
       </Box>
-    </Container>
+    </Box>
   );
 };
 

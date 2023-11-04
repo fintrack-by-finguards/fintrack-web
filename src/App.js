@@ -13,7 +13,7 @@ import { SnackbarProvider } from "notistack";
 const menuItems = ["Trang chủ", "Tính năng", "Đội ngũ", "Thử nghiệm"];
 
 function App() {
-  const [curNav, setCurNav] = useState("Trang chủ");
+  const [curNav, setCurNav] = useState("Đăng nhập");
 
   return (
     <GlobalProvider>
@@ -23,7 +23,6 @@ function App() {
           sx={{
             backgroundColor: "#FFF",
             display: "flex",
-            minHeight: "101vh",
             justifyContent: "space-between",
             flexDirection: "column",
           }}

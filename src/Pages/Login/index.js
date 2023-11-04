@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import {
   Box,
   Typography,
@@ -30,10 +30,24 @@ const Login = ({ setCurNav }) => {
   const [showSignInPassword, setShowSignInPassword] = useState(false);
   const [showSignUpPassword, setShowSignUpPassword] = useState(false);
 
-  const { name, updateConnect, updateUsername, updateName } =
+  const { updateConnect, updateUsername, updateName } =
     useContext(GlobalContext);
 
-  console.log(name);
+  const [isMobile, setIsMobile] = useState(false);
+
+  //choose the screen size
+  const handleResize = () => {
+    if (window.innerWidth < 720) {
+      setIsMobile(true);
+    } else {
+      setIsMobile(false);
+    }
+  };
+
+  useEffect(() => {
+    handleResize();
+    window.addEventListener("resize", handleResize);
+  });
 
   const createNewUser = async () => {
     try {
@@ -123,14 +137,17 @@ const Login = ({ setCurNav }) => {
         container
         sx={{
           width: "60%",
-          height: "500px",
+          minHeight: "500px",
           backgroundColor: theme.primary.main,
           borderRadius: theme.primary.borderRadius,
+          [theme.breakpoints.down("md")]: {
+            width: "90%",
+          },
         }}
       >
         {state === "signin" ? (
           <Grid
-            xs={6}
+            xs={isMobile ? 12 : 6}
             sx={{
               padding: "20px",
               display: "flex",
@@ -145,6 +162,9 @@ const Login = ({ setCurNav }) => {
                 color: "white",
                 fontFamily: theme.primary.fontFamily,
                 fontWeight: 600,
+                [theme.breakpoints.down("md")]: {
+                  fontSize: theme.primary.mediumMobile,
+                },
               }}
             >
               Chào mừng quay trở lại!
@@ -157,6 +177,9 @@ const Login = ({ setCurNav }) => {
                   fontFamily: theme.primary.fontFamily,
                   fontWeight: 500,
                   marginBottom: "5px",
+                  [theme.breakpoints.down("md")]: {
+                    fontSize: theme.primary.smallMobile,
+                  },
                 }}
                 textAlign="left"
               >
@@ -183,12 +206,23 @@ const Login = ({ setCurNav }) => {
                       color: theme.primary.sub,
                     },
                   },
+                  [theme.breakpoints.down("md")]: {
+                    height: "30px",
+                  },
                 }}
                 InputLabelProps={{ shrink: false, style: { fontSize: 0 } }}
               />
             </Box>
 
-            <Box sx={{ marginTop: "20px", width: "90%" }}>
+            <Box
+              sx={{
+                marginTop: "20px",
+                width: "90%",
+                [theme.breakpoints.down("md")]: {
+                  marginTop: "10px",
+                },
+              }}
+            >
               <Typography
                 sx={{
                   fontSize: theme.primary.small,
@@ -196,6 +230,9 @@ const Login = ({ setCurNav }) => {
                   fontFamily: theme.primary.fontFamily,
                   fontWeight: 500,
                   marginBottom: "5px",
+                  [theme.breakpoints.down("md")]: {
+                    fontSize: theme.primary.smallMobile,
+                  },
                 }}
                 textAlign="left"
               >
@@ -222,6 +259,9 @@ const Login = ({ setCurNav }) => {
                       border: `3px solid ${theme.primary.sub}`,
                       color: theme.primary.sub,
                     },
+                  },
+                  [theme.breakpoints.down("md")]: {
+                    height: "30px",
                   },
                 }}
                 InputLabelProps={{ shrink: false, style: { fontSize: 0 } }}
@@ -253,6 +293,10 @@ const Login = ({ setCurNav }) => {
                 borderRadius: theme.primary.borderRadius,
                 width: "90%",
                 marginTop: "20px",
+                [theme.breakpoints.down("md")]: {
+                  marginTop: "20px",
+                  fontSize: theme.primary.smallMobile,
+                },
               }}
               onClick={() => logIn()}
             >
@@ -281,6 +325,9 @@ const Login = ({ setCurNav }) => {
                   color: "white",
                   fontFamily: theme.primary.fontFamily,
                   fontWeight: 500,
+                  [theme.breakpoints.down("md")]: {
+                    fontSize: theme.primary.smallMobile,
+                  },
                 }}
               >
                 hoặc
@@ -301,6 +348,9 @@ const Login = ({ setCurNav }) => {
                 alignItems: "center",
                 justifyContent: "space-between",
                 marginTop: "10px",
+                [theme.breakpoints.down("md")]: {
+                  flexDirection: "column",
+                },
               }}
             >
               <Typography
@@ -309,6 +359,10 @@ const Login = ({ setCurNav }) => {
                   color: "white",
                   fontFamily: theme.primary.fontFamily,
                   fontWeight: 500,
+                  [theme.breakpoints.down("md")]: {
+                    fontSize: theme.primary.smallMobile,
+                    marginBottom: "10px",
+                  },
                 }}
               >
                 Chưa có tài khoản?
@@ -322,7 +376,10 @@ const Login = ({ setCurNav }) => {
                   fontWeight: 600,
                   backgroundColor: "white",
                   borderRadius: theme.primary.borderRadius,
-                  width: "150px",
+                  width: "180px",
+                  [theme.breakpoints.down("md")]: {
+                    fontSize: theme.primary.smallMobile,
+                  },
                 }}
                 onClick={() => changeTabToSignUp()}
               >
@@ -332,7 +389,7 @@ const Login = ({ setCurNav }) => {
           </Grid>
         ) : (
           <Grid
-            xs={6}
+            xs={isMobile ? 12 : 6}
             sx={{
               padding: "30px",
               display: "flex",
@@ -342,6 +399,11 @@ const Login = ({ setCurNav }) => {
               backgroundColor: theme.primary.sub,
               borderTopLeftRadius: theme.primary.borderRadius,
               borderBottomLeftRadius: theme.primary.borderRadius,
+              [theme.breakpoints.down("md")]: {
+                borderTopLeftRadius: theme.primary.borderRadius,
+                borderTopRightRadius: theme.primary.borderRadius,
+                borderBottomLeftRadius: 0,
+              },
             }}
           >
             <Typography
@@ -350,6 +412,9 @@ const Login = ({ setCurNav }) => {
                 color: theme.primary.main,
                 fontFamily: theme.primary.fontFamily,
                 fontWeight: 800,
+                [theme.breakpoints.down("md")]: {
+                  fontSize: theme.primary.mediumMobile,
+                },
               }}
               textAlign="center"
             >
@@ -359,6 +424,9 @@ const Login = ({ setCurNav }) => {
               sx={{
                 fontSize: 200,
                 color: theme.primary.main,
+                [theme.breakpoints.down("md")]: {
+                  fontSize: 100,
+                },
               }}
             />
           </Grid>
@@ -366,9 +434,9 @@ const Login = ({ setCurNav }) => {
 
         {state === "signup" ? (
           <Grid
-            xs={6}
+            xs={isMobile ? 12 : 6}
             sx={{
-              padding: "10px",
+              padding: "40px",
               display: "flex",
               flexDirection: "column",
               alignItems: "center",
@@ -381,10 +449,13 @@ const Login = ({ setCurNav }) => {
                 color: "white",
                 fontFamily: theme.primary.fontFamily,
                 fontWeight: 600,
+                [theme.breakpoints.down("md")]: {
+                  fontSize: theme.primary.small,
+                },
               }}
               textAlign="center"
             >
-              Chào mừng bạn đến với FinTrack!
+              Chào mừng bạn!
             </Typography>
             <Box sx={{ marginTop: "20px", width: "90%" }}>
               <Typography
@@ -394,6 +465,9 @@ const Login = ({ setCurNav }) => {
                   fontFamily: theme.primary.fontFamily,
                   fontWeight: 500,
                   marginBottom: "5px",
+                  [theme.breakpoints.down("md")]: {
+                    fontSize: theme.primary.smallMobile,
+                  },
                 }}
                 textAlign="left"
               >
@@ -420,6 +494,9 @@ const Login = ({ setCurNav }) => {
                       color: theme.primary.sub,
                     },
                   },
+                  [theme.breakpoints.down("md")]: {
+                    height: "30px",
+                  },
                 }}
                 InputLabelProps={{ shrink: false, style: { fontSize: 0 } }}
               />
@@ -433,6 +510,9 @@ const Login = ({ setCurNav }) => {
                   fontFamily: theme.primary.fontFamily,
                   fontWeight: 500,
                   marginBottom: "5px",
+                  [theme.breakpoints.down("md")]: {
+                    fontSize: theme.primary.smallMobile,
+                  },
                 }}
                 textAlign="left"
               >
@@ -460,6 +540,9 @@ const Login = ({ setCurNav }) => {
                       color: theme.primary.sub,
                     },
                   },
+                  [theme.breakpoints.down("md")]: {
+                    height: "30px",
+                  },
                 }}
                 InputLabelProps={{ shrink: false, style: { fontSize: 0 } }}
                 InputProps={{
@@ -486,6 +569,9 @@ const Login = ({ setCurNav }) => {
                   fontFamily: theme.primary.fontFamily,
                   fontWeight: 500,
                   marginBottom: "5px",
+                  [theme.breakpoints.down("md")]: {
+                    fontSize: theme.primary.smallMobile,
+                  },
                 }}
                 textAlign="left"
               >
@@ -512,6 +598,9 @@ const Login = ({ setCurNav }) => {
                       color: theme.primary.sub,
                     },
                   },
+                  [theme.breakpoints.down("md")]: {
+                    height: "30px",
+                  },
                 }}
                 InputLabelProps={{ shrink: false, style: { fontSize: 0 } }}
               />
@@ -529,6 +618,9 @@ const Login = ({ setCurNav }) => {
                 borderRadius: theme.primary.borderRadius,
                 width: "90%",
                 marginTop: "20px",
+                [theme.breakpoints.down("md")]: {
+                  fontSize: theme.primary.smallMobile,
+                },
               }}
               onClick={() => createNewUser()}
             >
@@ -557,6 +649,9 @@ const Login = ({ setCurNav }) => {
                   color: "white",
                   fontFamily: theme.primary.fontFamily,
                   fontWeight: 500,
+                  [theme.breakpoints.down("md")]: {
+                    fontSize: theme.primary.smallMobile,
+                  },
                 }}
               >
                 hoặc
@@ -577,6 +672,9 @@ const Login = ({ setCurNav }) => {
                 alignItems: "center",
                 justifyContent: "space-between",
                 marginTop: "10px",
+                [theme.breakpoints.down("md")]: {
+                  flexDirection: "column",
+                },
               }}
             >
               <Typography
@@ -585,6 +683,10 @@ const Login = ({ setCurNav }) => {
                   color: "white",
                   fontFamily: theme.primary.fontFamily,
                   fontWeight: 500,
+                  [theme.breakpoints.down("md")]: {
+                    fontSize: theme.primary.smallMobile,
+                    marginBottom: "10px",
+                  },
                 }}
               >
                 Đã có tài khoản?
@@ -599,6 +701,9 @@ const Login = ({ setCurNav }) => {
                   backgroundColor: "white",
                   borderRadius: theme.primary.borderRadius,
                   width: "150px",
+                  [theme.breakpoints.down("md")]: {
+                    fontSize: theme.primary.smallMobile,
+                  },
                 }}
                 onClick={() => changeTabToSignIn()}
               >
@@ -608,7 +713,7 @@ const Login = ({ setCurNav }) => {
           </Grid>
         ) : (
           <Grid
-            xs={6}
+            xs={isMobile ? 12 : 6}
             sx={{
               padding: "30px",
               display: "flex",
@@ -618,6 +723,11 @@ const Login = ({ setCurNav }) => {
               backgroundColor: theme.primary.sub,
               borderTopRightRadius: theme.primary.borderRadius,
               borderBottomRightRadius: theme.primary.borderRadius,
+              [theme.breakpoints.down("md")]: {
+                borderBottomLeftRadius: theme.primary.borderRadius,
+                borderBottomRightRadius: theme.primary.borderRadius,
+                borderTopRightRadius: 0,
+              },
             }}
           >
             <Typography
@@ -626,6 +736,9 @@ const Login = ({ setCurNav }) => {
                 color: theme.primary.main,
                 fontFamily: theme.primary.fontFamily,
                 fontWeight: 800,
+                [theme.breakpoints.down("md")]: {
+                  fontSize: theme.primary.mediumMobile,
+                },
               }}
               textAlign="center"
             >
@@ -635,6 +748,9 @@ const Login = ({ setCurNav }) => {
               sx={{
                 fontSize: 200,
                 color: theme.primary.main,
+                [theme.breakpoints.down("md")]: {
+                  fontSize: 100,
+                },
               }}
             />
           </Grid>

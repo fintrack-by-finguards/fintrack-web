@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Box, Typography, Container } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import Member1 from "../../assets/Member1.png";
@@ -75,6 +75,21 @@ const members = [
 const Members = () => {
   const theme = useTheme();
   const [curMember, setCurMember] = useState("0");
+  const [isMobile, setIsMobile] = useState(false);
+
+  //choose the screen size
+  const handleResize = () => {
+    if (window.innerWidth < 720) {
+      setIsMobile(true);
+    } else {
+      setIsMobile(false);
+    }
+  };
+
+  useEffect(() => {
+    handleResize();
+    window.addEventListener("resize", handleResize);
+  });
 
   return (
     <Container
@@ -87,29 +102,71 @@ const Members = () => {
         justifyContent: "center",
         alignItems: "center",
         minHeight: "75vh",
+        [theme.breakpoints.down("md")]: {
+          marginTop: "15px",
+          marginBottom: "15px",
+        },
       }}
     >
-      <Box
-        sx={{
-          display: "flex",
-          width: "50%",
-          justifyContent: "space-around",
-          alignItems: "center",
-        }}
-      >
-        {members.map((member) => (
-          <img
-            class={
-              curMember === member.id ? "selected-member-image" : "member-image"
-            }
-            src={member.image}
-            alt=""
-            key={member.id}
-            onClick={() => setCurMember(member.id)}
-          />
-        ))}
-      </Box>
-
+      {isMobile ? (
+        <Box
+          sx={{
+            display: "flex",
+            width: "50%",
+            justifyContent: "space-around",
+            alignItems: "center",
+            [theme.breakpoints.down("md")]: {
+              width: "95%",
+            },
+          }}
+        >
+          {members.map((member) => (
+            <img
+              class={
+                curMember === member.id
+                  ? "selected-member-image-mobile"
+                  : "member-image-mobile"
+              }
+              src={member.image}
+              alt=""
+              key={member.id}
+              onClick={() => setCurMember(member.id)}
+            />
+          ))}
+        </Box>
+      ) : (
+        <Box
+          sx={{
+            display: "flex",
+            width: "50%",
+            justifyContent: "space-around",
+            alignItems: "center",
+          }}
+        >
+          {members.map((member) => (
+            <img
+              class={
+                curMember === member.id
+                  ? "selected-member-image"
+                  : "member-image"
+              }
+              src={member.image}
+              alt=""
+              key={member.id}
+              onClick={() => setCurMember(member.id)}
+            />
+          ))}
+        </Box>
+      )}
+      {isMobile ? (
+        <img
+          class={"member-banner-mobile"}
+          src={members[curMember].image}
+          alt=""
+        />
+      ) : (
+        ""
+      )}
       <Box
         sx={{
           width: "75%",
@@ -118,16 +175,34 @@ const Members = () => {
           backgroundColor: theme.primary.main,
           borderRadius: theme.primary.borderRadius,
           display: "flex",
+          [theme.breakpoints.down("md")]: {
+            width: "95%",
+            height: "230px",
+          },
         }}
       >
-        <img class="member-banner" src={members[curMember].image} alt="" />
-        <Box sx={{ padding: "40px" }}>
+        {isMobile ? (
+          ""
+        ) : (
+          <img class={"member-banner"} src={members[curMember].image} alt="" />
+        )}
+        <Box
+          sx={{
+            padding: "40px",
+            [theme.breakpoints.down("md")]: {
+              padding: "20px",
+            },
+          }}
+        >
           <Typography
             sx={{
               fontFamily: theme.primary.fontFamily,
               fontWeight: "800",
-              fontSize: theme.primary.semiBig,
+              fontSize: "4vh",
               color: "white",
+              [theme.breakpoints.down("md")]: {
+                fontSize: theme.primary.mediumMobile,
+              },
             }}
             textAlign="left"
           >
@@ -139,6 +214,9 @@ const Members = () => {
               fontWeight: "800",
               fontSize: theme.primary.medium,
               color: theme.primary.sub,
+              [theme.breakpoints.down("md")]: {
+                fontSize: theme.primary.smallMobile,
+              },
             }}
             textAlign="left"
           >
@@ -151,6 +229,9 @@ const Members = () => {
                 marginLeft: "30px",
                 marginTop: "10px",
                 alignItems: "center",
+                [theme.breakpoints.down("md")]: {
+                  marginLeft: "10px",
+                },
               }}
             >
               <CircleIcon sx={{ color: "white", fontSize: "8px" }} />
@@ -158,9 +239,12 @@ const Members = () => {
                 sx={{
                   fontFamily: theme.primary.fontFamily,
                   fontWeight: "600",
-                  fontSize: theme.primary.small,
+                  fontSize: theme.primary.smallMobile,
                   color: "white",
                   marginLeft: "10px",
+                  [theme.breakpoints.down("md")]: {
+                    fontSize: "1.2vh",
+                  },
                 }}
                 textAlign="left"
               >

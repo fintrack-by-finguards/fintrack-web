@@ -7,6 +7,7 @@
 body {
   margin: 0;
   background-color: white;
+  padding: 0;
 }
 
 .App-logo {
@@ -50,7 +51,7 @@ body {
 }
 
 .home-screen {
-  width: 500px;
+  width: 300px;
 }
 
 .home-download {
@@ -59,16 +60,15 @@ body {
 
 .service-slide {
   width: 100%;
-  margin: 5px;
   border-radius: 8px;
 }
 
 .service-item {
-  width: 400px;
+  width: 85%;
   height: auto;
   margin: 0 auto;
   border: 5px solid #192841;
-  border-radius: 20px;
+  border-radius: 8px;
 }
 
 .member-image {
@@ -78,6 +78,13 @@ body {
   border: 5px solid #ffb000;
 }
 
+.member-image-mobile {
+  width: 50px;
+  height: 50px;
+  border-radius: 100%;
+  border: 3px solid #ffb000;
+}
+
 .selected-member-image {
   width: 120px;
   height: 120px;
@@ -85,8 +92,21 @@ body {
   border: 5px solid #192841;
 }
 
+.selected-member-image-mobile {
+  width: 70px;
+  height: 70px;
+  border-radius: 100%;
+  border: 3px solid #192841;
+}
+
 .member-banner {
   height: 100%;
   border-top-left-radius: 20px;
   border-bottom-left-radius: 20px;
+}
+
+.member-banner-mobile {
+  margin-top: 20px;
+  height: 200px;
+  border-radius: 20px;
 }

@@ -8,12 +8,23 @@ const theme = createTheme({
     main: "#192841",
     sub: "#FFB000",
     fontFamily: "Montserrat",
-    big: "50px",
-    semiBig: "35px",
-    medium: "25px",
-    semi: "18px",
-    small: "13px",
+    big: "7vh",
+    semiBig: "5vh",
+    medium: "3vh",
+    semi: "2.5vh",
+    small: "2vh",
     borderRadius: "8px",
+    mediumMobile: "2.3vh",
+    smallMobile: "1.5vh",
+  },
+  breakpoints: {
+    values: {
+      xs: 0,
+      sm: 600,
+      md: 900,
+      lg: 1200,
+      xl: 1500,
+    },
   },
 });
 
