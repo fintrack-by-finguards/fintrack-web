@@ -29,7 +29,7 @@ const Home = () => {
         marginBottom: "30px",
         display: "flex",
         alignItems: "center",
-        height: "80vh",
+        height: "82vh",
       }}
     >
       <Box
@@ -127,7 +127,7 @@ const Home = () => {
               color: "white",
             }}
           >
-            TẢI NGAY TẠI
+            SẮP CÓ MẶT TẠI
           </Typography>
           <Box sx={{ display: "flex", justifyContent: "space-around" }}>
             <img class="home-download" src={AppStore} alt="" />

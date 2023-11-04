@@ -1,10 +1,13 @@
+import { useContext } from "react";
 import { Box, Typography } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import PersonIcon from "@mui/icons-material/Person";
+import { GlobalContext } from "../../context/GlobalState";
+import MenuIcon from "@mui/icons-material/Menu";
 
 const Header = ({ menuItems, curNav, setCurNav }) => {
   const theme = useTheme();
-
+  const { name } = useContext(GlobalContext);
   return (
     <Box
       sx={{
@@ -84,35 +87,60 @@ const Header = ({ menuItems, curNav, setCurNav }) => {
           ))}
         </Box>
         {/* Sign in */}
-        <Box
-          sx={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            width: "25%",
-            height: "50px",
-            borderRadius: theme.primary.borderRadius,
-            backgroundColor: theme.primary.main,
-          }}
-        >
-          <PersonIcon
+        {name === "" ? (
+          <Box
             sx={{
-              color: "white",
-              fontSize: theme.primary.medium,
-            }}
-          />
-          <Typography
-            sx={{
-              fontFamily: theme.primary.fontFamily,
-              fontWeight: "600",
-              fontSize: theme.primary.semi,
-              color: "white",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              width: "25%",
+              height: "50px",
               marginLeft: "10px",
+              borderRadius: theme.primary.borderRadius,
+              backgroundColor: theme.primary.main,
             }}
+            onClick={() => setCurNav("Đăng nhập")}
           >
-            Đăng nhập
-          </Typography>
-        </Box>
+            <PersonIcon
+              sx={{
+                color: "white",
+                fontSize: theme.primary.medium,
+              }}
+            />
+            <Typography
+              sx={{
+                fontFamily: theme.primary.fontFamily,
+                fontWeight: "600",
+                fontSize: theme.primary.semi,
+                color: "white",
+                marginLeft: "10px",
+              }}
+            >
+              Đăng nhập
+            </Typography>
+          </Box>
+        ) : (
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              width: "50px",
+              height: "50px",
+              borderRadius: "100px",
+              marginLeft: "10px",
+              backgroundColor: theme.primary.main,
+            }}
+            onClick={() => setCurNav("Đăng nhập")}
+          >
+            <MenuIcon
+              sx={{
+                color: "white",
+                fontSize: theme.primary.medium,
+              }}
+            />
+          </Box>
+        )}
       </Box>
     </Box>
   );

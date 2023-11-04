@@ -3,6 +3,10 @@ import { Box, Typography, Container, Button, Grid } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import Service1 from "../../assets/Service1.png";
 import Service2 from "../../assets/Service2.png";
+import ServiceItem1 from "../../assets/ServiceItem1.png";
+import ServiceItem2 from "../../assets/ServiceItem2.png";
+import ServiceItem3 from "../../assets/ServiceItem3.png";
+import ServiceItem4 from "../../assets/ServiceItem4.png";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 
@@ -102,137 +106,217 @@ const Services = () => {
         <Grid container>
           <Grid
             item
-            xs={4}
+            xs={6}
             sx={{
-              padding: "20px",
-              backgroundColor: theme.primary.main,
-              borderRadius: theme.primary.borderRadius,
+              marginTop: "40px",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
             }}
           >
-            <Typography
+            <Box
               sx={{
-                fontFamily: theme.primary.fontFamily,
-                fontWeight: "700",
-                fontSize: theme.primary.medium,
-                color: "white",
+                width: "75%",
+                padding: "20px",
+                backgroundColor: theme.primary.main,
+                borderRadius: theme.primary.borderRadius,
               }}
             >
-              Theo dõi chi tiêu dễ dàng
-            </Typography>
-            <Typography
-              sx={{
-                fontFamily: theme.primary.fontFamily,
-                fontWeight: "400",
-                fontSize: theme.primary.small,
-                color: "white",
-              }}
-            >
-              Các chi tiêu chuyển khoản, trả bill hay tiền mặt đều được tự động
-              cập nhật vào các danh mục phù hợp. Các giao dịch được ghi chép chi
-              tiết và trực quan với hình ảnh
-            </Typography>
+              <Typography
+                sx={{
+                  fontFamily: theme.primary.fontFamily,
+                  fontWeight: "700",
+                  fontSize: theme.primary.medium,
+                  color: "white",
+                }}
+              >
+                Theo dõi chi tiêu dễ dàng
+              </Typography>
+              <Typography
+                sx={{
+                  fontFamily: theme.primary.fontFamily,
+                  fontWeight: "400",
+                  fontSize: theme.primary.small,
+                  color: "white",
+                  marginTop: "10px",
+                  marginLeft: "10px",
+                  marginRight: "10px",
+                }}
+                textAlign={"justify"}
+              >
+                Các chi tiêu chuyển khoản, trả bill hay tiền mặt đều được tự
+                động cập nhật vào các danh mục phù hợp. Các giao dịch được ghi
+                chép chi tiết và trực quan với hình ảnh
+              </Typography>
+            </Box>
           </Grid>
-          <Grid item xs={8}></Grid>
-          {/* // */}
-          <Grid item xs={8}></Grid>
-          <Grid
-            item
-            xs={4}
-            sx={{
-              padding: "20px",
-              backgroundColor: theme.primary.main,
-              borderRadius: theme.primary.borderRadius,
-            }}
-          >
-            <Typography
-              sx={{
-                fontFamily: theme.primary.fontFamily,
-                fontWeight: "700",
-                fontSize: theme.primary.medium,
-                color: "white",
-              }}
-            >
-              Thực hành mỗi ngày
-            </Typography>
-            <Typography
-              sx={{
-                fontFamily: theme.primary.fontFamily,
-                fontWeight: "400",
-                fontSize: theme.primary.small,
-                color: "white",
-              }}
-            >
-              Thực hành chi tiêu, đầu tư, tiết kiệm thông qua nhiệm vụ, mục tiêu
-              tài chính từng ngày
-            </Typography>
+          <Grid item xs={6} sx={{ marginTop: "40px" }}>
+            <img class="service-item" src={ServiceItem1} alt="" />
           </Grid>
           {/* // */}
-          <Grid
-            item
-            xs={4}
-            sx={{
-              padding: "20px",
-              backgroundColor: theme.primary.main,
-              borderRadius: theme.primary.borderRadius,
-            }}
-          >
-            <Typography
-              sx={{
-                fontFamily: theme.primary.fontFamily,
-                fontWeight: "700",
-                fontSize: theme.primary.medium,
-                color: "white",
-              }}
-            >
-              Báo cáo chi tiết
-            </Typography>
-            <Typography
-              sx={{
-                fontFamily: theme.primary.fontFamily,
-                fontWeight: "400",
-                fontSize: theme.primary.small,
-                color: "white",
-              }}
-            >
-              FinTrack báo cáo chi tiêu và thu nhập chi tiết của người dùng theo
-              ngày, tuần, tháng, năm, mục tiêu thông qua các biểu đồ trực quan
-              và con số cụ thể
-            </Typography>
+          <Grid item xs={6} sx={{ marginTop: "40px" }}>
+            <img class="service-item" src={ServiceItem2} alt="" />
           </Grid>
-          <Grid item xs={8}></Grid>
-          {/* // */}
-          <Grid item xs={8}></Grid>
           <Grid
             item
-            xs={4}
+            xs={6}
             sx={{
-              padding: "20px",
-              backgroundColor: theme.primary.main,
-              borderRadius: theme.primary.borderRadius,
+              marginTop: "40px",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
             }}
           >
-            <Typography
+            <Box
               sx={{
-                fontFamily: theme.primary.fontFamily,
-                fontWeight: "700",
-                fontSize: theme.primary.medium,
-                color: "white",
+                width: "75%",
+                backgroundColor: theme.primary.main,
+                padding: "20px",
+                borderRadius: theme.primary.borderRadius,
               }}
             >
-              Mục tiêu tài chính cá nhân hoá
-            </Typography>
-            <Typography
+              <Typography
+                sx={{
+                  fontFamily: theme.primary.fontFamily,
+                  fontWeight: "700",
+                  fontSize: theme.primary.medium,
+                  color: "white",
+                }}
+              >
+                Thực hành mỗi ngày
+              </Typography>
+              <Typography
+                sx={{
+                  fontFamily: theme.primary.fontFamily,
+                  fontWeight: "400",
+                  fontSize: theme.primary.small,
+                  color: "white",
+                  marginTop: "10px",
+                  marginLeft: "10px",
+                  marginRight: "10px",
+                }}
+                textAlign={"justify"}
+              >
+                Thực hành chi tiêu, đầu tư, tiết kiệm thông qua nhiệm vụ, mục
+                tiêu tài chính từng ngày
+              </Typography>
+            </Box>
+          </Grid>
+          {/* // */}
+          <Grid
+            item
+            xs={6}
+            sx={{
+              marginTop: "40px",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <Box
               sx={{
-                fontFamily: theme.primary.fontFamily,
-                fontWeight: "400",
-                fontSize: theme.primary.small,
-                color: "white",
+                width: "75%",
+                padding: "20px",
+                backgroundColor: theme.primary.main,
+                borderRadius: theme.primary.borderRadius,
               }}
             >
-              Mỗi cá nhân có những đặc điểm và mục tiêu tài chính riêng, và do
-              đó, lộ trình tài chính cá nhân hoá là công cụ tối ưu nhất để giúp
-              họ biến các mục tiêu tài chính thành hiện thực
-            </Typography>
+              <Typography
+                sx={{
+                  fontFamily: theme.primary.fontFamily,
+                  fontWeight: "700",
+                  fontSize: theme.primary.medium,
+                  color: "white",
+                }}
+              >
+                Báo cáo chi tiết
+              </Typography>
+              <Typography
+                sx={{
+                  fontFamily: theme.primary.fontFamily,
+                  fontWeight: "400",
+                  fontSize: theme.primary.small,
+                  color: "white",
+                  marginTop: "10px",
+                  marginLeft: "10px",
+                  marginRight: "10px",
+                }}
+                textAlign={"justify"}
+              >
+                FinTrack báo cáo chi tiêu và thu nhập chi tiết của người dùng
+                theo ngày, tuần, tháng, năm, mục tiêu thông qua các biểu đồ trực
+                quan và con số cụ thể
+              </Typography>
+            </Box>
+          </Grid>
+          <Grid
+            item
+            xs={6}
+            sx={{
+              marginTop: "40px",
+              display: "flex",
+              justifyContent: "center",
+            }}
+          >
+            <img class="service-item" src={ServiceItem3} alt="" />
+          </Grid>
+          {/* // */}
+          <Grid
+            item
+            xs={6}
+            sx={{
+              marginTop: "40px",
+              display: "flex",
+              justifyContent: "center",
+            }}
+          >
+            <img class="service-item" src={ServiceItem4} alt="" />
+          </Grid>
+          <Grid
+            item
+            xs={6}
+            sx={{
+              marginTop: "40px",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <Box
+              sx={{
+                width: "75%",
+                padding: "20px",
+                backgroundColor: theme.primary.main,
+                borderRadius: theme.primary.borderRadius,
+              }}
+            >
+              <Typography
+                sx={{
+                  fontFamily: theme.primary.fontFamily,
+                  fontWeight: "700",
+                  fontSize: theme.primary.medium,
+                  color: "white",
+                }}
+              >
+                Mục tiêu tài chính cá nhân hoá
+              </Typography>
+              <Typography
+                sx={{
+                  fontFamily: theme.primary.fontFamily,
+                  fontWeight: "400",
+                  fontSize: theme.primary.small,
+                  color: "white",
+                  marginTop: "10px",
+                  marginLeft: "10px",
+                  marginRight: "10px",
+                }}
+                textAlign={"justify"}
+              >
+                Mỗi cá nhân có những đặc điểm và mục tiêu tài chính riêng, và do
+                đó, lộ trình tài chính cá nhân hoá là công cụ tối ưu nhất để
+                giúp họ biến các mục tiêu tài chính thành hiện thực
+              </Typography>
+            </Box>
           </Grid>
         </Grid>
       </Container>
