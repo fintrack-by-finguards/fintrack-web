@@ -6,12 +6,13 @@ import Screen2 from "../../assets/Screen2.png";
 import Screen3 from "../../assets/Screen3.png";
 import Screen4 from "../../assets/Screen4.png";
 import Screen5 from "../../assets/Screen5.png";
+import Screen6 from "../../assets/Screen6.png";
 import AppStore from "../../assets/AppStore.png";
 import GooglePlay from "../../assets/GooglePlay.png";
 import ArrowCircleRightIcon from "@mui/icons-material/ArrowCircleRight";
 import ArrowCircleLeftIcon from "@mui/icons-material/ArrowCircleLeft";
 
-const screen = [Screen1, Screen2, Screen3, Screen4, Screen5];
+const screen = [Screen1, Screen2, Screen3, Screen4, Screen5, Screen6];
 
 const Home = () => {
   const theme = useTheme();
