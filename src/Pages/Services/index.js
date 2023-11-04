@@ -89,7 +89,7 @@ const Services = () => {
         <Box
           sx={{
             display: "flex",
-            justifyContent: "center",
+            // justifyContent: "center",
             overflow: "scroll",
             scrollBehavior: "smooth",
             transition: "scroll 0.3s ease-in-out",
