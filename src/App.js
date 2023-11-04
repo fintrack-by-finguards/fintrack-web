@@ -13,7 +13,7 @@ import { SnackbarProvider } from "notistack";
 const menuItems = ["Trang chủ", "Tính năng", "Đội ngũ", "Thử nghiệm"];
 
 function App() {
-  const [curNav, setCurNav] = useState("Đăng nhập");
+  const [curNav, setCurNav] = useState("Trang chủ");
 
   return (
     <GlobalProvider>
