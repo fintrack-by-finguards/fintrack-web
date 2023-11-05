@@ -37,7 +37,7 @@ const Experiment = () => {
           "&:hover": theme.primary.hoverDefault,
           marginBottom: "10px",
           [theme.breakpoints.down("md")]: {
-            fontSize: theme.primary.mediumMobile,
+            fontSize: theme.primary.medium,
           },
         }}
       >
