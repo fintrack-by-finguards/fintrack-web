@@ -63,7 +63,7 @@ const Experiment = () => {
           },
         }}
       >
-        Cùng đón chờ để thử nghiệm tính năng đầu tiên vào 07/09/2023
+        Cùng đón chờ để thử nghiệm tính năng đầu tiên vào 07/11/2023
       </Typography>
       <Box sx={{ display: "flex", alignItems: "center", marginTop: "20px" }}>
         <Typography
