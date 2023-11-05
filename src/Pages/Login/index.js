@@ -131,6 +131,9 @@ const Login = ({ setCurNav }) => {
         minHeight: "70vh",
         marginTop: "50px",
         marginBottom: "50px",
+        [theme.breakpoints.down("md")]: {
+          marginBottom: "150px",
+        },
       }}
     >
       <Grid
@@ -209,7 +212,7 @@ const Login = ({ setCurNav }) => {
                     },
                   },
                   [theme.breakpoints.down("md")]: {
-                    height: "30px",
+                    height: "50px",
                   },
                 }}
                 InputLabelProps={{ shrink: false, style: { fontSize: 0 } }}
@@ -265,7 +268,7 @@ const Login = ({ setCurNav }) => {
                     },
                   },
                   [theme.breakpoints.down("md")]: {
-                    height: "30px",
+                    height: "50px",
                   },
                 }}
                 InputLabelProps={{ shrink: false, style: { fontSize: 0 } }}
@@ -504,7 +507,7 @@ const Login = ({ setCurNav }) => {
                     },
                   },
                   [theme.breakpoints.down("md")]: {
-                    height: "30px",
+                    height: "50px",
                   },
                 }}
                 InputLabelProps={{ shrink: false, style: { fontSize: 0 } }}
@@ -551,7 +554,7 @@ const Login = ({ setCurNav }) => {
                     },
                   },
                   [theme.breakpoints.down("md")]: {
-                    height: "30px",
+                    height: "50px",
                   },
                 }}
                 InputLabelProps={{ shrink: false, style: { fontSize: 0 } }}
@@ -610,7 +613,7 @@ const Login = ({ setCurNav }) => {
                     },
                   },
                   [theme.breakpoints.down("md")]: {
-                    height: "30px",
+                    height: "50px",
                   },
                 }}
                 InputLabelProps={{ shrink: false, style: { fontSize: 0 } }}
