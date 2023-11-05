@@ -32,7 +32,7 @@ const Home = () => {
         marginBottom: "30px",
         display: "flex",
         alignItems: "center",
-        minHeight: "82vh",
+        minHeight: "100vh",
         [theme.breakpoints.down("md")]: {
           flexDirection: "column",
         },

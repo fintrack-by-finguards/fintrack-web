@@ -36,7 +36,14 @@ const Services = () => {
   });
 
   return (
-    <Box sx={{ marginBottom: "20px" }}>
+    <Box
+      sx={{
+        marginBottom: "100px",
+        [theme.breakpoints.down("md")]: {
+          marginBottom: "150px",
+        },
+      }}
+    >
       <Container
         sx={{
           backgroundColor: "white",

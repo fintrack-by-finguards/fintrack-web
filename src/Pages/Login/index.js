@@ -58,7 +58,7 @@ const Login = ({ setCurNav }) => {
       };
       const res = await postApi(
         newUserInfo,
-        "http://localhost:8000/user/create"
+        "http://202.158.244.6:8000/user/create"
       );
       if (res.status === "success") {
         enqueueSnackbar("Tạo tài khoản thành công!", {
@@ -86,7 +86,7 @@ const Login = ({ setCurNav }) => {
       const data = {
         username: signInUserName,
       };
-      const res = await postApi(data, "http://localhost:8000/user/getOne");
+      const res = await postApi(data, "http://202.158.244.6:8000/user/getOne");
       const hashedPassword = sha256(signInPassword);
       if (hashedPassword === res.data.password) {
         updateConnect(true);

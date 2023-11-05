@@ -7,6 +7,7 @@ import Login from "./Pages/Login";
 import Home from "./Pages/Home";
 import Members from "./Pages/Members";
 import Services from "./Pages/Services";
+import Experiment from "./Pages/Experiment";
 import { GlobalProvider } from "./context/GlobalState";
 import { SnackbarProvider } from "notistack";
 
@@ -31,6 +32,7 @@ function App() {
           {curNav === "Trang chủ" ? <Home /> : ""}
           {curNav === "Tính năng" ? <Services /> : ""}
           {curNav === "Đội ngũ" ? <Members /> : ""}
+          {curNav === "Thử nghiệm" ? <Experiment /> : ""}
           {curNav === "Đăng nhập" ? <Login setCurNav={setCurNav} /> : ""}
           <Footer />
         </Box>

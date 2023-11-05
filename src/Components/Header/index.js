@@ -11,7 +11,8 @@ const ITEM_HEIGHT = 48;
 const Header = ({ menuItems, curNav, setCurNav }) => {
   const [isMobile, setIsMobile] = useState(false);
   const theme = useTheme();
-  const { name } = useContext(GlobalContext);
+  const { name, updateConnect, updateName, updateUsername } =
+    useContext(GlobalContext);
 
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
@@ -37,6 +38,12 @@ const Header = ({ menuItems, curNav, setCurNav }) => {
     handleResize();
     window.addEventListener("resize", handleResize);
   });
+
+  const signOut = () => {
+    updateConnect(false);
+    updateName("");
+    updateUsername("");
+  };
 
   return (
     <Box>
@@ -153,7 +160,7 @@ const Header = ({ menuItems, curNav, setCurNav }) => {
                   sx={{
                     display: "flex",
                   }}
-                  onClick={() => setCurNav("Đăng nhập")}
+                  onClick={() => signOut()}
                 >
                   <ClearIcon
                     sx={{
@@ -268,13 +275,11 @@ const Header = ({ menuItems, curNav, setCurNav }) => {
                       display: "flex",
                       alignItems: "center",
                       justifyContent: "center",
-                      width: "50px",
-                      height: "50px",
                       borderRadius: "100px",
                       marginLeft: "10px",
                       backgroundColor: theme.primary.main,
                     }}
-                    onClick={() => setCurNav("Đăng nhập")}
+                    onClick={() => signOut()}
                   >
                     <ClearIcon
                       sx={{
@@ -282,6 +287,17 @@ const Header = ({ menuItems, curNav, setCurNav }) => {
                         fontSize: theme.primary.medium,
                       }}
                     />
+                    <Typography
+                      sx={{
+                        fontFamily: theme.primary.fontFamily,
+                        fontWeight: "600",
+                        fontSize: theme.primary.semi,
+                        color: "white",
+                        marginLeft: "10px",
+                      }}
+                    >
+                      Đăng xuất
+                    </Typography>
                   </Box>
                 )}
               </Box>
