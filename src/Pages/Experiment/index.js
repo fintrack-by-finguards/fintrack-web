@@ -113,11 +113,17 @@ const Experiment = () => {
               { url: downloadURL },
               "http://202.158.244.6:8000/bill"
             ).then((res) => {
-              if ("error" in res.data) {
-                console.log("Không thể xử lý hình ảnh, vui lòng thử lại!");
-                setLoading(false);
-              } else {
-                setBillData(res.data);
+              try {
+                if ("error" in res.data) {
+                  console.log("Không thể xử lý hình ảnh, vui lòng thử lại!");
+                  setLoading(false);
+                } else {
+                  setBillData(res.data);
+                  setError(false);
+                  console.log(res.data);
+                  setLoading(false);
+                }
+              } catch {
                 setError(false);
                 console.log(res.data);
                 setLoading(false);
