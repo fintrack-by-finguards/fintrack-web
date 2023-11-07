@@ -747,95 +747,101 @@ const Experiment = () => {
                       }
                     }
                   })}
-                  <Typography
-                    sx={{
-                      fontSize: theme.primary.semi,
-                      color: "black",
-                      fontFamily: theme.primary.fontFamily,
-                      fontWeight: 600,
-                      "&:hover": theme.primary.hoverDefault,
-                      [theme.breakpoints.down("md")]: {
-                        fontSize: theme.primary.smallMobile,
-                      },
-                      textAlign: "left",
-                      marginTop: "20px",
-                    }}
-                  >
-                    Đánh giá kết quả:
-                  </Typography>
-                  <Typography
-                    sx={{
-                      fontSize: theme.primary.small,
-                      color: "black",
-                      marginLeft: "30px",
-                      marginTop: "10px",
-                      fontFamily: theme.primary.fontFamily,
-                      fontWeight: 600,
-                      "&:hover": theme.primary.hoverDefault,
-                      [theme.breakpoints.down("md")]: {
-                        fontSize: theme.primary.smallMobile,
-                      },
-                      textAlign: "left",
-                    }}
-                  >
-                    Bạn cảm thấy kết quả này có chính xác và phù hợp không?
-                  </Typography>
-                  <Rating
-                    name="customized-10"
-                    defaultValue={2}
-                    max={10}
-                    value={star}
-                    onChange={(e) => setStar(e.target.value)}
-                  />
-                  <Typography
-                    sx={{
-                      fontSize: theme.primary.small,
-                      marginLeft: "30px",
-                      marginTop: "10px",
-                      color: "black",
-                      fontFamily: theme.primary.fontFamily,
-                      fontWeight: 600,
-                      "&:hover": theme.primary.hoverDefault,
-                      [theme.breakpoints.down("md")]: {
-                        fontSize: theme.primary.smallMobile,
-                      },
-                      textAlign: "left",
-                    }}
-                  >
-                    Ý kiến đóng góp khác:
-                  </Typography>
-                  <TextField
-                    multiline
-                    rows={2}
-                    sx={{
-                      width: "100%",
-                      marginTop: "10px",
-                      fontFamily: theme.primary.fontFamily,
-                    }}
-                    value={comment}
-                    onChange={(e) => setComment(e.target.value)}
-                  />
-                  <Button
-                    variant="contained"
-                    sx={{
-                      fontSize: theme.primary.small,
-                      color: "black",
-                      fontFamily: theme.primary.fontFamily,
-                      fontWeight: 600,
-                      marginBottom: "5px",
-                      backgroundColor: theme.primary.sub,
-                      borderRadius: theme.primary.borderRadius,
-                      width: "90%",
-                      marginTop: "20px",
-                      [theme.breakpoints.down("md")]: {
-                        marginTop: "20px",
-                        fontSize: theme.primary.smallMobile,
-                      },
-                    }}
-                    onClick={() => sendComment()}
-                  >
-                    Gửi ý kiến
-                  </Button>
+                  {billData && !error ? (
+                    <Box>
+                      <Typography
+                        sx={{
+                          fontSize: theme.primary.semi,
+                          color: "black",
+                          fontFamily: theme.primary.fontFamily,
+                          fontWeight: 600,
+                          "&:hover": theme.primary.hoverDefault,
+                          [theme.breakpoints.down("md")]: {
+                            fontSize: theme.primary.smallMobile,
+                          },
+                          textAlign: "left",
+                          marginTop: "20px",
+                        }}
+                      >
+                        Đánh giá kết quả:
+                      </Typography>
+                      <Typography
+                        sx={{
+                          fontSize: theme.primary.small,
+                          color: "black",
+                          marginLeft: "30px",
+                          marginTop: "10px",
+                          fontFamily: theme.primary.fontFamily,
+                          fontWeight: 600,
+                          "&:hover": theme.primary.hoverDefault,
+                          [theme.breakpoints.down("md")]: {
+                            fontSize: theme.primary.smallMobile,
+                          },
+                          textAlign: "left",
+                        }}
+                      >
+                        Bạn cảm thấy kết quả này có chính xác và phù hợp không?
+                      </Typography>
+                      <Rating
+                        name="customized-10"
+                        defaultValue={2}
+                        max={10}
+                        value={star}
+                        onChange={(e) => setStar(e.target.value)}
+                      />
+                      <Typography
+                        sx={{
+                          fontSize: theme.primary.small,
+                          marginLeft: "30px",
+                          marginTop: "10px",
+                          color: "black",
+                          fontFamily: theme.primary.fontFamily,
+                          fontWeight: 600,
+                          "&:hover": theme.primary.hoverDefault,
+                          [theme.breakpoints.down("md")]: {
+                            fontSize: theme.primary.smallMobile,
+                          },
+                          textAlign: "left",
+                        }}
+                      >
+                        Ý kiến đóng góp khác:
+                      </Typography>
+                      <TextField
+                        multiline
+                        rows={2}
+                        sx={{
+                          width: "100%",
+                          marginTop: "10px",
+                          fontFamily: theme.primary.fontFamily,
+                        }}
+                        value={comment}
+                        onChange={(e) => setComment(e.target.value)}
+                      />
+                      <Button
+                        variant="contained"
+                        sx={{
+                          fontSize: theme.primary.small,
+                          color: "black",
+                          fontFamily: theme.primary.fontFamily,
+                          fontWeight: 600,
+                          marginBottom: "5px",
+                          backgroundColor: theme.primary.sub,
+                          borderRadius: theme.primary.borderRadius,
+                          width: "90%",
+                          marginTop: "20px",
+                          [theme.breakpoints.down("md")]: {
+                            marginTop: "20px",
+                            fontSize: theme.primary.smallMobile,
+                          },
+                        }}
+                        onClick={() => sendComment()}
+                      >
+                        Gửi ý kiến
+                      </Button>
+                    </Box>
+                  ) : (
+                    ""
+                  )}
                 </Box>
               ) : (
                 ""
