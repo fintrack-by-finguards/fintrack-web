@@ -16,6 +16,7 @@ import { postApi } from "../../others/database";
 import { sha256 } from "js-sha256";
 import { useSnackbar } from "notistack";
 import { GlobalContext } from "../../context/GlobalState";
+import { SERVER } from "../../constant";
 
 const Login = ({ setCurNav }) => {
   const { enqueueSnackbar } = useSnackbar();
@@ -56,10 +57,7 @@ const Login = ({ setCurNav }) => {
         password: sha256(signUpPassword),
         username: signUpUserName,
       };
-      const res = await postApi(
-        newUserInfo,
-        "http://202.158.244.6:8000/user/create"
-      );
+      const res = await postApi(newUserInfo, `${SERVER}/user/create`);
       if (res.status === "success") {
         enqueueSnackbar("Tạo tài khoản thành công!", {
           variant: "success",
@@ -86,7 +84,7 @@ const Login = ({ setCurNav }) => {
       const data = {
         username: signInUserName,
       };
-      const res = await postApi(data, "http://202.158.244.6:8000/user/getOne");
+      const res = await postApi(data, `${SERVER}/user/getOne`);
       const hashedPassword = sha256(signInPassword);
       if (hashedPassword === res.data.password) {
         updateConnect(true);
