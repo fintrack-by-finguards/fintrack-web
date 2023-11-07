@@ -8,7 +8,7 @@ const theme = createTheme({
     main: "#192841",
     sub: "#FFB000",
     fontFamily: "Montserrat",
-    big: "7vh",
+    big: "8vh",
     semiBig: "5vh",
     medium: "3vh",
     semi: "2.5vh",

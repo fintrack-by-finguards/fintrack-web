@@ -114,3 +114,31 @@ body {
 .experiment-image {
   width: 100px;
 }
+
+input[type="file"] {
+  display: none;
+}
+
+.custom-file-upload {
+  font-size: 2vh;
+  color: 2vh;
+  font-family: "Montserrat";
+  font-weight: 600;
+  background-color: "#FFB000";
+  border-radius: 8px;
+  padding: 10px;
+  margin: 10px auto;
+  cursor: pointer;
+}
+
+.custom-file-upload-small {
+  font-size: 1.5vh;
+  color: 2vh;
+  font-family: "Montserrat";
+  font-weight: 600;
+  background-color: "#FFB000";
+  border-radius: 8px;
+  padding: 10px;
+  margin: 10px auto;
+  cursor: pointer;
+}

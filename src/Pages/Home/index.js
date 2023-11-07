@@ -68,13 +68,21 @@ const Home = () => {
           flexDirection: "column",
           alignItems: "center",
           justifyContent: "space-around",
+          paddingRight: "30px",
+          marginBottom: "50px",
           [theme.breakpoints.down("md")]: {
             width: "100%",
             marginTop: "30px",
+            paddingRight: "0px",
+            marginBottom: 0,
           },
         }}
       >
-        <Box sx={{ display: "flex" }}>
+        <Box
+          sx={{
+            display: "flex",
+          }}
+        >
           <Typography
             sx={{
               fontFamily: theme.primary.fontFamily,

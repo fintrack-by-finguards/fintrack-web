@@ -1,34 +1,596 @@
-import React, { useContext } from "react";
-import { Box, Typography, Container } from "@mui/material";
+import React, { useState, useEffect } from "react";
+import {
+  Box,
+  Typography,
+  Container,
+  TableBody,
+  TableContainer,
+  Paper,
+  TableCell,
+  TableHead,
+  TableRow,
+} from "@mui/material";
 import { useTheme } from "@mui/material/styles";
-import { GlobalContext } from "../../context/GlobalState";
-import Suggest from "../../assets/Suggest.png";
+import CircularProgress from "@mui/material/CircularProgress";
+// import { GlobalContext } from "../../context/GlobalState";
+// import Suggest from "../../assets/Suggest.png";
+import { storage } from "../../others/firebase";
+import { useSnackbar } from "notistack";
+import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+import { postApi } from "../../others/database";
+import CircleIcon from "@mui/icons-material/Circle";
 
 const Experiment = () => {
   const theme = useTheme();
-  const { name } = useContext(GlobalContext);
+  const { enqueueSnackbar } = useSnackbar();
+  const [billData, setBillData] = useState(null);
+  const [error, setError] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  const [isMobile, setIsMobile] = useState(false);
+
+  //choose the screen size
+  const handleResize = () => {
+    if (window.innerWidth < 720) {
+      setIsMobile(true);
+    } else {
+      setIsMobile(false);
+    }
+  };
+
+  useEffect(() => {
+    handleResize();
+    window.addEventListener("resize", handleResize);
+  });
+  // const { name } = useContext(GlobalContext);
+
+  const [image, setImage] = useState(null); // state lưu ảnh sau khi chọn
+  const [progress, setProgress] = useState(0); // state hiển thị phần trăm tải ảnh lên store
+  const handleChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const fileType = file.type;
+      if (fileType === "image/jpeg" || fileType === "image/png") {
+        setImage(file);
+      } else {
+        alert("Only JPG/PNG files are allowed.");
+        // Optionally, clear the file input here if wrong type
+      }
+    }
+  };
+  const handleUpload = () => {
+    const imageType = image.type;
+    const metadata = {
+      contentType: imageType, // This sets the appropriate MIME type for the image
+    };
+
+    const storageRef = ref(storage, `images/${image.name}`); // tạo 1 địa chỉ để chứa ảnh chuẩn bị tải lên store
+    const uploadTask = uploadBytesResumable(storageRef, image, metadata); // hàm tải ảnh lên store
+    // Đoạn code này để tạo tính năng lắng nghe quá trình tải ảnh, trả về tiến trình để làm tính năng phần trăm tải ảnh
+    uploadTask.on(
+      "state_changed",
+      (snapshot) => {
+        // Observe state change events such as progress, pause, and resume
+        // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+        const progress =
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        setProgress(progress);
+        console.log("Upload is " + progress + "% done");
+        switch (snapshot.state) {
+          case "paused":
+            console.log("Upload is paused");
+            break;
+          case "running":
+            console.log("Upload is running");
+            break;
+          default:
+            break;
+        }
+      },
+      (error) => {
+        enqueueSnackbar("Đăng tải ảnh thất bại, xin vui lòng thử lại!", {
+          variant: "error",
+          autoHideDuration: 5000,
+        });
+      },
+      () => {
+        // Xử lý trường hợp tải ảnh thành công
+        //  Lấy về đường link của ảnh vừa tải thành công
+        enqueueSnackbar("Đăng tải ảnh thành công!", {
+          variant: "success",
+          autoHideDuration: 5000,
+        });
+
+        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+          // alert("Upload image successfully, download URL: " + downloadURL);
+          // reset các trạng thái sau khi tải ảnh thành công
+          // setImage(null);
+          // setProgress(0);
+          console.log("File available at", downloadURL);
+          try {
+            setLoading(true);
+            postApi(
+              { url: downloadURL },
+              "http://202.158.244.6:8000/bill"
+            ).then((res) => {
+              if ("error" in res.data) {
+                console.log("Không thể xử lý hình ảnh, vui lòng thử lại!");
+                setLoading(false);
+              } else {
+                setBillData(res.data);
+                setError(false);
+                console.log(res.data);
+                setLoading(false);
+              }
+            });
+          } catch (err) {
+            console.log(err);
+          }
+        });
+      }
+    );
+  };
 
   return (
     <Container
       sx={{
         backgroundColor: theme.primary.main,
-        marginTop: "50px",
+        marginTop: "30px",
         marginBottom: "100px",
+        paddingTop: "30px",
+        paddingBottom: "50px",
         display: "flex",
-        alignItems: "center",
-        minHeight: "60vh",
-        flexDirection: "column",
-        justifyContent: "center",
+        alignItems: "flex-start",
+        minHeight: "70vh",
+        justifyContent: "space-around",
         borderRadius: theme.primary.borderRadius,
         [theme.breakpoints.down("md")]: {
           flexDirection: "column",
-          width: "80%",
-          padding: "50px",
+          width: "90%",
           minHeight: "50vh",
+          justifyContent: "center",
+          marginBottom: "150px",
         },
       }}
     >
-      <Typography
+      <Box
+        sx={{
+          backgroundColor: "white",
+          padding: "20px",
+          borderRadius: theme.primary.borderRadius,
+          width: "30%",
+          [theme.breakpoints.down("md")]: {
+            width: "90%",
+            padding: "10px",
+            margin: "0 auto",
+          },
+        }}
+      >
+        <Box className="max-w-md mx-auto p-6 bg-white rounded-lg shadow-lg">
+          <Box className="mb-4">
+            {isMobile ? (
+              <Box
+                sx={{
+                  backgroundColor: theme.primary.sub,
+                  padding: "10px",
+                  width: image ? "150px" : "100px",
+                  margin: "10px auto",
+                  borderRadius: theme.primary.borderRadius,
+                  "&hover:": theme.primary.hoverPointer,
+                }}
+              >
+                <label class="custom-file-upload-small">
+                  <input type="file" onChange={handleChange} />
+                  {image ? "Chọn ảnh khác" : "Chọn ảnh"}
+                </label>
+              </Box>
+            ) : (
+              <Box
+                sx={{
+                  backgroundColor: theme.primary.sub,
+                  padding: "10px",
+                  width: image ? "150px" : "100px",
+                  margin: "10px auto",
+                  borderRadius: theme.primary.borderRadius,
+                  "&hover:": theme.primary.hoverPointer,
+                }}
+              >
+                <label class="custom-file-upload">
+                  <input type="file" onChange={handleChange} />
+                  {image ? "Chọn ảnh khác" : "Chọn ảnh"}
+                </label>
+              </Box>
+            )}
+            {image && (
+              <Typography
+                sx={{
+                  fontSize: theme.primary.small,
+                  color: theme.primary.main,
+                  fontFamily: theme.primary.fontFamily,
+                  fontWeight: 500,
+                  "&:hover": theme.primary.hoverDefault,
+                  [theme.breakpoints.down("md")]: {
+                    fontSize: theme.primary.smallMobile,
+                  },
+                }}
+              >
+                {image.name.length > 30
+                  ? image.name.slice(0, 15) +
+                    " ... " +
+                    image.name.slice(image.name.length - 15, image.name.length)
+                  : image.name}
+              </Typography>
+            )}
+            {image && (
+              <img
+                src={URL.createObjectURL(image)}
+                alt="Preview"
+                className="mt-2 rounded-lg shadow-md"
+                style={{ maxWidth: "100%", maxHeight: "300px" }}
+              />
+            )}
+          </Box>
+          {progress > 0 && (
+            <progress value={progress} max="100" className="w-full" />
+          )}
+          {image && (
+            <Box
+              onClick={handleUpload}
+              variant="contained"
+              sx={{
+                fontSize: theme.primary.small,
+                color: "black",
+                fontFamily: theme.primary.fontFamily,
+                fontWeight: 600,
+                marginBottom: "5px",
+                backgroundColor: theme.primary.sub,
+                borderRadius: theme.primary.borderRadius,
+                width: "90%",
+                padding: "10px",
+                margin: "10px auto",
+                [theme.breakpoints.down("md")]: {
+                  marginTop: "20px",
+                  fontSize: theme.primary.smallMobile,
+                },
+              }}
+            >
+              Tải ảnh lên
+            </Box>
+          )}
+        </Box>
+      </Box>
+      <Box
+        sx={{
+          backgroundColor: "white",
+          width: "60%",
+          borderRadius: theme.primary.borderRadius,
+          [theme.breakpoints.down("md")]: {
+            width: "90%",
+            padding: "10px",
+            margin: "0 auto",
+            marginTop: "50px",
+          },
+        }}
+      >
+        <Typography
+          sx={{
+            fontSize: theme.primary.medium,
+            color: theme.primary.main,
+            fontFamily: theme.primary.fontFamily,
+            fontWeight: 600,
+            marginTop: "20px",
+            marginBottom: "20px",
+            "&:hover": theme.primary.hoverDefault,
+            [theme.breakpoints.down("md")]: {
+              fontSize: theme.primary.mediumMobile,
+            },
+          }}
+        >
+          Kết quả
+        </Typography>
+        {loading ? (
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+            }}
+          >
+            <CircularProgress sx={{ color: "green" }} />
+            <Typography
+              sx={{
+                fontSize: theme.primary.semi,
+                color: "green",
+                fontFamily: theme.primary.fontFamily,
+                fontWeight: 600,
+                marginBottom: "20px",
+                marginTop: "10px",
+                "&:hover": theme.primary.hoverDefault,
+                [theme.breakpoints.down("md")]: {
+                  fontSize: theme.primary.smallMobile,
+                },
+              }}
+            >
+              Đang xử lý!
+            </Typography>
+          </Box>
+        ) : (
+          ""
+        )}
+        {error ? (
+          <Typography
+            sx={{
+              fontSize: theme.primary.semi,
+              color: "red",
+              fontFamily: theme.primary.fontFamily,
+              fontWeight: 600,
+              marginBottom: "20px",
+              "&:hover": theme.primary.hoverDefault,
+              [theme.breakpoints.down("md")]: {
+                fontSize: theme.primary.smallMobile,
+              },
+            }}
+          >
+            Không thể xử lý hình ảnh, vui lòng thử lại!
+          </Typography>
+        ) : (
+          ""
+        )}
+        {billData ? (
+          <Box sx={{ padding: "20px" }}>
+            {Object.keys(billData).map((key, index) => {
+              if (key !== "Sản phẩm") {
+                return (
+                  <Box
+                    sx={{
+                      display: "flex",
+                      alignItems: key === "Địa chỉ" ? "flex-start" : "center",
+                    }}
+                  >
+                    <CircleIcon
+                      sx={{
+                        color: theme.primary.main,
+                        fontSize: "8px",
+                        marginRight: "10px",
+                        marginTop: key === "Địa chỉ" ? "5px" : "",
+                      }}
+                    />
+                    <Typography
+                      sx={{
+                        fontSize: "1.7vh",
+                        color: theme.primary.main,
+                        fontFamily: theme.primary.fontFamily,
+                        fontWeight: 600,
+                        "&:hover": theme.primary.hoverDefault,
+                        [theme.breakpoints.down("md")]: {
+                          fontSize: theme.primary.smallMobile,
+                        },
+                        textAlign: "left",
+                      }}
+                    >
+                      {key}: {billData[key]}
+                    </Typography>
+                  </Box>
+                );
+              } else {
+                if (billData.length === 0) {
+                  return (
+                    <Box sx={{ display: "flex", alignItems: "center" }}>
+                      <CircleIcon
+                        sx={{
+                          color: theme.primary.main,
+                          fontSize: "8px",
+                          marginRight: "10px",
+                        }}
+                      />
+                      <Typography
+                        sx={{
+                          fontSize: "1.7vh",
+                          color: theme.primary.main,
+                          fontFamily: theme.primary.fontFamily,
+                          fontWeight: 600,
+                          "&:hover": theme.primary.hoverDefault,
+                          [theme.breakpoints.down("md")]: {
+                            fontSize: theme.primary.smallMobile,
+                          },
+                        }}
+                      >
+                        Sản phẩm: 0
+                      </Typography>
+                    </Box>
+                  );
+                } else {
+                  return (
+                    <Box>
+                      <Box sx={{ display: "flex", alignItems: "center" }}>
+                        <CircleIcon
+                          sx={{
+                            color: theme.primary.main,
+                            fontSize: "8px",
+                            marginRight: "10px",
+                          }}
+                        />
+                        <Typography
+                          sx={{
+                            fontSize: "1.7vh",
+                            color: theme.primary.main,
+                            fontFamily: theme.primary.fontFamily,
+                            fontWeight: 600,
+                            "&:hover": theme.primary.hoverDefault,
+                            [theme.breakpoints.down("md")]: {
+                              fontSize: theme.primary.smallMobile,
+                            },
+                          }}
+                        >
+                          Sản phẩm:
+                        </Typography>
+                      </Box>
+                      <TableContainer
+                        component={Paper}
+                        sx={{ marginTop: "10px", marginBottom: "10px" }}
+                      >
+                        <TableHead>
+                          <TableRow>
+                            <TableCell
+                              sx={{
+                                width: "4%",
+                                fontFamily: theme.primary.fontFamily,
+                                fontWeight: 600,
+                                [theme.breakpoints.down("md")]: {
+                                  fontSize: theme.primary.smallMobile,
+                                },
+                              }}
+                            >
+                              STT
+                            </TableCell>
+                            <TableCell
+                              align="center"
+                              sx={{
+                                width: "24%",
+                                fontFamily: theme.primary.fontFamily,
+                                fontWeight: 600,
+                                [theme.breakpoints.down("md")]: {
+                                  fontSize: theme.primary.smallMobile,
+                                },
+                              }}
+                            >
+                              Tên
+                            </TableCell>
+                            <TableCell
+                              align="center"
+                              sx={{
+                                width: "24%",
+                                fontFamily: theme.primary.fontFamily,
+                                fontWeight: 600,
+                                [theme.breakpoints.down("md")]: {
+                                  fontSize: theme.primary.smallMobile,
+                                },
+                              }}
+                            >
+                              Số lượng
+                            </TableCell>
+                            <TableCell
+                              align="center"
+                              sx={{
+                                width: "24%",
+                                fontFamily: theme.primary.fontFamily,
+                                fontWeight: 600,
+                                [theme.breakpoints.down("md")]: {
+                                  fontSize: theme.primary.smallMobile,
+                                },
+                              }}
+                            >
+                              Giá tiền
+                            </TableCell>
+                            <TableCell
+                              align="right"
+                              sx={{
+                                width: "24%",
+                                fontFamily: theme.primary.fontFamily,
+                                fontWeight: 600,
+                                [theme.breakpoints.down("md")]: {
+                                  fontSize: theme.primary.smallMobile,
+                                },
+                              }}
+                            >
+                              Khuyến mãi
+                            </TableCell>
+                          </TableRow>
+                        </TableHead>
+                        <TableBody>
+                          {billData[key].map((item, idx) => (
+                            <TableRow
+                              key={idx}
+                              sx={{
+                                "&:last-child td, &:last-child th": {
+                                  border: 0,
+                                  [theme.breakpoints.down("md")]: {
+                                    fontSize: theme.primary.smallMobile,
+                                  },
+                                },
+                              }}
+                            >
+                              <TableCell
+                                component="th"
+                                scope="row"
+                                align="center"
+                                sx={{
+                                  width: "4%",
+                                  fontFamily: theme.primary.fontFamily,
+                                  fontWeight: 600,
+                                  [theme.breakpoints.down("md")]: {
+                                    fontSize: theme.primary.smallMobile,
+                                  },
+                                }}
+                              >
+                                {idx + 1}
+                              </TableCell>
+                              <TableCell
+                                align="left"
+                                sx={{
+                                  width: "24%",
+                                  fontFamily: theme.primary.fontFamily,
+                                  [theme.breakpoints.down("md")]: {
+                                    fontSize: theme.primary.smallMobile,
+                                    padding: 0,
+                                  },
+                                }}
+                              >
+                                {item.name ? item.name : ""}
+                              </TableCell>
+                              <TableCell
+                                align="center"
+                                sx={{
+                                  width: "24%",
+                                  fontFamily: theme.primary.fontFamily,
+                                  [theme.breakpoints.down("md")]: {
+                                    fontSize: theme.primary.smallMobile,
+                                  },
+                                }}
+                              >
+                                {item.quantity
+                                  ? item.quantity.split(" ")[0]
+                                  : ""}
+                              </TableCell>
+                              <TableCell
+                                align="center"
+                                sx={{
+                                  width: "24%",
+                                  fontFamily: theme.primary.fontFamily,
+                                  [theme.breakpoints.down("md")]: {
+                                    fontSize: theme.primary.smallMobile,
+                                  },
+                                }}
+                              >
+                                {item.price ? item.price : ""}
+                              </TableCell>
+                              <TableCell
+                                align="center"
+                                sx={{
+                                  width: "24%",
+                                  fontFamily: theme.primary.fontFamily,
+                                  [theme.breakpoints.down("md")]: {
+                                    fontSize: theme.primary.smallMobile,
+                                  },
+                                }}
+                              >
+                                {item.discount ? item.discount : ""}
+                              </TableCell>
+                            </TableRow>
+                          ))}
+                        </TableBody>
+                      </TableContainer>
+                    </Box>
+                  );
+                }
+              }
+            })}{" "}
+          </Box>
+        ) : (
+          ""
+        )}
+      </Box>
+      {/* <Typography
         sx={{
           fontSize: theme.primary.semiBig,
           color: theme.primary.sub,
@@ -82,7 +644,7 @@ const Experiment = () => {
           Gợi ý:
         </Typography>
         <img class="experiment-image" src={Suggest} alt="" />
-      </Box>
+      </Box> */}
     </Container>
   );
 };
