@@ -132,7 +132,7 @@ const Experiment = () => {
           console.log("File available at", downloadURL);
           try {
             setLoading(true);
-            postApi({ url: downloadURL }, `${SERVER}/bill`).then((res) => {
+            postApi({ url: downloadURL }, `${SERVER}/bill/fake`).then((res) => {
               try {
                 if ("error" in res.data) {
                   console.log("Không thể xử lý hình ảnh, vui lòng thử lại!");
