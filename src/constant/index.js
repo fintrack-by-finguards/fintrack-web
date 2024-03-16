@@ -50,7 +50,12 @@ export const EXPENSESCATEGORIES = {
   "Tiết kiệm": [],
   "Giáo dục": [],
   "Hưởng thụ": ["Mua sắm", "Xem phim", "Trò chơi", "Nhà hàng"],
-  "Tự do tài chính": ["Bảo hiểm", "Tiết kiệm hưu trí"],
+  "Tự do tài chính": [
+    "Bảo hiểm",
+    "Tiết kiệm hưu trí",
+    "Đầu tư",
+    "Bất động sản",
+  ],
   "Quà và từ thiện": ["Từ thiện", "Quà lễ"],
 };
 
@@ -61,4 +66,22 @@ export const RECEIVECATEGORIES = [
   "Quà tặng",
   "Bán đồ",
   "Thu khác",
+];
+
+export const ASSETSCATEGORIES = [
+  "Tiền mặt",
+  "Tiền gửi ngân hàng",
+  "Cho vay",
+  "Đầu tư",
+  "Bất động sản",
+];
+
+export const DEBTCATEGORIES = ["Tiền mặt", "Trả góp", "Thế chấp", "Thấu chi"];
+
+export const FIVECOLORS = [
+  "#ef476f",
+  "#ffd166",
+  "#06d6a0",
+  "#118ab2",
+  "#073b4c",
 ];

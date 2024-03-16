@@ -348,6 +348,8 @@ const AddTransactionDialog = ({
               >
                 <MenuItem value={0}>Bảo hiểm</MenuItem>
                 <MenuItem value={1}>Tiết kiệm hưu trí</MenuItem>
+                <MenuItem value={2}>Đầu tư</MenuItem>
+                <MenuItem value={3}>Bất động sản</MenuItem>
               </Select>
             </FormControl>
           ) : (

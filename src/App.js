@@ -7,9 +7,9 @@ import Login from "./Pages/Login";
 import Home from "./Pages/Home";
 import AboutUs from "./Pages/AboutUs";
 import Services from "./Pages/Services";
-import Experiment from "./Pages/Experiment";
 import FinancialPlans from "./Pages/Services/FinancialPlans";
 import TransactionsManagement from "./Pages/Services/TransactionsManagement";
+import AssetsManagement from "./Pages/Services/AssetsManagement";
 import Community from "./Pages/Community";
 import { GlobalProvider } from "./context/GlobalState";
 import { SnackbarProvider } from "notistack";
@@ -40,6 +40,7 @@ function App() {
           {curNav === "Kế hoạch tài chính" ? <FinancialPlans /> : ""}
           {curNav === "Mục tiêu tài chính" ? <GoalsManagement /> : ""}
           {curNav === "Quản lý chi tiêu" ? <TransactionsManagement /> : ""}
+          {curNav === "Quản lý tài chính" ? <AssetsManagement /> : ""}
           {/* {curNav === "Thử nghiệm" ? <Experiment /> : ""} */}
           {curNav === "Đăng nhập" ? <Login setCurNav={setCurNav} /> : ""}
           <Footer />
