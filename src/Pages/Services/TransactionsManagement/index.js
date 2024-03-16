@@ -557,7 +557,7 @@ const TransactionsManagement = () => {
             </Select>
           </FormControl>
         </Box>
-        <TransactionsChart />
+        <TransactionsChart startDay={startDay} endDay={endDay} />
       </Box>
     </Container>
   );
