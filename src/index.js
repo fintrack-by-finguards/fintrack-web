@@ -7,6 +7,7 @@ const theme = createTheme({
   primary: {
     main: "#192841",
     sub: "#FFB000",
+    greyLight: "#DCDCDC",
     fontFamily: "Montserrat",
     big: "8vh",
     semiBig: "5vh",

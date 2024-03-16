@@ -46,9 +46,7 @@ const Experiment = () => {
     postApi({}, `${SERVER}/comment/count`).then((res) =>
       setCurComment(res.data)
     );
-    postApi({}, `${SERVER}/comment/point`).then((res) =>
-      setCurPoint(res.data.toFixed(2))
-    );
+    postApi({}, `${SERVER}/comment/point`).then((res) => setCurPoint(res.data));
   }, [refresh]);
 
   //choose the screen size
@@ -132,7 +130,7 @@ const Experiment = () => {
           console.log("File available at", downloadURL);
           try {
             setLoading(true);
-            postApi({ url: downloadURL }, `${SERVER}/bill`).then((res) => {
+            postApi({ url: downloadURL }, `${SERVER}/bill/`).then((res) => {
               try {
                 if ("error" in res.data) {
                   console.log("Không thể xử lý hình ảnh, vui lòng thử lại!");

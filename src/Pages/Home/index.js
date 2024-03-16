@@ -14,6 +14,11 @@ import ArrowCircleLeftIcon from "@mui/icons-material/ArrowCircleLeft";
 
 const screen = [Screen1, Screen2, Screen3, Screen4, Screen5, Screen6];
 
+const content = [
+  { content: "Thông tin bảo mật 100%" },
+  { content: "10.000 người dùng" },
+];
+
 const Home = () => {
   const theme = useTheme();
   const [curScreen, setCurScreen] = useState(0);

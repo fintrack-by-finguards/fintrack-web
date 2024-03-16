@@ -72,7 +72,7 @@ const members = [
   },
 ];
 
-const Members = () => {
+const AboutUs = () => {
   const theme = useTheme();
   const [curMember, setCurMember] = useState("0");
   const [isMobile, setIsMobile] = useState(false);
@@ -261,4 +261,4 @@ const Members = () => {
   );
 };
 
-export default Members;
+export default AboutUs;

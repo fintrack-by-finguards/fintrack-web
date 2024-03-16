@@ -58,6 +58,11 @@ body {
   width: 200px;
 }
 
+.footer-download {
+  width: 170px;
+  margin-top: 0px;
+}
+
 .service-slide {
   width: 100%;
   border-radius: 8px;
@@ -142,3 +147,35 @@ input[type="file"] {
   margin: 10px auto;
   cursor: pointer;
 }
+
+.carousel-container {
+  position: relative;
+  overflow: hidden;
+}
+
+.carousel-container::before,
+.carousel-container::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 100px; /* Adjust based on your preference */
+  z-index: 1;
+  pointer-events: none;
+  background: linear-gradient(
+    to right,
+    rgba(255, 255, 255, 1),
+    rgba(255, 255, 255, 0)
+  );
+}
+
+.carousel-container::after {
+  right: 0;
+  transform: rotateZ(180deg);
+}
+
+.carousel-item {
+  transition: transform 0.5s ease-in-out;
+}
+
+/* Add any additional styling you need for your items */

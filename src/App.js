@@ -5,13 +5,17 @@ import Header from "./Components/Header";
 import Footer from "./Components/Footer";
 import Login from "./Pages/Login";
 import Home from "./Pages/Home";
-import Members from "./Pages/Members";
+import AboutUs from "./Pages/AboutUs";
 import Services from "./Pages/Services";
 import Experiment from "./Pages/Experiment";
+import FinancialPlans from "./Pages/Services/FinancialPlans";
+import TransactionsManagement from "./Pages/Services/TransactionsManagement";
+import Community from "./Pages/Community";
 import { GlobalProvider } from "./context/GlobalState";
 import { SnackbarProvider } from "notistack";
+import GoalsManagement from "./Pages/Services/GoalsManagement";
 
-const menuItems = ["Trang chủ", "Tính năng", "Đội ngũ", "Thử nghiệm"];
+const menuItems = ["Trang chủ", "Sản phẩm", "Cộng đồng", "Về chúng tôi"];
 
 function App() {
   const [curNav, setCurNav] = useState("Trang chủ");
@@ -30,9 +34,13 @@ function App() {
         >
           <Header menuItems={menuItems} curNav={curNav} setCurNav={setCurNav} />
           {curNav === "Trang chủ" ? <Home /> : ""}
-          {curNav === "Tính năng" ? <Services /> : ""}
-          {curNav === "Đội ngũ" ? <Members /> : ""}
-          {curNav === "Thử nghiệm" ? <Experiment /> : ""}
+          {curNav === "Sản phẩm" ? <Services /> : ""}
+          {curNav === "Về chúng tôi" ? <AboutUs /> : ""}
+          {curNav === "Cộng đồng" ? <Community /> : ""}
+          {curNav === "Kế hoạch tài chính" ? <FinancialPlans /> : ""}
+          {curNav === "Mục tiêu tài chính" ? <GoalsManagement /> : ""}
+          {curNav === "Quản lý chi tiêu" ? <TransactionsManagement /> : ""}
+          {/* {curNav === "Thử nghiệm" ? <Experiment /> : ""} */}
           {curNav === "Đăng nhập" ? <Login setCurNav={setCurNav} /> : ""}
           <Footer />
         </Box>

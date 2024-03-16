@@ -1,9 +1,17 @@
 import { useContext, useState, useEffect } from "react";
-import { Box, Typography, IconButton, Menu, MenuItem } from "@mui/material";
+import {
+  Box,
+  Typography,
+  IconButton,
+  Menu,
+  MenuItem,
+  Button,
+} from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import PersonIcon from "@mui/icons-material/Person";
 import MenuIcon from "@mui/icons-material/Menu";
 import { GlobalContext } from "../../context/GlobalState";
+import MyMenu from "./MyMenu";
 import ClearIcon from "@mui/icons-material/Clear";
 
 const ITEM_HEIGHT = 48;
@@ -179,7 +187,7 @@ const Header = ({ menuItems, curNav, setCurNav }) => {
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
-              width: "55%",
+              width: "65%",
             }}
           >
             {/* Menu */}
@@ -192,37 +200,45 @@ const Header = ({ menuItems, curNav, setCurNav }) => {
               }}
             >
               {menuItems.map((item) => (
-                <Box
-                  sx={{
-                    marginLeft: "30px",
-                    display: "flex",
-                    alignItems: "center",
-                    borderBottom:
-                      curNav === item ? `2px solid ${theme.primary.sub}` : "",
-                  }}
-                  onClick={() => setCurNav(item)}
-                >
-                  <Typography
-                    sx={{
-                      fontFamily: theme.primary.fontFamily,
-                      fontWeight: "600",
-                      fontSize: theme.primary.semi,
-                      "&:hover": {
-                        cursor: "pointer",
-                        color: theme.primary.sub,
+                <Box>
+                  {item !== "Sản phẩm" ? (
+                    <Button
+                      sx={{
+                        marginLeft: "10px",
+                        display: "flex",
+                        alignItems: "center",
                         borderBottom:
                           curNav === item
-                            ? " "
-                            : `2px solid ${theme.primary.sub}`,
-                      },
-                      color:
-                        curNav === item
-                          ? theme.primary.sub
-                          : theme.primary.main,
-                    }}
-                  >
-                    {item}
-                  </Typography>
+                            ? `2px solid ${theme.primary.sub}`
+                            : "",
+                      }}
+                      onClick={() => setCurNav(item)}
+                    >
+                      <Typography
+                        sx={{
+                          fontFamily: theme.primary.fontFamily,
+                          fontWeight: "600",
+                          fontSize: theme.primary.semi,
+                          "&:hover": {
+                            cursor: "pointer",
+                            color: theme.primary.sub,
+                            borderBottom:
+                              curNav === item
+                                ? " "
+                                : `2px solid ${theme.primary.sub}`,
+                          },
+                          color:
+                            curNav === item
+                              ? theme.primary.sub
+                              : theme.primary.main,
+                        }}
+                      >
+                        {item}
+                      </Typography>
+                    </Button>
+                  ) : (
+                    <MyMenu curNav={curNav} item={item} setCurNav={setCurNav} />
+                  )}
                 </Box>
               ))}
             </Box>

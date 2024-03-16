@@ -12,11 +12,16 @@ import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import { useTheme } from "@mui/material/styles";
 import HandshakeIcon from "@mui/icons-material/Handshake";
 import SavingsIcon from "@mui/icons-material/Savings";
+import Select from "@mui/material/Select";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
 import { postApi } from "../../others/database";
 import { sha256 } from "js-sha256";
 import { useSnackbar } from "notistack";
 import { GlobalContext } from "../../context/GlobalState";
 import { SERVER } from "../../constant";
+import { toDateString } from "../Functions/text";
+import { JOBS, UNIS } from "../../constant/index";
 
 const Login = ({ setCurNav }) => {
   const { enqueueSnackbar } = useSnackbar();
@@ -28,6 +33,12 @@ const Login = ({ setCurNav }) => {
   const [signUpPassword, setSignUpPassword] = useState("");
   const [signUpName, setSignUpName] = useState("");
 
+  const [day, setDay] = useState("01");
+  const [month, setMonth] = useState("01");
+  const [year, setYear] = useState("1980");
+  const [job, setJob] = useState("Sinh viên");
+  const [uni, setUni] = useState("Học viện Ngân hàng");
+
   const [showSignInPassword, setShowSignInPassword] = useState(false);
   const [showSignUpPassword, setShowSignUpPassword] = useState(false);
 
@@ -35,6 +46,40 @@ const Login = ({ setCurNav }) => {
     useContext(GlobalContext);
 
   const [isMobile, setIsMobile] = useState(false);
+
+  const createArray = (N) => {
+    return Array.apply(null, { length: N }).map(Number.call, Number);
+  };
+
+  const getYear = () => {
+    var currentYear = new Date().getFullYear();
+    var years = [];
+    var startYear = 1980;
+    for (var i = startYear; i <= currentYear; i++) {
+      years.push(startYear++);
+    }
+    return years;
+  };
+
+  const handleChangeDay = (e) => {
+    setDay(e.target.value);
+  };
+
+  const handleChangeMonth = (e) => {
+    setMonth(e.target.value);
+  };
+
+  const handleChangeYear = (e) => {
+    setYear(e.target.value);
+  };
+
+  const handleChangeJob = (e) => {
+    setJob(e.target.value);
+  };
+
+  const handleChangeUni = (e) => {
+    setUni(e.target.value);
+  };
 
   //choose the screen size
   const handleResize = () => {
@@ -128,7 +173,6 @@ const Login = ({ setCurNav }) => {
         justifyContent: "center",
         minHeight: "70vh",
         marginTop: "50px",
-        marginBottom: "50px",
         [theme.breakpoints.down("md")]: {
           marginBottom: "150px",
         },
@@ -492,7 +536,6 @@ const Login = ({ setCurNav }) => {
                 sx={{
                   backgroundColor: "white",
                   width: "100%",
-                  height: "50px",
                   borderRadius: theme.primary.borderRadius,
                   "& .MuiOutlinedInput-root": {
                     "& fieldset": {
@@ -504,11 +547,13 @@ const Login = ({ setCurNav }) => {
                       color: theme.primary.sub,
                     },
                   },
-                  [theme.breakpoints.down("md")]: {
-                    height: "50px",
-                  },
                 }}
                 InputLabelProps={{ shrink: false, style: { fontSize: 0 } }}
+                inputProps={{
+                  style: {
+                    height: "5px",
+                  },
+                }}
               />
             </Box>
 
@@ -539,7 +584,6 @@ const Login = ({ setCurNav }) => {
                 sx={{
                   backgroundColor: "white",
                   width: "100%",
-                  height: "50px",
                   borderRadius: theme.primary.borderRadius,
                   "& .MuiOutlinedInput-root": {
                     "& fieldset": {
@@ -551,8 +595,10 @@ const Login = ({ setCurNav }) => {
                       color: theme.primary.sub,
                     },
                   },
-                  [theme.breakpoints.down("md")]: {
-                    height: "50px",
+                }}
+                inputProps={{
+                  style: {
+                    height: "5px",
                   },
                 }}
                 InputLabelProps={{ shrink: false, style: { fontSize: 0 } }}
@@ -598,7 +644,6 @@ const Login = ({ setCurNav }) => {
                 sx={{
                   backgroundColor: "white",
                   width: "100%",
-                  height: "50px",
                   borderRadius: theme.primary.borderRadius,
                   "& .MuiOutlinedInput-root": {
                     "& fieldset": {
@@ -610,13 +655,223 @@ const Login = ({ setCurNav }) => {
                       color: theme.primary.sub,
                     },
                   },
-                  [theme.breakpoints.down("md")]: {
-                    height: "50px",
-                  },
                 }}
                 InputLabelProps={{ shrink: false, style: { fontSize: 0 } }}
+                inputProps={{
+                  style: {
+                    height: "5px",
+                  },
+                }}
               />
             </Box>
+
+            <Box sx={{ marginTop: "10px", width: "90%" }}>
+              <Typography
+                sx={{
+                  fontSize: theme.primary.small,
+                  color: "white",
+                  fontFamily: theme.primary.fontFamily,
+                  fontWeight: 500,
+                  marginBottom: "5px",
+                  "&:hover": theme.primary.hoverDefault,
+                  [theme.breakpoints.down("md")]: {
+                    fontSize: theme.primary.smallMobile,
+                  },
+                }}
+                textAlign="left"
+              >
+                Ngày sinh
+              </Typography>
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                }}
+              >
+                <FormControl sx={{ minWidth: 60, height: "40px" }}>
+                  <Select
+                    value={day}
+                    onChange={handleChangeDay}
+                    displayEmpty
+                    inputProps={{ "aria-label": "Without label" }}
+                    sx={{
+                      backgroundColor: "white",
+                      width: "100%",
+                      height: "40px",
+                      borderRadius: theme.primary.borderRadius,
+                    }}
+                    MenuProps={{ PaperProps: { sx: { maxHeight: 120 } } }}
+                  >
+                    {createArray(31).map((value, id) => (
+                      <MenuItem value={toDateString(value + 1)} key={id}>
+                        {toDateString(value + 1)}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+
+                <Typography
+                  sx={{
+                    fontSize: theme.primary.small,
+                    color: "white",
+                    fontFamily: theme.primary.fontFamily,
+                    fontWeight: 700,
+                    marginRight: "5px",
+                    "&:hover": theme.primary.hoverDefault,
+                    [theme.breakpoints.down("md")]: {
+                      fontSize: theme.primary.smallMobile,
+                      marginBottom: "10px",
+                      marginRight: "0px",
+                    },
+                  }}
+                >
+                  /
+                </Typography>
+
+                <FormControl sx={{ minWidth: 60, height: "40px" }}>
+                  <Select
+                    value={month}
+                    onChange={handleChangeMonth}
+                    displayEmpty
+                    inputProps={{ "aria-label": "Without label" }}
+                    sx={{
+                      backgroundColor: "white",
+                      width: "100%",
+                      height: "40px",
+                      borderRadius: theme.primary.borderRadius,
+                    }}
+                    MenuProps={{ PaperProps: { sx: { maxHeight: 120 } } }}
+                  >
+                    {createArray(12).map((value, id) => (
+                      <MenuItem value={toDateString(value + 1)} key={id}>
+                        {toDateString(value + 1)}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+
+                <Typography
+                  sx={{
+                    fontSize: theme.primary.small,
+                    color: "white",
+                    fontFamily: theme.primary.fontFamily,
+                    fontWeight: 700,
+                    marginRight: "5px",
+                    "&:hover": theme.primary.hoverDefault,
+                    [theme.breakpoints.down("md")]: {
+                      fontSize: theme.primary.smallMobile,
+                      marginBottom: "10px",
+                      marginRight: "0px",
+                    },
+                  }}
+                >
+                  /
+                </Typography>
+
+                <FormControl sx={{ minWidth: 60, height: "40px" }}>
+                  <Select
+                    value={year}
+                    onChange={handleChangeYear}
+                    displayEmpty
+                    inputProps={{ "aria-label": "Without label" }}
+                    sx={{
+                      backgroundColor: "white",
+                      width: "100%",
+                      height: "40px",
+                      borderRadius: theme.primary.borderRadius,
+                    }}
+                    MenuProps={{ PaperProps: { sx: { maxHeight: 120 } } }}
+                  >
+                    {getYear().map((value, id) => (
+                      <MenuItem value={toDateString(value)} key={id}>
+                        {toDateString(value)}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+              </Box>
+            </Box>
+
+            <Box sx={{ marginTop: "10px", width: "90%" }}>
+              <Typography
+                sx={{
+                  fontSize: theme.primary.small,
+                  color: "white",
+                  fontFamily: theme.primary.fontFamily,
+                  fontWeight: 500,
+                  marginBottom: "5px",
+                  "&:hover": theme.primary.hoverDefault,
+                  [theme.breakpoints.down("md")]: {
+                    fontSize: theme.primary.smallMobile,
+                  },
+                }}
+                textAlign="left"
+              >
+                Nghề nghiệp
+              </Typography>
+              <Select
+                value={job}
+                onChange={handleChangeJob}
+                displayEmpty
+                inputProps={{ "aria-label": "Without label" }}
+                sx={{
+                  backgroundColor: "white",
+                  width: "100%",
+                  height: "40px",
+                  borderRadius: theme.primary.borderRadius,
+                }}
+                MenuProps={{ PaperProps: { sx: { maxHeight: 120 } } }}
+              >
+                {JOBS.map((value, id) => (
+                  <MenuItem value={value} key={id}>
+                    {value}
+                  </MenuItem>
+                ))}
+              </Select>
+            </Box>
+
+            {job === "Sinh viên" ? (
+              <Box sx={{ marginTop: "10px", width: "90%" }}>
+                <Typography
+                  sx={{
+                    fontSize: theme.primary.small,
+                    color: "white",
+                    fontFamily: theme.primary.fontFamily,
+                    fontWeight: 500,
+                    marginBottom: "5px",
+                    "&:hover": theme.primary.hoverDefault,
+                    [theme.breakpoints.down("md")]: {
+                      fontSize: theme.primary.smallMobile,
+                    },
+                  }}
+                  textAlign="left"
+                >
+                  Trường học
+                </Typography>
+                <Select
+                  value={uni}
+                  onChange={handleChangeUni}
+                  displayEmpty
+                  inputProps={{ "aria-label": "Without label" }}
+                  sx={{
+                    backgroundColor: "white",
+                    width: "100%",
+                    height: "40px",
+                    borderRadius: theme.primary.borderRadius,
+                  }}
+                  MenuProps={{ PaperProps: { sx: { maxHeight: 120 } } }}
+                >
+                  {UNIS.map((value, id) => (
+                    <MenuItem value={value} key={id}>
+                      {value}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </Box>
+            ) : (
+              ""
+            )}
 
             <Button
               variant="contained"
@@ -696,10 +951,12 @@ const Login = ({ setCurNav }) => {
                   color: "white",
                   fontFamily: theme.primary.fontFamily,
                   fontWeight: 500,
+                  marginRight: "5px",
                   "&:hover": theme.primary.hoverDefault,
                   [theme.breakpoints.down("md")]: {
                     fontSize: theme.primary.smallMobile,
                     marginBottom: "10px",
+                    marginRight: "0px",
                   },
                 }}
               >
@@ -714,7 +971,7 @@ const Login = ({ setCurNav }) => {
                   fontWeight: 600,
                   backgroundColor: "white",
                   borderRadius: theme.primary.borderRadius,
-                  width: "150px",
+                  width: "130px",
                   [theme.breakpoints.down("md")]: {
                     fontSize: theme.primary.smallMobile,
                   },
