@@ -47,6 +47,7 @@ const expensesHistories = [
         hour: 6,
         minute: 4,
         second: 20,
+        type: 0,
       },
       {
         name: "Đóng tiền nhà",
@@ -56,6 +57,17 @@ const expensesHistories = [
         hour: 10,
         minute: 35,
         second: 56,
+        type: 0,
+      },
+      {
+        name: "Tiền lương",
+        category1: "Tiền lương",
+        category2: "",
+        money: 5000000,
+        hour: 11,
+        minute: 43,
+        second: 54,
+        type: 1,
       },
       {
         name: "Ăn nem nướng",
@@ -65,6 +77,7 @@ const expensesHistories = [
         hour: 18,
         minute: 5,
         second: 3,
+        type: 0,
       },
       {
         name: "Xem phim",
@@ -74,6 +87,7 @@ const expensesHistories = [
         hour: 22,
         minute: 5,
         second: 3,
+        type: 0,
       },
     ],
   },
@@ -91,6 +105,7 @@ const expensesHistories = [
         hour: 7,
         minute: 43,
         second: 25,
+        type: 0,
       },
       {
         name: "Mua sách Thuế",
@@ -100,6 +115,7 @@ const expensesHistories = [
         hour: 11,
         minute: 34,
         second: 64,
+        type: 0,
       },
     ],
   },
@@ -117,6 +133,7 @@ const expensesHistories = [
         hour: 8,
         minute: 43,
         second: 25,
+        type: 0,
       },
     ],
   },
@@ -134,6 +151,7 @@ const expensesHistories = [
         hour: 16,
         minute: 45,
         second: 56,
+        type: 0,
       },
     ],
   },
@@ -157,6 +175,9 @@ const TransactionsManagement = () => {
     history: [],
   });
 
+  const [totalExpenses, setTotalExpenses] = useState(0);
+  const [totalReceive, setTotalReceive] = useState(0);
+
   const handleAddTrans = (
     _name,
     _cate1,
@@ -164,7 +185,8 @@ const TransactionsManagement = () => {
     _money,
     _hour,
     _minute,
-    _second
+    _second,
+    _type
   ) => {
     for (let i = 0; i < expensesHistories.length; ++i) {
       if (
@@ -180,6 +202,7 @@ const TransactionsManagement = () => {
           hour: _hour,
           minute: _minute,
           second: _second,
+          type: _type,
         });
         break;
       }
@@ -192,17 +215,40 @@ const TransactionsManagement = () => {
   };
 
   useEffect(() => {
+    let curExpenses = 0;
+    let curReceive = 0;
+    let check = 0;
     for (let i = 0; i < expensesHistories.length; ++i) {
       if (
         displayDay === expensesHistories[i].day &&
         choseMonth === expensesHistories[i].month &&
         choseYear === expensesHistories[i].year
       ) {
+        console.log(expensesHistories[i]);
         setDisplayHis(expensesHistories[i]);
+        check = 1;
+        for (let j = 0; j < expensesHistories[i].history.length; ++j) {
+          if (expensesHistories[i].history[j].type === 0) {
+            curExpenses += expensesHistories[i].history[j].money;
+          } else {
+            curReceive += expensesHistories[i].history[j].money;
+          }
+        }
         break;
       }
     }
-  }, [displayDay, choseMonth, choseYear]);
+    if (check === 0) {
+      setDisplayHis({
+        day: displayDay,
+        month: choseMonth,
+        year: choseYear,
+        user: "notta",
+        history: [],
+      });
+    }
+    setTotalExpenses(curExpenses);
+    setTotalReceive(curReceive);
+  }, [displayDay, choseMonth, choseYear, expensesHistories]);
 
   return (
     <Container
@@ -365,6 +411,7 @@ const TransactionsManagement = () => {
           </MenuItem>
         ))}
       </Box>
+
       <Box
         sx={{ display: "flex", justifyContent: "center", marginTop: "10px" }}
       >
@@ -404,7 +451,7 @@ const TransactionsManagement = () => {
                 fontFamily: "Montserrat",
               }}
             >
-              {numToMoney(3670000)}
+              {numToMoney(totalExpenses)}
             </Typography>
           </Box>
           <Box
@@ -435,7 +482,7 @@ const TransactionsManagement = () => {
                 fontFamily: "Montserrat",
               }}
             >
-              {numToMoney(0)}
+              {numToMoney(totalReceive)}
             </Typography>
           </Box>
         </Box>

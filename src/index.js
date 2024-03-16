@@ -8,6 +8,8 @@ const theme = createTheme({
     main: "#192841",
     sub: "#FFB000",
     greyLight: "#DCDCDC",
+    red: "#E32636",
+    green: "#32de84",
     fontFamily: "Montserrat",
     big: "8vh",
     semiBig: "5vh",

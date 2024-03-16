@@ -53,3 +53,12 @@ export const EXPENSESCATEGORIES = {
   "Tự do tài chính": ["Bảo hiểm", "Tiết kiệm hưu trí"],
   "Quà và từ thiện": ["Từ thiện", "Quà lễ"],
 };
+
+export const RECEIVECATEGORIES = [
+  "Giải thưởng",
+  "Tiền lãi",
+  "Tiền lương",
+  "Quà tặng",
+  "Bán đồ",
+  "Thu khác",
+];

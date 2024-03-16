@@ -15,7 +15,10 @@ import {
 } from "@mui/material";
 
 import { getCurrentTime } from "../../../Functions/text";
-import { EXPENSESCATEGORIES } from "../../../../constant/index";
+import {
+  EXPENSESCATEGORIES,
+  RECEIVECATEGORIES,
+} from "../../../../constant/index";
 
 const AddTransactionDialog = ({
   openDialog,
@@ -31,6 +34,7 @@ const AddTransactionDialog = ({
   const [tranHour, setTranHour] = useState(0);
   const [tranMinute, setTranMinute] = useState(0);
   const [tranSecond, setTranSecond] = useState(0);
+  const [tranType, setTranType] = useState(0);
 
   const handleClose = () => {
     handleCloseDialog();
@@ -38,18 +42,36 @@ const AddTransactionDialog = ({
     setTranMoney(0);
     setTranCate1(0);
     setTranCate2(0);
+    setTranType(0);
   };
 
   const submit = () => {
-    handleAddTrans(
-      tranName,
-      Object.keys(EXPENSESCATEGORIES)[tranCate1],
-      EXPENSESCATEGORIES[Object.keys(EXPENSESCATEGORIES)[tranCate1]][tranCate2],
-      tranMoney,
-      tranHour,
-      tranMinute,
-      tranSecond
-    );
+    if (tranType === 0) {
+      handleAddTrans(
+        tranName,
+        Object.keys(EXPENSESCATEGORIES)[tranCate1],
+        EXPENSESCATEGORIES[Object.keys(EXPENSESCATEGORIES)[tranCate1]][
+          tranCate2
+        ],
+        tranMoney,
+        tranHour,
+        tranMinute,
+        tranSecond,
+        tranType
+      );
+    } else {
+      handleAddTrans(
+        tranName,
+        RECEIVECATEGORIES[tranCate1],
+        "",
+        tranMoney,
+        tranHour,
+        tranMinute,
+        tranSecond,
+        tranType
+      );
+    }
+
     handleClose();
   };
 
@@ -66,8 +88,8 @@ const AddTransactionDialog = ({
       open={openDialog}
       PaperProps={{
         sx: {
-          width: "500px",
-          height: "450px",
+          width: "520px",
+          height: "520px",
           padding: "30px",
         },
       }}
@@ -83,6 +105,42 @@ const AddTransactionDialog = ({
       >
         Thêm giao dịch trong ngày
       </DialogTitle>
+      <Box sx={{ marginTop: "10px" }}>
+        <Typography
+          sx={{
+            fontSize: theme.primary.small,
+            color: theme.primary.main,
+            fontFamily: theme.primary.fontFamily,
+            fontWeight: 500,
+            marginBottom: "5px",
+            [theme.breakpoints.down("md")]: {
+              fontSize: theme.primary.smallMobile,
+            },
+            "&:hover": theme.primary.hoverDefault,
+          }}
+          textAlign="left"
+        >
+          Phân loại giao dịch
+        </Typography>
+        <FormControl sx={{ minWidth: 60, height: "40px" }}>
+          <Select
+            displayEmpty
+            inputProps={{ "aria-label": "Without label" }}
+            value={tranType}
+            onChange={(e) => setTranType(e.target.value)}
+            sx={{
+              backgroundColor: "white",
+              width: "100%",
+              height: "40px",
+              borderRadius: theme.primary.borderRadius,
+            }}
+            MenuProps={{ PaperProps: { sx: { maxHeight: 120 } } }}
+          >
+            <MenuItem value={0}>Giao dịch chi</MenuItem>
+            <MenuItem value={1}>Giao dịch thu</MenuItem>
+          </Select>
+        </FormControl>
+      </Box>
       <Box sx={{ marginTop: "10px" }}>
         <Typography
           sx={{
@@ -177,148 +235,7 @@ const AddTransactionDialog = ({
         />
       </Box>
 
-      <Box sx={{ marginTop: "10px" }}>
-        <Typography
-          sx={{
-            fontSize: theme.primary.small,
-            color: theme.primary.main,
-            fontFamily: theme.primary.fontFamily,
-            fontWeight: 500,
-            marginBottom: "5px",
-            [theme.breakpoints.down("md")]: {
-              fontSize: theme.primary.smallMobile,
-            },
-            "&:hover": theme.primary.hoverDefault,
-          }}
-          textAlign="left"
-        >
-          Phân loại chi tiêu
-        </Typography>
-        <FormControl sx={{ minWidth: 60, height: "40px" }}>
-          <Select
-            displayEmpty
-            inputProps={{ "aria-label": "Without label" }}
-            value={tranCate1}
-            onChange={(e) => setTranCate1(e.target.value)}
-            sx={{
-              backgroundColor: "white",
-              width: "100%",
-              height: "40px",
-              borderRadius: theme.primary.borderRadius,
-            }}
-            MenuProps={{ PaperProps: { sx: { maxHeight: 120 } } }}
-          >
-            <MenuItem value={0}>Chi tiêu cần thiết</MenuItem>
-            <MenuItem value={1}>Tiết kiệm</MenuItem>
-            <MenuItem value={2}>Giáo dục</MenuItem>
-            <MenuItem value={3}>Hưởng thụ</MenuItem>
-            <MenuItem value={4}>Tự do tài chính</MenuItem>
-            <MenuItem value={5}>Quà và từ thiện</MenuItem>
-          </Select>
-        </FormControl>
-
-        {tranCate1 === 0 ? (
-          <FormControl sx={{ minWidth: 60, height: "40px" }}>
-            <Select
-              displayEmpty
-              inputProps={{ "aria-label": "Without label" }}
-              value={tranCate2}
-              onChange={(e) => setTranCate2(e.target.value)}
-              sx={{
-                backgroundColor: "white",
-                width: "100%",
-                height: "40px",
-                borderRadius: theme.primary.borderRadius,
-                marginLeft: "15px",
-              }}
-              MenuProps={{ PaperProps: { sx: { maxHeight: 120 } } }}
-            >
-              <MenuItem value={0}>Ăn uống</MenuItem>
-              <MenuItem value={1}>Hoá đơn</MenuItem>
-              <MenuItem value={2}>Đi lại</MenuItem>
-              <MenuItem value={3}>Tiền nhà</MenuItem>
-              <MenuItem value={4}>Sức khoẻ</MenuItem>
-              <MenuItem value={5}>Gia đình</MenuItem>
-            </Select>
-          </FormControl>
-        ) : (
-          ""
-        )}
-
-        {tranCate1 === 3 ? (
-          <FormControl sx={{ minWidth: 60, height: "40px" }}>
-            <Select
-              displayEmpty
-              inputProps={{ "aria-label": "Without label" }}
-              value={tranCate2}
-              onChange={(e) => setTranCate2(e.target.value)}
-              sx={{
-                backgroundColor: "white",
-                width: "100%",
-                height: "40px",
-                borderRadius: theme.primary.borderRadius,
-                marginLeft: "15px",
-              }}
-              MenuProps={{ PaperProps: { sx: { maxHeight: 120 } } }}
-            >
-              <MenuItem value={0}>Mua sắm</MenuItem>
-              <MenuItem value={1}>Xem phim</MenuItem>
-              <MenuItem value={2}>Trò chơi</MenuItem>
-              <MenuItem value={3}>Nhà hàng</MenuItem>
-            </Select>
-          </FormControl>
-        ) : (
-          ""
-        )}
-
-        {tranCate1 === 4 ? (
-          <FormControl sx={{ minWidth: 60, height: "40px" }}>
-            <Select
-              displayEmpty
-              inputProps={{ "aria-label": "Without label" }}
-              value={tranCate2}
-              onChange={(e) => setTranCate2(e.target.value)}
-              sx={{
-                backgroundColor: "white",
-                width: "100%",
-                height: "40px",
-                borderRadius: theme.primary.borderRadius,
-                marginLeft: "15px",
-              }}
-              MenuProps={{ PaperProps: { sx: { maxHeight: 120 } } }}
-            >
-              <MenuItem value={0}>Bảo hiểm</MenuItem>
-              <MenuItem value={1}>Tiết kiệm hưu trí</MenuItem>
-            </Select>
-          </FormControl>
-        ) : (
-          ""
-        )}
-
-        {tranCate1 === 5 ? (
-          <FormControl sx={{ minWidth: 60, height: "40px" }}>
-            <Select
-              displayEmpty
-              inputProps={{ "aria-label": "Without label" }}
-              value={tranCate2}
-              onChange={(e) => setTranCate2(e.target.value)}
-              sx={{
-                backgroundColor: "white",
-                width: "100%",
-                height: "40px",
-                borderRadius: theme.primary.borderRadius,
-                marginLeft: "15px",
-              }}
-              MenuProps={{ PaperProps: { sx: { maxHeight: 120 } } }}
-            >
-              <MenuItem value={0}>Từ thiện</MenuItem>
-              <MenuItem value={1}>Quà lễ</MenuItem>
-            </Select>
-          </FormControl>
-        ) : (
-          ""
-        )}
-
+      {tranType === 0 ? (
         <Box sx={{ marginTop: "10px" }}>
           <Typography
             sx={{
@@ -334,124 +251,307 @@ const AddTransactionDialog = ({
             }}
             textAlign="left"
           >
-            Thời gian
+            Phân loại chi tiêu
           </Typography>
-          <Box>
-            <TextField
-              id="outlined-basic"
-              variant="outlined"
-              value={tranHour}
-              onChange={(e) => setTranHour(e.target.value)}
+          <FormControl sx={{ minWidth: 60, height: "40px" }}>
+            <Select
+              displayEmpty
+              inputProps={{ "aria-label": "Without label" }}
+              value={tranCate1}
+              onChange={(e) => setTranCate1(e.target.value)}
               sx={{
                 backgroundColor: "white",
-                width: "15%",
-                marginRight: "10px",
+                width: "100%",
+                height: "40px",
                 borderRadius: theme.primary.borderRadius,
-                "& .MuiOutlinedInput-root": {
-                  "& fieldset": {
-                    borderRadius: theme.primary.borderRadius,
-                    fontFamily: theme.primary.fontFamily,
-                  },
-                  "&.Mui-focused fieldset": {
-                    border: `3px solid ${theme.primary.sub}`,
-                    color: theme.primary.sub,
-                  },
-                },
               }}
-              InputLabelProps={{ shrink: false, style: { fontSize: 0 } }}
-              inputProps={{
-                style: {
-                  height: "7px",
-                },
-              }}
-            />
+              MenuProps={{ PaperProps: { sx: { maxHeight: 120 } } }}
+            >
+              <MenuItem value={0}>Chi tiêu cần thiết</MenuItem>
+              <MenuItem value={1}>Tiết kiệm</MenuItem>
+              <MenuItem value={2}>Giáo dục</MenuItem>
+              <MenuItem value={3}>Hưởng thụ</MenuItem>
+              <MenuItem value={4}>Tự do tài chính</MenuItem>
+              <MenuItem value={5}>Quà và từ thiện</MenuItem>
+            </Select>
+          </FormControl>
 
-            <TextField
-              id="outlined-basic"
-              variant="outlined"
-              value={tranMinute}
-              onChange={(e) => setTranMinute(e.target.value)}
-              sx={{
-                backgroundColor: "white",
-                width: "15%",
-                marginRight: "10px",
-                borderRadius: theme.primary.borderRadius,
-                "& .MuiOutlinedInput-root": {
-                  "& fieldset": {
-                    borderRadius: theme.primary.borderRadius,
-                    fontFamily: theme.primary.fontFamily,
-                  },
-                  "&.Mui-focused fieldset": {
-                    border: `3px solid ${theme.primary.sub}`,
-                    color: theme.primary.sub,
-                  },
-                },
-              }}
-              InputLabelProps={{ shrink: false, style: { fontSize: 0 } }}
-              inputProps={{
-                style: {
-                  height: "7px",
-                },
-              }}
-            />
+          {tranCate1 === 0 ? (
+            <FormControl sx={{ minWidth: 60, height: "40px" }}>
+              <Select
+                displayEmpty
+                inputProps={{ "aria-label": "Without label" }}
+                value={tranCate2}
+                onChange={(e) => setTranCate2(e.target.value)}
+                sx={{
+                  backgroundColor: "white",
+                  width: "100%",
+                  height: "40px",
+                  borderRadius: theme.primary.borderRadius,
+                  marginLeft: "15px",
+                }}
+                MenuProps={{ PaperProps: { sx: { maxHeight: 120 } } }}
+              >
+                <MenuItem value={0}>Ăn uống</MenuItem>
+                <MenuItem value={1}>Hoá đơn</MenuItem>
+                <MenuItem value={2}>Đi lại</MenuItem>
+                <MenuItem value={3}>Tiền nhà</MenuItem>
+                <MenuItem value={4}>Sức khoẻ</MenuItem>
+                <MenuItem value={5}>Gia đình</MenuItem>
+              </Select>
+            </FormControl>
+          ) : (
+            ""
+          )}
 
-            <TextField
-              id="outlined-basic"
-              variant="outlined"
-              value={tranSecond}
-              onChange={(e) => setTranSecond(e.target.value)}
-              sx={{
-                backgroundColor: "white",
-                width: "15%",
-                marginRight: "10px",
-                borderRadius: theme.primary.borderRadius,
-                "& .MuiOutlinedInput-root": {
-                  "& fieldset": {
-                    borderRadius: theme.primary.borderRadius,
-                    fontFamily: theme.primary.fontFamily,
-                  },
-                  "&.Mui-focused fieldset": {
-                    border: `3px solid ${theme.primary.sub}`,
-                    color: theme.primary.sub,
-                  },
-                },
-              }}
-              InputLabelProps={{ shrink: false, style: { fontSize: 0 } }}
-              inputProps={{
-                style: {
-                  height: "7px",
-                },
-              }}
-            />
-          </Box>
+          {tranCate1 === 3 ? (
+            <FormControl sx={{ minWidth: 60, height: "40px" }}>
+              <Select
+                displayEmpty
+                inputProps={{ "aria-label": "Without label" }}
+                value={tranCate2}
+                onChange={(e) => setTranCate2(e.target.value)}
+                sx={{
+                  backgroundColor: "white",
+                  width: "100%",
+                  height: "40px",
+                  borderRadius: theme.primary.borderRadius,
+                  marginLeft: "15px",
+                }}
+                MenuProps={{ PaperProps: { sx: { maxHeight: 120 } } }}
+              >
+                <MenuItem value={0}>Mua sắm</MenuItem>
+                <MenuItem value={1}>Xem phim</MenuItem>
+                <MenuItem value={2}>Trò chơi</MenuItem>
+                <MenuItem value={3}>Nhà hàng</MenuItem>
+              </Select>
+            </FormControl>
+          ) : (
+            ""
+          )}
+
+          {tranCate1 === 4 ? (
+            <FormControl sx={{ minWidth: 60, height: "40px" }}>
+              <Select
+                displayEmpty
+                inputProps={{ "aria-label": "Without label" }}
+                value={tranCate2}
+                onChange={(e) => setTranCate2(e.target.value)}
+                sx={{
+                  backgroundColor: "white",
+                  width: "100%",
+                  height: "40px",
+                  borderRadius: theme.primary.borderRadius,
+                  marginLeft: "15px",
+                }}
+                MenuProps={{ PaperProps: { sx: { maxHeight: 120 } } }}
+              >
+                <MenuItem value={0}>Bảo hiểm</MenuItem>
+                <MenuItem value={1}>Tiết kiệm hưu trí</MenuItem>
+              </Select>
+            </FormControl>
+          ) : (
+            ""
+          )}
+
+          {tranCate1 === 5 ? (
+            <FormControl sx={{ minWidth: 60, height: "40px" }}>
+              <Select
+                displayEmpty
+                inputProps={{ "aria-label": "Without label" }}
+                value={tranCate2}
+                onChange={(e) => setTranCate2(e.target.value)}
+                sx={{
+                  backgroundColor: "white",
+                  width: "100%",
+                  height: "40px",
+                  borderRadius: theme.primary.borderRadius,
+                  marginLeft: "15px",
+                }}
+                MenuProps={{ PaperProps: { sx: { maxHeight: 120 } } }}
+              >
+                <MenuItem value={0}>Từ thiện</MenuItem>
+                <MenuItem value={1}>Quà lễ</MenuItem>
+              </Select>
+            </FormControl>
+          ) : (
+            ""
+          )}
         </Box>
-
-        <Button
-          sx={{
-            backgroundColor: theme.primary.sub,
-            marginRight: "10px",
-            display: "block",
-            margin: "0 auto",
-            marginTop: "20px",
-          }}
-          onClick={submit}
-        >
+      ) : (
+        <Box sx={{ marginTop: "10px" }}>
           <Typography
             sx={{
               fontSize: theme.primary.small,
               color: theme.primary.main,
               fontFamily: theme.primary.fontFamily,
-              fontWeight: 600,
+              fontWeight: 500,
+              marginBottom: "5px",
               [theme.breakpoints.down("md")]: {
                 fontSize: theme.primary.smallMobile,
               },
               "&:hover": theme.primary.hoverDefault,
             }}
+            textAlign="left"
           >
-            Thêm giao dịch
+            Phân loại nguồn thu
           </Typography>
-        </Button>
+          <FormControl sx={{ minWidth: 60, height: "40px" }}>
+            <Select
+              displayEmpty
+              inputProps={{ "aria-label": "Without label" }}
+              value={tranCate1}
+              onChange={(e) => setTranCate1(e.target.value)}
+              sx={{
+                backgroundColor: "white",
+                width: "100%",
+                height: "40px",
+                borderRadius: theme.primary.borderRadius,
+              }}
+              MenuProps={{ PaperProps: { sx: { maxHeight: 120 } } }}
+            >
+              <MenuItem value={0}>Giải thưởng</MenuItem>
+              <MenuItem value={1}>Tiền lãi</MenuItem>
+              <MenuItem value={2}>Tiền thưởng</MenuItem>
+              <MenuItem value={3}>Quà tặng</MenuItem>
+              <MenuItem value={4}>Bán đồ</MenuItem>
+              <MenuItem value={5}>Nguồn thu khác</MenuItem>
+            </Select>
+          </FormControl>
+        </Box>
+      )}
+      <Box sx={{ marginTop: "10px" }}>
+        <Typography
+          sx={{
+            fontSize: theme.primary.small,
+            color: theme.primary.main,
+            fontFamily: theme.primary.fontFamily,
+            fontWeight: 500,
+            marginBottom: "5px",
+            [theme.breakpoints.down("md")]: {
+              fontSize: theme.primary.smallMobile,
+            },
+            "&:hover": theme.primary.hoverDefault,
+          }}
+          textAlign="left"
+        >
+          Thời gian
+        </Typography>
+        <Box>
+          <TextField
+            id="outlined-basic"
+            variant="outlined"
+            value={tranHour}
+            onChange={(e) => setTranHour(e.target.value)}
+            sx={{
+              backgroundColor: "white",
+              width: "15%",
+              marginRight: "10px",
+              borderRadius: theme.primary.borderRadius,
+              "& .MuiOutlinedInput-root": {
+                "& fieldset": {
+                  borderRadius: theme.primary.borderRadius,
+                  fontFamily: theme.primary.fontFamily,
+                },
+                "&.Mui-focused fieldset": {
+                  border: `3px solid ${theme.primary.sub}`,
+                  color: theme.primary.sub,
+                },
+              },
+            }}
+            InputLabelProps={{ shrink: false, style: { fontSize: 0 } }}
+            inputProps={{
+              style: {
+                height: "7px",
+              },
+            }}
+          />
+
+          <TextField
+            id="outlined-basic"
+            variant="outlined"
+            value={tranMinute}
+            onChange={(e) => setTranMinute(e.target.value)}
+            sx={{
+              backgroundColor: "white",
+              width: "15%",
+              marginRight: "10px",
+              borderRadius: theme.primary.borderRadius,
+              "& .MuiOutlinedInput-root": {
+                "& fieldset": {
+                  borderRadius: theme.primary.borderRadius,
+                  fontFamily: theme.primary.fontFamily,
+                },
+                "&.Mui-focused fieldset": {
+                  border: `3px solid ${theme.primary.sub}`,
+                  color: theme.primary.sub,
+                },
+              },
+            }}
+            InputLabelProps={{ shrink: false, style: { fontSize: 0 } }}
+            inputProps={{
+              style: {
+                height: "7px",
+              },
+            }}
+          />
+
+          <TextField
+            id="outlined-basic"
+            variant="outlined"
+            value={tranSecond}
+            onChange={(e) => setTranSecond(e.target.value)}
+            sx={{
+              backgroundColor: "white",
+              width: "15%",
+              marginRight: "10px",
+              borderRadius: theme.primary.borderRadius,
+              "& .MuiOutlinedInput-root": {
+                "& fieldset": {
+                  borderRadius: theme.primary.borderRadius,
+                  fontFamily: theme.primary.fontFamily,
+                },
+                "&.Mui-focused fieldset": {
+                  border: `3px solid ${theme.primary.sub}`,
+                  color: theme.primary.sub,
+                },
+              },
+            }}
+            InputLabelProps={{ shrink: false, style: { fontSize: 0 } }}
+            inputProps={{
+              style: {
+                height: "7px",
+              },
+            }}
+          />
+        </Box>
       </Box>
+
+      <Button
+        sx={{
+          backgroundColor: theme.primary.sub,
+          marginRight: "10px",
+          display: "block",
+          margin: "0 auto",
+          marginTop: "20px",
+        }}
+        onClick={submit}
+      >
+        <Typography
+          sx={{
+            fontSize: theme.primary.small,
+            color: theme.primary.main,
+            fontFamily: theme.primary.fontFamily,
+            fontWeight: 600,
+            [theme.breakpoints.down("md")]: {
+              fontSize: theme.primary.smallMobile,
+            },
+            "&:hover": theme.primary.hoverDefault,
+          }}
+        >
+          Thêm giao dịch
+        </Typography>
+      </Button>
     </Dialog>
   );
 };
