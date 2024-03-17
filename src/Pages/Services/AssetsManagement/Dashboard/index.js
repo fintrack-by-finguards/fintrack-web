@@ -1,13 +1,39 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Box, Typography, Grid } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import { numToMoney } from "../../../Functions/text";
+import { postApi } from "../../../../others/database";
+import { SERVER } from "../../../../constant";
+import { GlobalContext } from "../../../../context/GlobalState";
 import PaidIcon from "@mui/icons-material/Paid";
 import ErrorIcon from "@mui/icons-material/Error";
 import AccountBalanceWalletIcon from "@mui/icons-material/AccountBalanceWallet";
 
 const Dashboard = () => {
   const theme = useTheme();
+
+  const { username } = useContext(GlobalContext);
+
+  const [totalAssets, setTotalAssets] = useState(0);
+  const [totalDebt, setTotalDebt] = useState(0);
+
+  useEffect(() => {
+    postApi(
+      { username: username, day: 30, month: 3, year: 2024 },
+      `${SERVER}/assets/getOne`
+    ).then((res) => {
+      setTotalAssets(
+        res.data.assets.reduce((accumulator, currentValue) => {
+          return accumulator + currentValue;
+        }, 0)
+      );
+      setTotalDebt(
+        res.data.debt.reduce((accumulator, currentValue) => {
+          return accumulator + currentValue;
+        }, 0)
+      );
+    });
+  }, []);
 
   return (
     <Box
@@ -58,7 +84,7 @@ const Dashboard = () => {
                 fontFamily: theme.primary.fontFamily,
               }}
             >
-              {numToMoney(20000000)}
+              {numToMoney(totalAssets)}
             </Typography>
           </Box>
         </Grid>
@@ -98,7 +124,7 @@ const Dashboard = () => {
                 fontFamily: theme.primary.fontFamily,
               }}
             >
-              {numToMoney(5000000)}
+              {numToMoney(totalDebt)}
             </Typography>
           </Box>
         </Grid>
@@ -140,7 +166,7 @@ const Dashboard = () => {
                 fontFamily: theme.primary.fontFamily,
               }}
             >
-              {numToMoney(15000000)}
+              {numToMoney(totalAssets - totalDebt)}
             </Typography>
           </Box>
         </Grid>

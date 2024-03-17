@@ -22,6 +22,7 @@ const Header = ({ menuItems, curNav, setCurNav }) => {
   const { name, updateConnect, updateName, updateUsername } =
     useContext(GlobalContext);
 
+  useEffect(() => {}, [name]);
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {

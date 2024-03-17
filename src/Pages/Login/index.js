@@ -101,9 +101,17 @@ const Login = ({ setCurNav }) => {
         name: signUpName,
         password: sha256(signUpPassword),
         username: signUpUserName,
+        birthday: day + "/" + month + "/" + year,
+        job: job,
+        university: uni,
       };
+
       const res = await postApi(newUserInfo, `${SERVER}/user/create`);
       if (res.status === "success") {
+        updateConnect(true);
+        updateName(res.data.name);
+        updateUsername(res.data.username);
+        setCurNav("Trang chủ");
         enqueueSnackbar("Tạo tài khoản thành công!", {
           variant: "success",
           autoHideDuration: 5000,
@@ -115,7 +123,7 @@ const Login = ({ setCurNav }) => {
         });
       } else {
         enqueueSnackbar("Tạo tài khoản thất bại!", {
-          variant: "success",
+          variant: "error",
           autoHideDuration: 5000,
         });
       }
@@ -135,7 +143,7 @@ const Login = ({ setCurNav }) => {
         updateConnect(true);
         updateName(res.data.name);
         updateUsername(res.data.username);
-        setCurNav("Tính năng");
+        setCurNav("Trang chủ");
         enqueueSnackbar("Chào mừng bạn!", {
           variant: "success",
           autoHideDuration: 5000,

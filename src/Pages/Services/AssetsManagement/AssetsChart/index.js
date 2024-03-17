@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import {
   Box,
   Typography,
@@ -12,14 +12,9 @@ import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import { FIVECOLORS } from "../../../../constant/index";
 import { createArray, toDateString } from "../../../Functions/text";
-
-const assetsData = [
-  { category: "Tiền mặt", value: 10000000 },
-  { category: "Tiền gửi ngân hàng", value: 5000000 },
-  { category: "Cho vay", value: 2000000 },
-  { category: "Đầu tư", value: 3000000 },
-  { category: "Bất động sản", value: 0 },
-];
+import { postApi } from "../../../../others/database";
+import { SERVER } from "../../../../constant";
+import { GlobalContext } from "../../../../context/GlobalState";
 
 const assetsTimeData = {
   "Tiền mặt": [
@@ -47,6 +42,33 @@ const assetsTimeData = {
     1886000, 1865000, 1660000, 2011000, 1558000, 2347000, 2028000,
   ],
   "Bất động sản": [
+    1564000, 2202000, 1726000, 2182000, 2503000, 2884000, 2429000, 1654000,
+    1779000, 2458000, 1719000, 2671000, 1202000, 227000, 2209000, 1698000,
+    2460000, 1136000, 1603000, 2704000, 1965000, 2082000, 2929000, 2192000,
+    1886000, 1865000, 1660000, 2011000, 1558000, 2347000, 2028000,
+  ],
+};
+
+const debtTimeData = {
+  "Tiền mặt": [
+    1564000, 2202000, 1726000, 2182000, 2503000, 2884000, 2429000, 1654000,
+    1779000, 2458000, 1719000, 2671000, 1202000, 227000, 2209000, 1698000,
+    2460000, 1136000, 1603000, 2704000, 1965000, 2082000, 2929000, 2192000,
+    1886000, 1865000, 1660000, 2011000, 1558000, 2347000, 2028000,
+  ],
+  "Trả góp": [
+    1564000, 2202000, 1726000, 2182000, 2503000, 2884000, 2429000, 1654000,
+    1779000, 2458000, 1719000, 2671000, 1202000, 227000, 2209000, 1698000,
+    2460000, 1136000, 1603000, 2704000, 1965000, 2082000, 2929000, 2192000,
+    1886000, 1865000, 1660000, 2011000, 1558000, 2347000, 2028000,
+  ],
+  "Thế chấp": [
+    1564000, 2202000, 1726000, 2182000, 2503000, 2884000, 2429000, 1654000,
+    1779000, 2458000, 1719000, 2671000, 1202000, 227000, 2209000, 1698000,
+    2460000, 1136000, 1603000, 2704000, 1965000, 2082000, 2929000, 2192000,
+    1886000, 1865000, 1660000, 2011000, 1558000, 2347000, 2028000,
+  ],
+  "Thấu chi": [
     1564000, 2202000, 1726000, 2182000, 2503000, 2884000, 2429000, 1654000,
     1779000, 2458000, 1719000, 2671000, 1202000, 227000, 2209000, 1698000,
     2460000, 1136000, 1603000, 2704000, 1965000, 2082000, 2929000, 2192000,
@@ -120,7 +142,7 @@ function getDataRange(min, max, data, timeData) {
   //     data: getDataRange(startDay, endDay, totalReceiveData),
   //   },
 }
-const options1 = () => {
+const options1 = (data) => {
   return {
     chart: {
       plotBackgroundColor: null,
@@ -154,14 +176,14 @@ const options1 = () => {
       },
     },
 
-    series: getTop5(assetsData),
+    series: getTop5(data),
     credits: {
       enabled: false,
     },
   };
 };
 
-const options2 = (startDay, endDay) => {
+const options2 = (startDay, endDay, data, totalData) => {
   return {
     chart: {
       type: "column",
@@ -197,9 +219,8 @@ const options2 = (startDay, endDay) => {
       },
     },
 
-    series: getDataRange(startDay, endDay, assetsData, totalExpensesData).data,
-    colors: getDataRange(startDay, endDay, assetsData, totalExpensesData)
-      .colors,
+    series: getDataRange(startDay, endDay, data, totalData).data,
+    colors: getDataRange(startDay, endDay, data, totalData).colors,
     credits: {
       enabled: false,
     },
@@ -209,6 +230,53 @@ const options2 = (startDay, endDay) => {
 const AssetsChart = () => {
   const [startDay, setStartDay] = useState("01");
   const [endDay, setEndDay] = useState("31");
+
+  const [checkNoData, setCheckNoData] = useState(false);
+
+  const [assetsData, setAssetsData] = useState([
+    { category: "Tiền mặt", value: 1 },
+    { category: "Tiền gửi ngân hàng", value: 2 },
+    { category: "Cho vay", value: 3 },
+    { category: "Đầu tư", value: 4 },
+    { category: "Bất động sản", value: 5 },
+  ]);
+
+  const [debtData, setDebtData] = useState([
+    { category: "Tiền mặt", value: 1 },
+    { category: "Trả góp", value: 2 },
+    { category: "Thế chấp", value: 3 },
+    { category: "Thấu chi", value: 4 },
+  ]);
+
+  useEffect(() => {
+    postApi(
+      { username: username, day: 30, month: 3, year: 2024 },
+      `${SERVER}/assets/getOne`
+    ).then((res) => {
+      setAssetsData([
+        { category: "Tiền mặt", value: res.data.assets[0] },
+        { category: "Tiền gửi ngân hàng", value: res.data.assets[1] },
+        { category: "Cho vay", value: res.data.assets[2] },
+        { category: "Đầu tư", value: res.data.assets[3] },
+        { category: "Bất động sản", value: res.data.assets[4] },
+      ]);
+      setDebtData([
+        { category: "Tiền mặt", value: res.data.debt[0] },
+        { category: "Trả góp", value: res.data.debt[1] },
+        { category: "Thế chấp", value: res.data.debt[2] },
+        { category: "Thấu chi", value: res.data.debt[3] },
+      ]);
+
+      if (
+        res.data.assets === [0, 0, 0, 0, 0] ||
+        res.data.debt === [0, 0, 0, 0]
+      ) {
+        setCheckNoData(true);
+      }
+    });
+  }, []);
+
+  const { username } = useContext(GlobalContext);
 
   const theme = useTheme();
 
@@ -225,176 +293,154 @@ const AssetsChart = () => {
       }}
       boxShadow={3}
     >
-      <Grid container sx={{ padding: "20px" }}>
-        <Grid
-          xs={4}
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-          }}
-        >
-          <Typography
-            sx={{
-              color: theme.primary.main,
-              fontSize: "2vh",
-              fontWeight: 600,
-              fontFamily: theme.primary.fontFamily,
-              marginBottom: "20px",
-            }}
-            textAlign="center"
-          >
-            TỔNG QUAN
-          </Typography>
-          <Box
+      {checkNoData ? (
+        <Grid container sx={{ padding: "20px" }}>
+          <Grid
+            xs={4}
             sx={{
               display: "flex",
+              flexDirection: "column",
               alignItems: "center",
-              height: "100%",
-              paddingBottom: "50px",
             }}
-          >
-            <HighchartsReact highcharts={Highcharts} options={options1()} />
-          </Box>
-
-          {/* <Box>
-            {getTop5(assetsData)[0].data.map((data, idx) => (
-              <Box
-                sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  marginLeft: "20px",
-                  marginBottom: "5px",
-                }}
-              >
-                <Box
-                  sx={{
-                    width: "20px",
-                    height: "20px",
-                    backgroundColor: data.color,
-                    borderRadius: "2px",
-                  }}
-                ></Box>
-                <Typography
-                  sx={{
-                    color: theme.primary.main,
-                    fontSize: "1.7vh",
-                    marginLeft: "5px",
-                    fontWeight: 600,
-                    fontFamily: theme.primary.fontFamily,
-                  }}
-                >
-                  {data.name}
-                </Typography>
-              </Box>
-            ))}
-          </Box> */}
-        </Grid>
-
-        <Grid
-          xs={7}
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-          }}
-        >
-          <Typography
-            sx={{
-              color: theme.primary.main,
-              fontSize: "2vh",
-              fontWeight: 600,
-              fontFamily: theme.primary.fontFamily,
-              marginBottom: "10px",
-            }}
-            textAlign="center"
-          >
-            BIẾN ĐỘNG
-          </Typography>
-          <Box
-            sx={{ display: "flex", alignItems: "center", marginBottom: "20px" }}
           >
             <Typography
               sx={{
-                fontFamily: theme.primary.fontFamily,
-                fontWeight: "600",
-                fontSize: theme.primary.small,
-                marginRight: "10px",
-                "&:hover": theme.primary.hoverDefault,
-                [theme.breakpoints.down("md")]: {
-                  fontSize: theme.primary.medium,
-                },
-              }}
-            >
-              Thời gian:
-            </Typography>
-            <FormControl sx={{ minWidth: 60, height: "40px" }}>
-              <Select
-                value={startDay}
-                onChange={(e) => setStartDay(e.target.value)}
-                displayEmpty
-                inputProps={{ "aria-label": "Without label" }}
-                sx={{
-                  backgroundColor: "white",
-                  width: "100%",
-                  height: "40px",
-                  borderRadius: theme.primary.borderRadius,
-                }}
-                MenuProps={{ PaperProps: { sx: { maxHeight: 120 } } }}
-              >
-                {createArray(31).map((value, id) => (
-                  <MenuItem value={toDateString(value + 1)} key={id}>
-                    {toDateString(value + 1)}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-            <Typography
-              sx={{
-                fontSize: theme.primary.small,
                 color: theme.primary.main,
+                fontSize: "2vh",
+                fontWeight: 600,
                 fontFamily: theme.primary.fontFamily,
-                fontWeight: 700,
-                marginRight: "5px",
-                marginLeft: "5px",
-                "&:hover": theme.primary.hoverDefault,
-                [theme.breakpoints.down("md")]: {
-                  fontSize: theme.primary.smallMobile,
-                  marginBottom: "10px",
-                  marginRight: "0px",
-                },
+                marginBottom: "20px",
+              }}
+              textAlign="center"
+            >
+              TỔNG QUAN
+            </Typography>
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                height: "100%",
+                paddingBottom: "50px",
               }}
             >
-              đến
+              <HighchartsReact
+                highcharts={Highcharts}
+                options={options1(assetsData)}
+              />
+            </Box>
+          </Grid>
+
+          <Grid
+            xs={7}
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+            }}
+          >
+            <Typography
+              sx={{
+                color: theme.primary.main,
+                fontSize: "2vh",
+                fontWeight: 600,
+                fontFamily: theme.primary.fontFamily,
+                marginBottom: "10px",
+              }}
+              textAlign="center"
+            >
+              BIẾN ĐỘNG
             </Typography>
-            <FormControl sx={{ minWidth: 60, height: "40px" }}>
-              <Select
-                displayEmpty
-                value={endDay}
-                onChange={(e) => setEndDay(e.target.value)}
-                inputProps={{ "aria-label": "Without label" }}
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                marginBottom: "20px",
+              }}
+            >
+              <Typography
                 sx={{
-                  backgroundColor: "white",
-                  width: "100%",
-                  height: "40px",
-                  borderRadius: theme.primary.borderRadius,
+                  fontFamily: theme.primary.fontFamily,
+                  fontWeight: "600",
+                  fontSize: theme.primary.small,
+                  marginRight: "10px",
+                  "&:hover": theme.primary.hoverDefault,
+                  [theme.breakpoints.down("md")]: {
+                    fontSize: theme.primary.medium,
+                  },
                 }}
-                MenuProps={{ PaperProps: { sx: { maxHeight: 120 } } }}
               >
-                {createArray(31).map((value, id) => (
-                  <MenuItem value={toDateString(value + 1)} key={id}>
-                    {toDateString(value + 1)}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-          </Box>
-          <HighchartsReact
-            highcharts={Highcharts}
-            options={options2(startDay, endDay)}
-          />
+                Thời gian:
+              </Typography>
+              <FormControl sx={{ minWidth: 60, height: "40px" }}>
+                <Select
+                  value={startDay}
+                  onChange={(e) => setStartDay(e.target.value)}
+                  displayEmpty
+                  inputProps={{ "aria-label": "Without label" }}
+                  sx={{
+                    backgroundColor: "white",
+                    width: "100%",
+                    height: "40px",
+                    borderRadius: theme.primary.borderRadius,
+                  }}
+                  MenuProps={{ PaperProps: { sx: { maxHeight: 120 } } }}
+                >
+                  {createArray(31).map((value, id) => (
+                    <MenuItem value={toDateString(value + 1)} key={id}>
+                      {toDateString(value + 1)}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+              <Typography
+                sx={{
+                  fontSize: theme.primary.small,
+                  color: theme.primary.main,
+                  fontFamily: theme.primary.fontFamily,
+                  fontWeight: 700,
+                  marginRight: "5px",
+                  marginLeft: "5px",
+                  "&:hover": theme.primary.hoverDefault,
+                  [theme.breakpoints.down("md")]: {
+                    fontSize: theme.primary.smallMobile,
+                    marginBottom: "10px",
+                    marginRight: "0px",
+                  },
+                }}
+              >
+                đến
+              </Typography>
+              <FormControl sx={{ minWidth: 60, height: "40px" }}>
+                <Select
+                  displayEmpty
+                  value={endDay}
+                  onChange={(e) => setEndDay(e.target.value)}
+                  inputProps={{ "aria-label": "Without label" }}
+                  sx={{
+                    backgroundColor: "white",
+                    width: "100%",
+                    height: "40px",
+                    borderRadius: theme.primary.borderRadius,
+                  }}
+                  MenuProps={{ PaperProps: { sx: { maxHeight: 120 } } }}
+                >
+                  {createArray(31).map((value, id) => (
+                    <MenuItem value={toDateString(value + 1)} key={id}>
+                      {toDateString(value + 1)}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+            </Box>
+            <HighchartsReact
+              highcharts={Highcharts}
+              options={options2(startDay, endDay, assetsData, assetsTimeData)}
+            />
+          </Grid>
         </Grid>
-      </Grid>
+      ) : (
+        <Box></Box>
+      )}
     </Box>
   );
 };
