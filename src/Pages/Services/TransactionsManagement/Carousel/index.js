@@ -1,80 +1,29 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Grid, Paper, Box, Typography, Button } from "@mui/material";
 import { numToMoney } from "../../../Functions/text";
-import CrisisAlertIcon from "@mui/icons-material/CrisisAlert";
-import SavingsIcon from "@mui/icons-material/Savings";
-import SchoolIcon from "@mui/icons-material/School";
-import GamepadIcon from "@mui/icons-material/Gamepad";
-import MonetizationOnIcon from "@mui/icons-material/MonetizationOn";
-import CardGiftcardIcon from "@mui/icons-material/CardGiftcard";
-import EmojiEventsIcon from "@mui/icons-material/EmojiEvents";
-import PriceCheckIcon from "@mui/icons-material/PriceCheck";
-import MoneyIcon from "@mui/icons-material/Money";
-import SellIcon from "@mui/icons-material/Sell";
-import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
+import { CATEICON } from "../../../../constant";
 import AddTransactionDialog from "../AddTransactionDialog";
+import DeleteTransactionDialog from "../DeleteTransactionDialog";
+import UpdateTransactionDialog from "../UpdateTransactionDialog";
+import DeleteIcon from "@mui/icons-material/Delete";
+import ChangeCircleIcon from "@mui/icons-material/ChangeCircle";
 import "./Carousel.css"; // Make sure this is correctly linked to your CSS file
 import WarningIcon from "@mui/icons-material/Warning";
 
-const cateIcon = {
-  "Chi tiêu cần thiết": (
-    <CrisisAlertIcon
-      sx={{ color: "#E32636", fontSize: "8vh", marginLeft: "20px" }}
-    />
-  ),
-  "Tiết kiệm": (
-    <SavingsIcon
-      sx={{ color: "#E32636", fontSize: "8vh", marginLeft: "20px" }}
-    />
-  ),
-  "Giáo dục": (
-    <SchoolIcon
-      sx={{ color: "#E32636", fontSize: "8vh", marginLeft: "20px" }}
-    />
-  ),
-  "Hưởng thụ": (
-    <GamepadIcon
-      sx={{ color: "#E32636", fontSize: "8vh", marginLeft: "20px" }}
-    />
-  ),
-  "Tự do tài chính": (
-    <MonetizationOnIcon
-      sx={{ color: "#E32636", fontSize: "8vh", marginLeft: "20px" }}
-    />
-  ),
-  "Quà và từ thiện": (
-    <CardGiftcardIcon
-      sx={{ color: "#E32636", fontSize: "8vh", marginLeft: "20px" }}
-    />
-  ),
-  "Giải thưởng": (
-    <EmojiEventsIcon
-      sx={{ color: "#32de84", fontSize: "8vh", marginLeft: "20px" }}
-    />
-  ),
-  "Tiền lãi": (
-    <PriceCheckIcon
-      sx={{ color: "#32de84", fontSize: "8vh", marginLeft: "20px" }}
-    />
-  ),
-  "Tiền lương": (
-    <MoneyIcon sx={{ color: "#32de84", fontSize: "8vh", marginLeft: "20px" }} />
-  ),
-  "Quà tặng": (
-    <CardGiftcardIcon
-      sx={{ color: "#32de84", fontSize: "8vh", marginLeft: "20px" }}
-    />
-  ),
-  "Bán đồ": (
-    <SellIcon sx={{ color: "#32de84", fontSize: "8vh", marginLeft: "20px" }} />
-  ),
-  "Thu khác": (
-    <MoreHorizIcon
-      sx={{ color: "#32de84", fontSize: "8vh", marginLeft: "20px" }}
-    />
-  ),
-};
-const CarouselItem = ({ item, className, open, setOpen, handleAddTrans }) => (
+const CarouselItem = ({
+  item,
+  className,
+  open,
+  setOpen,
+  handleAddTrans,
+  openDelete,
+  setOpenDelete,
+  handleDeleteTrans,
+  openUpdate,
+  setOpenUpdate,
+  handleUpdateTrans,
+  time,
+}) => (
   <Grid
     className={`carousel-item ${className}`}
     sx={{
@@ -199,7 +148,7 @@ const CarouselItem = ({ item, className, open, setOpen, handleAddTrans }) => (
                 </Typography>
               </Box>
 
-              {cateIcon[his.category1]}
+              {CATEICON[his.category1]}
 
               <Box
                 sx={{
@@ -208,7 +157,7 @@ const CarouselItem = ({ item, className, open, setOpen, handleAddTrans }) => (
                   justifyContent: "start",
                   alignItems: "start",
                   marginLeft: "20px",
-                  width: "200px",
+                  width: "180px",
                 }}
               >
                 <Typography
@@ -255,12 +204,44 @@ const CarouselItem = ({ item, className, open, setOpen, handleAddTrans }) => (
                   fontSize: "2.5vh",
                   fontWeight: 600,
                   fontFamily: "Montserrat",
-                  marginLeft: "20px",
-                  float: "right",
+                  marginLeft: "5px",
+                  width: "130px",
                 }}
+                textAlign="left"
               >
                 {numToMoney(his.money)}
               </Typography>
+
+              <Box
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  width: "50px",
+                }}
+              >
+                <DeleteIcon
+                  sx={{ color: "grey" }}
+                  onClick={() => setOpenDelete(true)}
+                />
+                <DeleteTransactionDialog
+                  openDialog={openDelete}
+                  handleCloseDialog={() => setOpenDelete(false)}
+                  handleDeleteTrans={handleDeleteTrans}
+                  time={time}
+                  data={his}
+                />
+                <ChangeCircleIcon
+                  sx={{ color: "grey", marginLeft: "5px" }}
+                  onClick={() => setOpenUpdate(true)}
+                />
+                <UpdateTransactionDialog
+                  openDialog={openUpdate}
+                  handleCloseDialog={() => setOpenUpdate(false)}
+                  handleUpdateTrans={handleUpdateTrans}
+                  time={time}
+                  data={his}
+                />
+              </Box>
             </Box>
           </Box>
         ))}
@@ -308,8 +289,22 @@ const CarouselItem = ({ item, className, open, setOpen, handleAddTrans }) => (
   </Grid>
 );
 
-const Carousel = ({ item, handleAddTrans }) => {
+const Carousel = ({
+  item,
+  handleAddTrans,
+  handleDeleteTrans,
+  handleUpdateTrans,
+  day,
+  month,
+  year,
+}) => {
   const [openAddTransactionDialog, setOpenAddTransactionDialog] =
+    useState(false);
+
+  const [openDeleteTransactionDialog, setOpenDeleteTransactionDialog] =
+    useState(false);
+
+  const [openUpdateTransactionDialog, setOpenUpdateTransactionDialog] =
     useState(false);
 
   return (
@@ -318,10 +313,16 @@ const Carousel = ({ item, handleAddTrans }) => {
         key={1}
         index={1}
         item={item}
-        className={""}
         open={openAddTransactionDialog}
         setOpen={setOpenAddTransactionDialog}
         handleAddTrans={handleAddTrans}
+        openDelete={openDeleteTransactionDialog}
+        setOpenDelete={setOpenDeleteTransactionDialog}
+        handleDeleteTrans={handleDeleteTrans}
+        openUpdate={openUpdateTransactionDialog}
+        setOpenUpdate={setOpenUpdateTransactionDialog}
+        handleUpdateTrans={handleUpdateTrans}
+        time={{ day: day, month: month, year: year }}
       ></CarouselItem>
     </Box>
   );

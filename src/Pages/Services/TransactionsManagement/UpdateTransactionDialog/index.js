@@ -20,10 +20,11 @@ import {
   RECEIVECATEGORIES,
 } from "../../../../constant/index";
 
-const AddTransactionDialog = ({
+const UpdateTransactionDialog = ({
   openDialog,
   handleCloseDialog,
-  handleAddTrans,
+  handleUpdateTrans,
+  data,
 }) => {
   const theme = useTheme();
 
@@ -36,23 +37,64 @@ const AddTransactionDialog = ({
   const [tranSecond, setTranSecond] = useState(0);
   const [tranType, setTranType] = useState(0);
 
+  useEffect(() => {
+    setTranType(data.type);
+    setTranName(data.name);
+    setTranMoney(data.money);
+    if (data.type === 0)
+      setTranCate1(Object.keys(EXPENSESCATEGORIES).indexOf(data.category1));
+    else setTranCate1(RECEIVECATEGORIES.indexOf(data.category1));
+    if (data.category2 !== "")
+      setTranCate2(EXPENSESCATEGORIES[data.category1].indexOf(data.category2));
+    setTranHour(data.hour);
+    setTranMinute(data.minute);
+    setTranSecond(data.second);
+  }, [data]);
+
   const handleClose = () => {
     handleCloseDialog();
-    setTranName("");
-    setTranMoney(0);
-    setTranCate1(0);
-    setTranCate2(0);
-    setTranType(0);
+    setTranType(data.type);
+    setTranName(data.name);
+    setTranMoney(data.money);
+    if (data.type === 0)
+      setTranCate1(Object.keys(EXPENSESCATEGORIES).indexOf(data.category1));
+    else setTranCate1(RECEIVECATEGORIES.indexOf(data.category1));
+    if (data.category2 !== "")
+      setTranCate2(EXPENSESCATEGORIES[data.category1].indexOf(data.category2));
+    setTranHour(data.hour);
+    setTranMinute(data.minute);
+    setTranSecond(data.second);
   };
 
   const submit = () => {
+    let finalTranCate2 =
+      Object.keys(EXPENSESCATEGORIES)[tranCate1] == "Tiết kiệm" ||
+      Object.keys(EXPENSESCATEGORIES)[tranCate1] == "Giáo dục" ||
+      Object.keys(EXPENSESCATEGORIES)[tranCate1] == "Giải thưởng" ||
+      Object.keys(EXPENSESCATEGORIES)[tranCate1] == "Tiền lãi" ||
+      Object.keys(EXPENSESCATEGORIES)[tranCate1] == "Tiền lương" ||
+      Object.keys(EXPENSESCATEGORIES)[tranCate1] == "Quà tặng" ||
+      Object.keys(EXPENSESCATEGORIES)[tranCate1] == "Bán đồ" ||
+      Object.keys(EXPENSESCATEGORIES)[tranCate1] == "Thu khác"
+        ? ""
+        : EXPENSESCATEGORIES[Object.keys(EXPENSESCATEGORIES)[tranCate1]][
+            tranCate2
+          ];
+
+    console.log(finalTranCate2);
     if (tranType === 0) {
-      handleAddTrans(
+      handleUpdateTrans(
+        data.name,
+        data.category1,
+        data.category2,
+        data.money,
+        data.hour,
+        data.minute,
+        data.second,
+        data.type,
         tranName,
         Object.keys(EXPENSESCATEGORIES)[tranCate1],
-        EXPENSESCATEGORIES[Object.keys(EXPENSESCATEGORIES)[tranCate1]][
-          tranCate2
-        ],
+        finalTranCate2,
         tranMoney,
         tranHour,
         tranMinute,
@@ -60,7 +102,15 @@ const AddTransactionDialog = ({
         tranType
       );
     } else {
-      handleAddTrans(
+      handleUpdateTrans(
+        data.name,
+        data.category1,
+        data.category2,
+        data.money,
+        data.hour,
+        data.minute,
+        data.second,
+        data.type,
         tranName,
         RECEIVECATEGORIES[tranCate1],
         "",
@@ -103,8 +153,25 @@ const AddTransactionDialog = ({
         }}
         textAlign="center"
       >
-        Thêm giao dịch trong ngày
+        Sửa thông tin giao dịch
       </DialogTitle>
+      <Typography
+        sx={{
+          fontSize: "1.5vh",
+          color: "grey",
+          fontFamily: theme.primary.fontFamily,
+          fontWeight: 500,
+          marginBottom: "5px",
+          fontStyle: "italic",
+          [theme.breakpoints.down("md")]: {
+            fontSize: theme.primary.smallMobile,
+          },
+          "&:hover": theme.primary.hoverDefault,
+        }}
+        textAlign="center"
+      >
+        Vui lòng kiểm tra các thông tin ở dưới!
+      </Typography>
       <Box sx={{ marginTop: "10px" }}>
         <Typography
           sx={{
@@ -551,11 +618,11 @@ const AddTransactionDialog = ({
             "&:hover": theme.primary.hoverDefault,
           }}
         >
-          Thêm giao dịch
+          Sửa giao dịch
         </Typography>
       </Button>
     </Dialog>
   );
 };
 
-export default AddTransactionDialog;
+export default UpdateTransactionDialog;

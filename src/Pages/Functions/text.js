@@ -7,12 +7,14 @@ export function toDateString(date) {
 }
 
 export function numToMoney(num) {
-  return (
+  let res =
     String(num).replace(
       /(?:(^\d{1,3})(?=(?:\d{3})*$)|(\d{3}))(?!$)/gm,
       "$1$2."
-    ) + "đ"
-  );
+    ) + "đ";
+  res = res.replace(/^0+/, "");
+  if (res === "đ") return "0đ";
+  else return res;
 }
 
 export function createArray(N) {

@@ -1,3 +1,15 @@
+import CrisisAlertIcon from "@mui/icons-material/CrisisAlert";
+import SavingsIcon from "@mui/icons-material/Savings";
+import SchoolIcon from "@mui/icons-material/School";
+import GamepadIcon from "@mui/icons-material/Gamepad";
+import MonetizationOnIcon from "@mui/icons-material/MonetizationOn";
+import CardGiftcardIcon from "@mui/icons-material/CardGiftcard";
+import EmojiEventsIcon from "@mui/icons-material/EmojiEvents";
+import PriceCheckIcon from "@mui/icons-material/PriceCheck";
+import MoneyIcon from "@mui/icons-material/Money";
+import SellIcon from "@mui/icons-material/Sell";
+import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
+
 // export const SERVER = "http://202.158.244.6:8000";
 export const SERVER = "http://localhost:8000";
 
@@ -85,3 +97,62 @@ export const FIVECOLORS = [
   "#118ab2",
   "#073b4c",
 ];
+
+export const CATEICON = {
+  "Chi tiêu cần thiết": (
+    <CrisisAlertIcon
+      sx={{ color: "#E32636", fontSize: "8vh", marginLeft: "20px" }}
+    />
+  ),
+  "Tiết kiệm": (
+    <SavingsIcon
+      sx={{ color: "#E32636", fontSize: "8vh", marginLeft: "20px" }}
+    />
+  ),
+  "Giáo dục": (
+    <SchoolIcon
+      sx={{ color: "#E32636", fontSize: "8vh", marginLeft: "20px" }}
+    />
+  ),
+  "Hưởng thụ": (
+    <GamepadIcon
+      sx={{ color: "#E32636", fontSize: "8vh", marginLeft: "20px" }}
+    />
+  ),
+  "Tự do tài chính": (
+    <MonetizationOnIcon
+      sx={{ color: "#E32636", fontSize: "8vh", marginLeft: "20px" }}
+    />
+  ),
+  "Quà và từ thiện": (
+    <CardGiftcardIcon
+      sx={{ color: "#E32636", fontSize: "8vh", marginLeft: "20px" }}
+    />
+  ),
+  "Giải thưởng": (
+    <EmojiEventsIcon
+      sx={{ color: "#32de84", fontSize: "8vh", marginLeft: "20px" }}
+    />
+  ),
+  "Tiền lãi": (
+    <PriceCheckIcon
+      sx={{ color: "#32de84", fontSize: "8vh", marginLeft: "20px" }}
+    />
+  ),
+  "Tiền lương": (
+    <MoneyIcon sx={{ color: "#32de84", fontSize: "8vh", marginLeft: "20px" }} />
+  ),
+  "Quà tặng": (
+    <CardGiftcardIcon
+      sx={{ color: "#32de84", fontSize: "8vh", marginLeft: "20px" }}
+    />
+  ),
+  "Bán đồ": (
+    <SellIcon sx={{ color: "#32de84", fontSize: "8vh", marginLeft: "20px" }} />
+  ),
+  "Thu khác": (
+    <MoreHorizIcon
+      sx={{ color: "#32de84", fontSize: "8vh", marginLeft: "20px" }}
+    />
+  ),
+};

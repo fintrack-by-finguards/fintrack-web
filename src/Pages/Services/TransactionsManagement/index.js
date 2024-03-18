@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import {
   Box,
   Typography,
@@ -9,10 +9,14 @@ import {
 } from "@mui/material";
 import Carousel from "./Carousel";
 import TransactionsChart from "./TransactionsChart";
-import { numToMoney } from "../../Functions/text";
+import { getCurrentTime, numToMoney } from "../../Functions/text";
 import { useTheme } from "@mui/material/styles";
 import { createArray } from "../../Functions/text";
 import { toDateString } from "../../Functions/text";
+import { postApi } from "../../../others/database";
+import { GlobalContext } from "../../../context/GlobalState";
+import { SERVER } from "../../../constant";
+import { useSnackbar } from "notistack";
 
 const time = [
   { month: 1, year: 2023 },
@@ -32,141 +36,17 @@ const time = [
   { month: 3, year: 2024 },
 ];
 
-const expensesHistories = [
-  {
-    day: 13,
-    month: 3,
-    year: 2024,
-    user: "notta",
-    history: [
-      {
-        name: "Ăn bún bò Huế",
-        category1: "Chi tiêu cần thiết",
-        category2: "Ăn uống",
-        money: 40000,
-        hour: 6,
-        minute: 4,
-        second: 20,
-        type: 0,
-      },
-      {
-        name: "Đóng tiền nhà",
-        category1: "Chi tiêu cần thiết",
-        category2: "Tiền nhà",
-        money: 3500000,
-        hour: 10,
-        minute: 35,
-        second: 56,
-        type: 0,
-      },
-      {
-        name: "Tiền lương",
-        category1: "Tiền lương",
-        category2: "",
-        money: 5000000,
-        hour: 11,
-        minute: 43,
-        second: 54,
-        type: 1,
-      },
-      {
-        name: "Ăn nem nướng",
-        category1: "Chi tiêu cần thiết",
-        category2: "Ăn uống",
-        money: 30000,
-        hour: 18,
-        minute: 5,
-        second: 3,
-        type: 0,
-      },
-      {
-        name: "Xem phim",
-        category1: "Hưởng thụ",
-        category2: "Xem phim",
-        money: 100000,
-        hour: 22,
-        minute: 5,
-        second: 3,
-        type: 0,
-      },
-    ],
-  },
-  {
-    day: 12,
-    month: 3,
-    year: 2024,
-    user: "notta",
-    history: [
-      {
-        name: "Đi ăn cưới",
-        category1: "Quà và từ thiện",
-        category2: "Quà lễ",
-        money: 50000,
-        hour: 7,
-        minute: 43,
-        second: 25,
-        type: 0,
-      },
-      {
-        name: "Mua sách Thuế",
-        category1: "Giáo dục",
-        category2: "",
-        money: 99000,
-        hour: 11,
-        minute: 34,
-        second: 64,
-        type: 0,
-      },
-    ],
-  },
-  {
-    day: 11,
-    month: 3,
-    year: 2024,
-    user: "notta",
-    history: [
-      {
-        name: "Tiết kiệm đi du lịch",
-        category1: "Tiết kiệm",
-        category2: "",
-        money: 500000,
-        hour: 8,
-        minute: 43,
-        second: 25,
-        type: 0,
-      },
-    ],
-  },
-  {
-    day: 10,
-    month: 3,
-    year: 2024,
-    user: "notta",
-    history: [
-      {
-        name: "Đóng bảo hiểm",
-        category1: "Tự do tài chính",
-        category2: "Bảo hiểm",
-        money: 3000000,
-        hour: 16,
-        minute: 45,
-        second: 56,
-        type: 0,
-      },
-    ],
-  },
-];
-
 const TransactionsManagement = () => {
+  const { enqueueSnackbar } = useSnackbar();
   const theme = useTheme();
 
-  const [choseMonth, setChoseMonth] = useState(3);
-  const [choseYear, setChoseYear] = useState(2024);
+  const [choseMonth, setChoseMonth] = useState(1);
+  const [choseYear, setChoseYear] = useState(2023);
 
   const [startDay, setStartDay] = useState("01");
   const [endDay, setEndDay] = useState("31");
 
-  const [displayDay, setDisplayDay] = useState(13);
+  const [displayDay, setDisplayDay] = useState(1);
   const [displayHis, setDisplayHis] = useState({
     day: 0,
     month: 0,
@@ -177,6 +57,23 @@ const TransactionsManagement = () => {
 
   const [totalExpenses, setTotalExpenses] = useState(0);
   const [totalReceive, setTotalReceive] = useState(0);
+  const [resetPage, setResetPage] = useState(false);
+
+  const { username } = useContext(GlobalContext);
+
+  useEffect(() => {
+    let time = getCurrentTime();
+    setDisplayDay(time.day);
+    setChoseMonth(time.month);
+    setChoseYear(time.year);
+
+    postApi(
+      { username: username, day: time.day, month: time.month, year: time.year },
+      `${SERVER}/transactions/getOne`
+    ).then((res) => {
+      handleChangeData(res);
+    });
+  }, [displayDay, choseMonth, choseYear, resetPage]);
 
   const handleAddTrans = (
     _name,
@@ -188,25 +85,139 @@ const TransactionsManagement = () => {
     _second,
     _type
   ) => {
-    for (let i = 0; i < expensesHistories.length; ++i) {
-      if (
-        expensesHistories[i].year === choseYear &&
-        expensesHistories[i].month === choseMonth &&
-        expensesHistories[i].day === displayDay
-      ) {
-        expensesHistories[i].history.push({
-          name: _name,
-          category1: _cate1,
-          category2: _cate2,
-          money: _money,
-          hour: _hour,
-          minute: _minute,
-          second: _second,
-          type: _type,
+    postApi(
+      {
+        username: username,
+        day: displayDay,
+        month: choseMonth,
+        year: choseYear,
+        name: _name,
+        category1: _cate1,
+        category2: _cate2,
+        money: _money,
+        hour: _hour,
+        minute: _minute,
+        second: _second,
+        type: _type,
+      },
+      `${SERVER}/transactions/add`
+    ).then((res) => {
+      if (res.status === "success") {
+        handleChangeData(res);
+        setResetPage(!resetPage);
+        enqueueSnackbar("Tạo giao dịch thành công!", {
+          variant: "success",
+          autoHideDuration: 5000,
         });
-        break;
+      } else if (res.status === "false") {
+        enqueueSnackbar("Tạo giao dịch thất bại!", {
+          variant: "error",
+          autoHideDuration: 5000,
+        });
       }
-    }
+    });
+  };
+
+  const handleDeleteTrans = (
+    _name,
+    _cate1,
+    _cate2,
+    _money,
+    _hour,
+    _minute,
+    _second,
+    _type
+  ) => {
+    postApi(
+      {
+        username: username,
+        day: displayDay,
+        month: choseMonth,
+        year: choseYear,
+        name: _name,
+        category1: _cate1,
+        category2: _cate2,
+        money: _money,
+        hour: _hour,
+        minute: _minute,
+        second: _second,
+        type: _type,
+      },
+      `${SERVER}/transactions/delete`
+    ).then((res) => {
+      if (res.status === "success") {
+        handleChangeData(res);
+        setResetPage(!resetPage);
+        enqueueSnackbar("Xoá giao dịch thành công!", {
+          variant: "success",
+          autoHideDuration: 5000,
+        });
+      } else if (res.status === "existed") {
+        enqueueSnackbar("Xoá giao dịch thất bại!", {
+          variant: "error",
+          autoHideDuration: 5000,
+        });
+      }
+    });
+  };
+
+  const handleUpdateTrans = (
+    _name,
+    _cate1,
+    _cate2,
+    _money,
+    _hour,
+    _minute,
+    _second,
+    _type,
+    new_name,
+    new_cate1,
+    new_cate2,
+    new_money,
+    new_hour,
+    new_minute,
+    new_second,
+    new_type
+  ) => {
+    postApi(
+      {
+        username: username,
+        day: displayDay,
+        month: choseMonth,
+        year: choseYear,
+        name: _name,
+        category1: _cate1,
+        category2: _cate2,
+        money: _money,
+        hour: _hour,
+        minute: _minute,
+        second: _second,
+        type: _type,
+        new_name: new_name,
+        new_category1: new_cate1,
+        new_category2: new_cate2,
+        new_money: new_money,
+        new_hour: new_hour,
+        new_minute: new_minute,
+        new_second: new_second,
+        new_type: new_type,
+      },
+      `${SERVER}/transactions/update`
+    ).then((res) => {
+      if (res.status === "success") {
+        handleChangeData(res);
+        setResetPage(!resetPage);
+        enqueueSnackbar("Cập nhật giao dịch thành công!", {
+          variant: "success",
+          autoHideDuration: 5000,
+        });
+      } else if (res.status === "existed") {
+        enqueueSnackbar("Cập nhật giao dịch thất bại!", {
+          variant: "error",
+          autoHideDuration: 5000,
+        });
+      }
+    });
   };
 
   const handleChangeTime = (data) => {
@@ -214,41 +225,20 @@ const TransactionsManagement = () => {
     setChoseYear(data.year);
   };
 
-  useEffect(() => {
+  const handleChangeData = (data) => {
+    setDisplayHis(data.data);
     let curExpenses = 0;
     let curReceive = 0;
-    let check = 0;
-    for (let i = 0; i < expensesHistories.length; ++i) {
-      if (
-        displayDay === expensesHistories[i].day &&
-        choseMonth === expensesHistories[i].month &&
-        choseYear === expensesHistories[i].year
-      ) {
-        console.log(expensesHistories[i]);
-        setDisplayHis(expensesHistories[i]);
-        check = 1;
-        for (let j = 0; j < expensesHistories[i].history.length; ++j) {
-          if (expensesHistories[i].history[j].type === 0) {
-            curExpenses += expensesHistories[i].history[j].money;
-          } else {
-            curReceive += expensesHistories[i].history[j].money;
-          }
-        }
-        break;
+    for (let i = 0; i < data.data.history.length; ++i) {
+      if (data.data.history[i].type === 0) {
+        curExpenses += Number(data.data.history[i].money);
+      } else {
+        curReceive += Number(data.data.history[i].money);
       }
-    }
-    if (check === 0) {
-      setDisplayHis({
-        day: displayDay,
-        month: choseMonth,
-        year: choseYear,
-        user: "notta",
-        history: [],
-      });
     }
     setTotalExpenses(curExpenses);
     setTotalReceive(curReceive);
-  }, [displayDay, choseMonth, choseYear, expensesHistories]);
+  };
 
   return (
     <Container
@@ -415,7 +405,16 @@ const TransactionsManagement = () => {
       <Box
         sx={{ display: "flex", justifyContent: "center", marginTop: "10px" }}
       >
-        <Carousel item={displayHis} handleAddTrans={handleAddTrans} />
+        <Carousel
+          item={displayHis}
+          handleAddTrans={handleAddTrans}
+          handleDeleteTrans={handleDeleteTrans}
+          handleUpdateTrans={handleUpdateTrans}
+          day={displayDay}
+          month={choseMonth}
+          year={choseYear}
+          username={username}
+        />
         <Box
           sx={{
             display: "flex",

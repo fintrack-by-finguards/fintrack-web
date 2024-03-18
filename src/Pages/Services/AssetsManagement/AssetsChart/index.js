@@ -284,9 +284,10 @@ const AssetsChart = () => {
     <Box
       sx={{
         width: "95%",
-        height: "450px",
+        height: checkNoData ? "450px" : "150px",
         borderRadius: theme.primary.borderRadius,
         display: "flex",
+        justifyContent: checkNoData ? "" : "center",
         alignItems: "center",
         margin: "0 auto",
         marginBottom: "30px",
@@ -439,7 +440,33 @@ const AssetsChart = () => {
           </Grid>
         </Grid>
       ) : (
-        <Box></Box>
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <Typography
+            sx={{
+              fontSize: theme.primary.medium,
+              color: theme.primary.main,
+              fontFamily: theme.primary.fontFamily,
+              fontWeight: 700,
+              marginRight: "5px",
+              marginLeft: "5px",
+              "&:hover": theme.primary.hoverDefault,
+              [theme.breakpoints.down("md")]: {
+                fontSize: theme.primary.smallMobile,
+                marginBottom: "10px",
+                marginRight: "0px",
+              },
+            }}
+          >
+            Chưa có dữ liệu để phân tích!
+          </Typography>
+        </Box>
       )}
     </Box>
   );
