@@ -35,6 +35,7 @@ const AddTransactionDialog = ({
   const [tranMinute, setTranMinute] = useState(0);
   const [tranSecond, setTranSecond] = useState(0);
   const [tranType, setTranType] = useState(0);
+  const [tranMoneyType, setTranMoneyType] = useState(0);
 
   const handleClose = () => {
     handleCloseDialog();
@@ -46,18 +47,31 @@ const AddTransactionDialog = ({
   };
 
   const submit = () => {
+    let finalTranCate2 =
+      Object.keys(EXPENSESCATEGORIES)[tranCate1] === "Tiết kiệm" ||
+      Object.keys(EXPENSESCATEGORIES)[tranCate1] === "Giáo dục" ||
+      Object.keys(EXPENSESCATEGORIES)[tranCate1] === "Giải thưởng" ||
+      Object.keys(EXPENSESCATEGORIES)[tranCate1] === "Tiền lãi" ||
+      Object.keys(EXPENSESCATEGORIES)[tranCate1] === "Tiền lương" ||
+      Object.keys(EXPENSESCATEGORIES)[tranCate1] === "Quà tặng" ||
+      Object.keys(EXPENSESCATEGORIES)[tranCate1] === "Bán đồ" ||
+      Object.keys(EXPENSESCATEGORIES)[tranCate1] === "Thu khác"
+        ? ""
+        : EXPENSESCATEGORIES[Object.keys(EXPENSESCATEGORIES)[tranCate1]][
+            tranCate2
+          ];
+
     if (tranType === 0) {
       handleAddTrans(
         tranName,
         Object.keys(EXPENSESCATEGORIES)[tranCate1],
-        EXPENSESCATEGORIES[Object.keys(EXPENSESCATEGORIES)[tranCate1]][
-          tranCate2
-        ],
+        finalTranCate2,
         tranMoney,
         tranHour,
         tranMinute,
         tranSecond,
-        tranType
+        tranType,
+        tranMoneyType
       );
     } else {
       handleAddTrans(
@@ -68,7 +82,8 @@ const AddTransactionDialog = ({
         tranHour,
         tranMinute,
         tranSecond,
-        tranType
+        tranType,
+        tranMoneyType
       );
     }
 
@@ -89,7 +104,7 @@ const AddTransactionDialog = ({
       PaperProps={{
         sx: {
           width: "520px",
-          height: "520px",
+          height: "570px",
           padding: "30px",
         },
       }}
@@ -273,6 +288,7 @@ const AddTransactionDialog = ({
               <MenuItem value={3}>Hưởng thụ</MenuItem>
               <MenuItem value={4}>Tự do tài chính</MenuItem>
               <MenuItem value={5}>Quà và từ thiện</MenuItem>
+              <MenuItem value={6}>Trả nợ</MenuItem>
             </Select>
           </FormControl>
 
@@ -379,6 +395,32 @@ const AddTransactionDialog = ({
           ) : (
             ""
           )}
+
+          {tranCate1 === 6 ? (
+            <FormControl sx={{ minWidth: 60, height: "40px" }}>
+              <Select
+                displayEmpty
+                inputProps={{ "aria-label": "Without label" }}
+                value={tranCate2}
+                onChange={(e) => setTranCate2(e.target.value)}
+                sx={{
+                  backgroundColor: "white",
+                  width: "100%",
+                  height: "40px",
+                  borderRadius: theme.primary.borderRadius,
+                  marginLeft: "15px",
+                }}
+                MenuProps={{ PaperProps: { sx: { maxHeight: 120 } } }}
+              >
+                <MenuItem value={0}>Tiền mặt</MenuItem>
+                <MenuItem value={1}>Trả góp</MenuItem>
+                <MenuItem value={2}>Thế chấp</MenuItem>
+                <MenuItem value={3}>Thấu chi</MenuItem>
+              </Select>
+            </FormControl>
+          ) : (
+            ""
+          )}
         </Box>
       ) : (
         <Box sx={{ marginTop: "10px" }}>
@@ -417,7 +459,8 @@ const AddTransactionDialog = ({
               <MenuItem value={2}>Tiền lương</MenuItem>
               <MenuItem value={3}>Quà tặng</MenuItem>
               <MenuItem value={4}>Bán đồ</MenuItem>
-              <MenuItem value={5}>Nguồn thu khác</MenuItem>
+              <MenuItem value={5}>Vay nợ</MenuItem>
+              <MenuItem value={6}>Nguồn thu khác</MenuItem>
             </Select>
           </FormControl>
         </Box>
@@ -527,6 +570,42 @@ const AddTransactionDialog = ({
             }}
           />
         </Box>
+      </Box>
+      <Box sx={{ marginTop: "10px" }}>
+        <Typography
+          sx={{
+            fontSize: theme.primary.small,
+            color: theme.primary.main,
+            fontFamily: theme.primary.fontFamily,
+            fontWeight: 500,
+            marginBottom: "5px",
+            [theme.breakpoints.down("md")]: {
+              fontSize: theme.primary.smallMobile,
+            },
+            "&:hover": theme.primary.hoverDefault,
+          }}
+          textAlign="left"
+        >
+          Dạng tiền
+        </Typography>
+        <FormControl sx={{ minWidth: 60, height: "40px" }}>
+          <Select
+            displayEmpty
+            inputProps={{ "aria-label": "Without label" }}
+            value={tranMoneyType}
+            onChange={(e) => setTranMoneyType(e.target.value)}
+            sx={{
+              backgroundColor: "white",
+              width: "100%",
+              height: "40px",
+              borderRadius: theme.primary.borderRadius,
+            }}
+            MenuProps={{ PaperProps: { sx: { maxHeight: 120 } } }}
+          >
+            <MenuItem value={0}>Tiền mặt</MenuItem>
+            <MenuItem value={1}>Tiền gửi ngân hàng</MenuItem>
+          </Select>
+        </FormControl>
       </Box>
 
       <Button

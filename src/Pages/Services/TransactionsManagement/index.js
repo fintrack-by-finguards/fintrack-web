@@ -11,42 +11,24 @@ import Carousel from "./Carousel";
 import TransactionsChart from "./TransactionsChart";
 import { getCurrentTime, numToMoney } from "../../Functions/text";
 import { useTheme } from "@mui/material/styles";
-import { createArray } from "../../Functions/text";
-import { toDateString } from "../../Functions/text";
+import { createArray, toDateString, getDays } from "../../Functions/text";
 import { postApi } from "../../../others/database";
 import { GlobalContext } from "../../../context/GlobalState";
-import { SERVER } from "../../../constant";
+import { SERVER, TIME } from "../../../constant";
 import { useSnackbar } from "notistack";
 
-const time = [
-  { month: 1, year: 2023 },
-  { month: 2, year: 2023 },
-  { month: 3, year: 2023 },
-  { month: 4, year: 2023 },
-  { month: 5, year: 2023 },
-  { month: 6, year: 2023 },
-  { month: 7, year: 2023 },
-  { month: 8, year: 2023 },
-  { month: 9, year: 2023 },
-  { month: 10, year: 2023 },
-  { month: 11, year: 2023 },
-  { month: 12, year: 2023 },
-  { month: 1, year: 2024 },
-  { month: 2, year: 2024 },
-  { month: 3, year: 2024 },
-];
-
 const TransactionsManagement = () => {
+  let currentTime = getCurrentTime();
   const { enqueueSnackbar } = useSnackbar();
   const theme = useTheme();
 
-  const [choseMonth, setChoseMonth] = useState(1);
-  const [choseYear, setChoseYear] = useState(2023);
+  const [choseMonth, setChoseMonth] = useState(currentTime.month);
+  const [choseYear, setChoseYear] = useState(currentTime.year);
 
   const [startDay, setStartDay] = useState("01");
-  const [endDay, setEndDay] = useState("31");
+  const [endDay, setEndDay] = useState(currentTime.day);
 
-  const [displayDay, setDisplayDay] = useState(1);
+  const [displayDay, setDisplayDay] = useState(currentTime.day);
   const [displayHis, setDisplayHis] = useState({
     day: 0,
     month: 0,
@@ -62,15 +44,16 @@ const TransactionsManagement = () => {
   const { username } = useContext(GlobalContext);
 
   useEffect(() => {
-    let time = getCurrentTime();
-    setDisplayDay(time.day);
-    setChoseMonth(time.month);
-    setChoseYear(time.year);
-
     postApi(
-      { username: username, day: time.day, month: time.month, year: time.year },
+      {
+        username: username,
+        day: displayDay,
+        month: choseMonth,
+        year: choseYear,
+      },
       `${SERVER}/transactions/getOne`
     ).then((res) => {
+      console.log(res);
       handleChangeData(res);
     });
   }, [displayDay, choseMonth, choseYear, resetPage]);
@@ -83,26 +66,140 @@ const TransactionsManagement = () => {
     _hour,
     _minute,
     _second,
-    _type
+    _type,
+    _moneytype
   ) => {
     postApi(
       {
         username: username,
-        day: displayDay,
-        month: choseMonth,
-        year: choseYear,
+        day: Number(displayDay),
+        month: Number(choseMonth),
+        year: Number(choseYear),
         name: _name,
         category1: _cate1,
         category2: _cate2,
-        money: _money,
-        hour: _hour,
-        minute: _minute,
-        second: _second,
-        type: _type,
+        money: Number(_money),
+        hour: Number(_hour),
+        minute: Number(_minute),
+        second: Number(_second),
+        type: Number(_type),
+        moneytype: Number(_moneytype),
       },
       `${SERVER}/transactions/add`
     ).then((res) => {
       if (res.status === "success") {
+        if (Number(_type) === 1) {
+          postApi(
+            {
+              username: username,
+              day: Number(displayDay),
+              month: Number(choseMonth),
+              year: Number(choseYear),
+              name: _name,
+              category1: "Tài sản",
+              category2: _moneytype === 0 ? "Tiền mặt" : "Tiền gửi ngân hàng",
+              money: Number(_money),
+              hour: Number(_hour),
+              minute: Number(_minute),
+              second: Number(_second),
+              type: 0,
+            },
+            `${SERVER}/assets/add`
+          ).then((res) => {
+            console.log(res);
+          });
+        }
+
+        if (Number(_type) === 1 && _cate1 === "Vay nợ") {
+          postApi(
+            {
+              username: username,
+              day: Number(displayDay),
+              month: Number(choseMonth),
+              year: Number(choseYear),
+              name: _name,
+              category1: "Nợ",
+              category2: "Tiền mặt",
+              money: Number(_money),
+              hour: Number(_hour),
+              minute: Number(_minute),
+              second: Number(_second),
+              type: 0,
+            },
+            `${SERVER}/assets/add`
+          ).then((res) => {
+            console.log(res);
+          });
+        }
+
+        if (Number(_type) === 0) {
+          postApi(
+            {
+              username: username,
+              day: Number(displayDay),
+              month: Number(choseMonth),
+              year: Number(choseYear),
+              name: _name,
+              category1: "Tài sản",
+              category2: _moneytype === 0 ? "Tiền mặt" : "Tiền gửi ngân hàng",
+              money: Number(_money),
+              hour: Number(_hour),
+              minute: Number(_minute),
+              second: Number(_second),
+              type: 1,
+            },
+            `${SERVER}/assets/add`
+          ).then((res) => {
+            console.log(res);
+          });
+        }
+
+        if (
+          Number(_type) === 0 &&
+          (_cate2 === "Đầu tư" || _cate2 === "Bất động sản")
+        ) {
+          postApi(
+            {
+              username: username,
+              day: Number(displayDay),
+              month: Number(choseMonth),
+              year: Number(choseYear),
+              name: _name,
+              category1: "Tài sản",
+              category2: _cate2,
+              money: Number(_money),
+              hour: Number(_hour),
+              minute: Number(_minute),
+              second: Number(_second),
+              type: 0,
+            },
+            `${SERVER}/assets/add`
+          ).then((res) => {
+            console.log(res);
+          });
+        }
+
+        if (Number(_type) === 0 && _cate1 === "Trả nợ") {
+          postApi(
+            {
+              username: username,
+              day: Number(displayDay),
+              month: Number(choseMonth),
+              year: Number(choseYear),
+              name: _name,
+              category1: "Nợ",
+              category2: "Tiền mặt",
+              money: Number(_money),
+              hour: Number(_hour),
+              minute: Number(_minute),
+              second: Number(_second),
+              type: 1,
+            },
+            `${SERVER}/assets/add`
+          ).then((res) => {
+            console.log(res);
+          });
+        }
         handleChangeData(res);
         setResetPage(!resetPage);
         enqueueSnackbar("Tạo giao dịch thành công!", {
@@ -126,7 +223,8 @@ const TransactionsManagement = () => {
     _hour,
     _minute,
     _second,
-    _type
+    _type,
+    _moneytype
   ) => {
     postApi(
       {
@@ -142,10 +240,28 @@ const TransactionsManagement = () => {
         minute: _minute,
         second: _second,
         type: _type,
+        moneytype: _moneytype,
       },
       `${SERVER}/transactions/delete`
     ).then((res) => {
       if (res.status === "success") {
+        postApi(
+          {
+            username: username,
+            day: Number(displayDay),
+            month: Number(choseMonth),
+            year: Number(choseYear),
+            name: _name,
+            money: _money,
+            hour: _hour,
+            minute: _minute,
+            second: _second,
+          },
+          `${SERVER}/assets/delete`
+        ).then((res) => {
+          console.log(res);
+        });
+
         handleChangeData(res);
         setResetPage(!resetPage);
         enqueueSnackbar("Xoá giao dịch thành công!", {
@@ -170,6 +286,7 @@ const TransactionsManagement = () => {
     _minute,
     _second,
     _type,
+    _moneytype,
     new_name,
     new_cate1,
     new_cate2,
@@ -177,7 +294,8 @@ const TransactionsManagement = () => {
     new_hour,
     new_minute,
     new_second,
-    new_type
+    new_type,
+    new_moneytype
   ) => {
     postApi(
       {
@@ -193,6 +311,7 @@ const TransactionsManagement = () => {
         minute: _minute,
         second: _second,
         type: _type,
+        moneytype: _moneytype,
         new_name: new_name,
         new_category1: new_cate1,
         new_category2: new_cate2,
@@ -201,6 +320,7 @@ const TransactionsManagement = () => {
         new_minute: new_minute,
         new_second: new_second,
         new_type: new_type,
+        new_moneytype: new_moneytype,
       },
       `${SERVER}/transactions/update`
     ).then((res) => {
@@ -238,6 +358,11 @@ const TransactionsManagement = () => {
     }
     setTotalExpenses(curExpenses);
     setTotalReceive(curReceive);
+  };
+
+  const handleChangeDisplayDay = (data) => {
+    setDisplayDay(data);
+    setEndDay(data);
   };
 
   return (
@@ -326,7 +451,7 @@ const TransactionsManagement = () => {
           border: `6px solid ${theme.primary.sub}`,
         }}
       >
-        {time.map((data, id) => (
+        {TIME.map((data, id) => (
           <MenuItem
             value={1}
             onClick={() => handleChangeTime(data)}
@@ -370,10 +495,10 @@ const TransactionsManagement = () => {
           padding: "5px",
         }}
       >
-        {createArray(31).map((data, id) => (
+        {createArray(getDays(choseYear, choseMonth)).map((data, id) => (
           <MenuItem
             value={1}
-            onClick={() => setDisplayDay(data + 1)}
+            onClick={() => handleChangeDisplayDay(data + 1)}
             key={id}
             sx={{
               backgroundColor:
@@ -420,12 +545,14 @@ const TransactionsManagement = () => {
             display: "flex",
             flexDirection: "column",
             justifyContent: "start",
+            width: "200px",
+            marginLeft: "20px",
           }}
         >
           <Box
             sx={{
-              width: "250px",
-              height: "100px",
+              width: "120px",
+              height: "50px",
               borderRadius: "8px",
               marginTop: "10px",
               padding: "20px",
@@ -435,7 +562,7 @@ const TransactionsManagement = () => {
             <Typography
               sx={{
                 color: "#E32636",
-                fontSize: "4vh",
+                fontSize: "3vh",
                 fontWeight: 800,
                 fontFamily: "Montserrat",
               }}
@@ -445,7 +572,7 @@ const TransactionsManagement = () => {
             <Typography
               sx={{
                 color: "#FFB000",
-                fontSize: "5vh",
+                fontSize: "2vh",
                 fontWeight: 600,
                 fontFamily: "Montserrat",
               }}
@@ -455,8 +582,8 @@ const TransactionsManagement = () => {
           </Box>
           <Box
             sx={{
-              width: "250px",
-              height: "100px",
+              width: "120px",
+              height: "50px",
               borderRadius: "8px",
               marginTop: "10px",
               padding: "20px",
@@ -466,7 +593,7 @@ const TransactionsManagement = () => {
             <Typography
               sx={{
                 color: "#32de84",
-                fontSize: "4vh",
+                fontSize: "2.9vh",
                 fontWeight: 800,
                 fontFamily: "Montserrat",
               }}
@@ -476,7 +603,7 @@ const TransactionsManagement = () => {
             <Typography
               sx={{
                 color: "#FFB000",
-                fontSize: "5vh",
+                fontSize: "2vh",
                 fontWeight: 600,
                 fontFamily: "Montserrat",
               }}
@@ -603,7 +730,13 @@ const TransactionsManagement = () => {
             </Select>
           </FormControl>
         </Box>
-        <TransactionsChart startDay={startDay} endDay={endDay} />
+        <TransactionsChart
+          startDay={startDay}
+          endDay={endDay}
+          choseMonth={choseMonth}
+          choseYear={choseYear}
+          resetPage={resetPage}
+        />
       </Box>
     </Container>
   );

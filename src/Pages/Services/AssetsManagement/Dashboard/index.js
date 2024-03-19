@@ -9,7 +9,7 @@ import PaidIcon from "@mui/icons-material/Paid";
 import ErrorIcon from "@mui/icons-material/Error";
 import AccountBalanceWalletIcon from "@mui/icons-material/AccountBalanceWallet";
 
-const Dashboard = () => {
+const Dashboard = ({ day, month, year }) => {
   const theme = useTheme();
 
   const { username } = useContext(GlobalContext);
@@ -19,7 +19,7 @@ const Dashboard = () => {
 
   useEffect(() => {
     postApi(
-      { username: username, day: 30, month: 3, year: 2024 },
+      { username: username, day: day, month: month, year: year },
       `${SERVER}/assets/getOne`
     ).then((res) => {
       setTotalAssets(
@@ -33,7 +33,7 @@ const Dashboard = () => {
         }, 0)
       );
     });
-  }, []);
+  }, [day, month, year]);
 
   return (
     <Box

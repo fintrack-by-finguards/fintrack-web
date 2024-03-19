@@ -1,89 +1,52 @@
-import React, { useState } from "react";
-import { Box, Typography, Grid } from "@mui/material";
+import React, { useState, useEffect, useContext } from "react";
+import { Box, Typography } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
-import { numToMoney } from "../../../Functions/text";
+import { numToMoney, sortBy } from "../../../Functions/text";
 import PaidIcon from "@mui/icons-material/Paid";
 import ErrorIcon from "@mui/icons-material/Error";
 import AddBoxIcon from "@mui/icons-material/AddBox";
+import { GlobalContext } from "../../../../context/GlobalState";
+import { postApi } from "../../../../others/database";
+import { SERVER } from "../../../../constant";
 import IndeterminateCheckBoxIcon from "@mui/icons-material/IndeterminateCheckBox";
 
-const fluctuationsHistory = [
-  {
-    day: 13,
-    month: 3,
-    year: 2024,
-    user: "notta",
-    history: [
-      {
-        name: "Nhận tiền lương",
-        category1: "Tài sản",
-        category2: "Tiền gửi ngân hàng",
-        type: 0,
-        money: 20000000,
-        hour: 7,
-        minute: 43,
-        second: 25,
-      },
-      {
-        name: "Trả nợ",
-        category1: "Nợ",
-        category2: "Tiền mặt",
-        type: 1,
-        money: 5000000,
-        hour: 10,
-        minute: 32,
-        second: 54,
-      },
-      {
-        name: "Trả nợ",
-        category1: "Nợ",
-        category2: "Tiền mặt",
-        type: 1,
-        money: 5000000,
-        hour: 10,
-        minute: 32,
-        second: 54,
-      },
-    ],
-  },
-  {
-    day: 12,
-    month: 3,
-    year: 2024,
-    user: "notta",
-    history: [
-      {
-        name: "Mua nhà",
-        category1: "Tài sản",
-        category2: "Bất động sản",
-        type: 0,
-        money: 10000000,
-        hour: 7,
-        minute: 43,
-        second: 25,
-      },
-      {
-        name: "Chi tiền mua nhà",
-        category1: "Tài sản",
-        category2: "Tiền mặt",
-        type: 1,
-        money: 10000000,
-        hour: 7,
-        minute: 43,
-        second: 25,
-      },
-    ],
-  },
-];
+const Fluctuations = ({ month, year }) => {
+  const [fluctuationsHistory, setFluctuationHistory] = useState([
+    {
+      day: 13,
+      month: 3,
+      year: 2024,
+      user: "notta",
+      assets: [0, 0, 0, 0, 0],
+      debt: [0, 0, 0, 0],
+      history: [],
+    },
+  ]);
 
-const Fluctuations = () => {
+  const [resetPage, setResetPage] = useState(false);
+
+  const { username } = useContext(GlobalContext);
+
+  useEffect(() => {
+    postApi(
+      { username: username, month: month, year: year },
+      `${SERVER}/assets/getMonthYear`
+    ).then((res) => {
+      let sortedData = res.data.sort(sortBy("day"));
+      let data = sortedData.filter((data) => data.history.length > 0);
+      setFluctuationHistory(data);
+      setResetPage(!resetPage);
+    });
+  }, [month, year, resetPage]);
+
   const theme = useTheme();
 
   return (
     <Box
       sx={{
         width: "95%",
-        height: "600px",
+        maxHeight: "550px",
+        paddingBottom: "50px",
         borderRadius: theme.primary.borderRadius,
         margin: "0 auto",
         display: "flex",
@@ -97,7 +60,7 @@ const Fluctuations = () => {
         sx={{
           color: theme.primary.main,
           fontSize: "2vh",
-          fontWeight: 600,
+          fontWeight: 700,
           fontFamily: theme.primary.fontFamily,
           marginTop: "20px",
         }}
@@ -154,35 +117,47 @@ const Fluctuations = () => {
           </Box>
 
           {data.history.map((his, idx) => (
-            <Box sx={{ display: "flex", marginTop: "10px" }}>
-              {his.category1 === "Tài sản" ? (
-                <PaidIcon sx={{ color: theme.primary.sub, fontSize: "50px" }} />
-              ) : (
-                <ErrorIcon
-                  sx={{ color: theme.primary.red, fontSize: "50px" }}
-                />
-              )}
-              {his.type === 0 ? (
-                <AddBoxIcon
-                  sx={{
-                    color:
-                      his.category1 === "Tài sản"
-                        ? theme.primary.green
-                        : theme.primary.red,
-                    fontSize: "50px",
-                  }}
-                />
-              ) : (
-                <IndeterminateCheckBoxIcon
-                  sx={{
-                    color:
-                      his.category1 === "Tài sản"
-                        ? theme.primary.red
-                        : theme.primary.green,
-                    fontSize: "50px",
-                  }}
-                />
-              )}
+            <Box
+              sx={{
+                display: "flex",
+                marginTop: "10px",
+                alignItems: "center",
+                boxShadow: 5,
+                borderRadius: theme.primary.borderRadius,
+              }}
+            >
+              <Box sx={{ display: "flex", flexDirection: "column" }}>
+                {his.category1 === "Tài sản" ? (
+                  <PaidIcon
+                    sx={{ color: theme.primary.sub, fontSize: "40px" }}
+                  />
+                ) : (
+                  <ErrorIcon
+                    sx={{ color: theme.primary.red, fontSize: "40px" }}
+                  />
+                )}
+                {his.type === 0 ? (
+                  <AddBoxIcon
+                    sx={{
+                      color:
+                        his.category1 === "Tài sản"
+                          ? theme.primary.green
+                          : theme.primary.red,
+                      fontSize: "40px",
+                    }}
+                  />
+                ) : (
+                  <IndeterminateCheckBoxIcon
+                    sx={{
+                      color:
+                        his.category1 === "Tài sản"
+                          ? theme.primary.red
+                          : theme.primary.green,
+                      fontSize: "40px",
+                    }}
+                  />
+                )}
+              </Box>
 
               <Box
                 sx={{
@@ -195,42 +170,99 @@ const Fluctuations = () => {
                 <Typography
                   sx={{
                     color: theme.primary.main,
-                    fontSize: "1.5vh",
+                    fontSize: "1.7vh",
                     fontWeight: 700,
                     fontFamily: theme.primary.fontFamily,
                   }}
                 >
-                  {his.category1} {his.category2 === "" ? "" : "- "}
-                  {his.category2}
+                  {his.type === 0 ? "↑ Tăng " : "↓ Giảm "} {his.category1}{" "}
+                  {his.category2 === "" ? "" : " - " + his.category2}
                 </Typography>
-                <Typography
-                  sx={{
-                    color: "#192841",
-                    fontSize: "1.5vh",
-                    fontWeight: 600,
-                    fontFamily: "Montserrat",
-                  }}
-                >
-                  {(his.hour < 10 ? "0" + his.hour : his.hour) +
-                    ":" +
-                    (his.minute < 10 ? "0" + his.minute : his.minute) +
-                    ":" +
-                    (his.second < 10 ? "0" + his.second : his.second)}
-                </Typography>
-                <Typography
-                  sx={{
-                    color:
-                      (his.category1 === "Tài sản" && his.type === 0) ||
-                      (his.category1 === "Nợ" && his.type === 1)
-                        ? theme.primary.green
-                        : theme.primary.red,
-                    fontSize: "1.5vh",
-                    fontWeight: 600,
-                    fontFamily: "Montserrat",
-                  }}
-                >
-                  {numToMoney(his.money)}
-                </Typography>
+
+                <Box sx={{ display: "flex" }}>
+                  <Typography
+                    sx={{
+                      color: "#192841",
+                      fontSize: "1.7vh",
+                      fontWeight: 600,
+                      fontFamily: "Montserrat",
+                      width: "50px",
+                    }}
+                    textAlign="left"
+                  >
+                    Tên:
+                  </Typography>
+                  <Typography
+                    sx={{
+                      color: "#192841",
+                      fontSize: "1.7vh",
+                      fontWeight: 600,
+                      fontFamily: "Montserrat",
+                      marginLeft: "10px",
+                    }}
+                  >
+                    {his.name}
+                  </Typography>
+                </Box>
+                <Box sx={{ display: "flex" }}>
+                  <Typography
+                    sx={{
+                      color: "#192841",
+                      fontSize: "1.7vh",
+                      fontWeight: 600,
+                      fontFamily: "Montserrat",
+                      width: "50px",
+                    }}
+                    textAlign="left"
+                  >
+                    T/g:
+                  </Typography>
+                  <Typography
+                    sx={{
+                      color: "#192841",
+                      fontSize: "1.7vh",
+                      fontWeight: 600,
+                      fontFamily: "Montserrat",
+                      marginLeft: "10px",
+                    }}
+                  >
+                    {(his.hour < 10 ? "0" + his.hour : his.hour) +
+                      ":" +
+                      (his.minute < 10 ? "0" + his.minute : his.minute) +
+                      ":" +
+                      (his.second < 10 ? "0" + his.second : his.second)}
+                  </Typography>
+                </Box>
+
+                <Box sx={{ display: "flex" }}>
+                  <Typography
+                    sx={{
+                      color: "#192841",
+                      fontSize: "1.7vh",
+                      fontWeight: 600,
+                      fontFamily: "Montserrat",
+                      width: "50px",
+                    }}
+                    textAlign="left"
+                  >
+                    Số tiền:
+                  </Typography>
+                  <Typography
+                    sx={{
+                      color:
+                        (his.category1 === "Tài sản" && his.type === 0) ||
+                        (his.category1 === "Nợ" && his.type === 1)
+                          ? theme.primary.green
+                          : theme.primary.red,
+                      fontSize: "1.7vh",
+                      fontWeight: 600,
+                      fontFamily: "Montserrat",
+                      marginLeft: "10px",
+                    }}
+                  >
+                    {numToMoney(his.money)}
+                  </Typography>
+                </Box>
               </Box>
             </Box>
           ))}

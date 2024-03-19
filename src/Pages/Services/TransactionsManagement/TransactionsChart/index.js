@@ -1,19 +1,9 @@
-import React from "react";
+import React, { useEffect, useState, useContext } from "react";
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
-
-const totalExpensesData = [
-  1069000, 2334000, 2233000, 510000, 2651000, 600000, 3432000, 50000, 150000,
-  340000, 4300000, 230000, 3640000, 544000, 50000, 1069000, 2334000, 2233000,
-  510000, 2651000, 600000, 3432000, 50000, 150000, 340000, 4300000, 230000,
-  3640000, 544000, 50000, 0,
-];
-
-const totalReceiveData = [
-  0, 0, 0, 0, 20000000, 600000, 0, 0, 10000000, 0, 0, 5000000, 0, 0, 400000,
-  500000, 0, 0, 0, 0, 20000000, 600000, 0, 0, 10000000, 0, 0, 5000000, 0, 0,
-  400000,
-];
+import { postApi } from "../../../../others/database";
+import { GlobalContext } from "../../../../context/GlobalState";
+import { SERVER } from "../../../../constant";
 
 function getDataRange(min, max, data) {
   let curData = [];
@@ -32,7 +22,7 @@ function range(min, max) {
   return arr;
 }
 
-const options = (startDay, endDay) => {
+const options = (totalExpensesData, totalReceiveData, startDay, endDay) => {
   return {
     chart: {
       type: "column",
@@ -85,12 +75,65 @@ const options = (startDay, endDay) => {
   };
 };
 
-const TransactionsChart = ({ startDay, endDay }) => {
+const TransactionsChart = ({
+  startDay,
+  endDay,
+  choseMonth,
+  choseYear,
+  resetPage,
+}) => {
+  const [totalExpensesData, setTotalExpensesData] = useState([
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0,
+  ]);
+  const [totalReceiveData, setTotalReceiveData] = useState([
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0,
+  ]);
+
   let sDay = Number(startDay);
   let eDay = Number(endDay);
-  console.log(sDay, eDay);
+
+  const { username } = useContext(GlobalContext);
+
+  useEffect(() => {
+    postApi(
+      {
+        username: username,
+        month: choseMonth,
+        year: choseYear,
+      },
+      `${SERVER}/transactions/getMonthYear`
+    ).then((res) => {
+      let curTotalExpensesData = [
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0, 0, 0,
+      ];
+      let curTotalReceiveData = [
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0, 0, 0,
+      ];
+      for (let i = 0; i < res.data.length; ++i) {
+        let curTotalExpenses = 0;
+        let curTotalReceive = 0;
+        for (let j = 0; j < res.data[i].history.length; ++j) {
+          if (res.data[i].history[j].type === 0)
+            curTotalExpenses += Number(res.data[i].history[j].money);
+          else curTotalReceive += Number(res.data[i].history[j].money);
+        }
+        curTotalExpensesData[res.data[i].day - 1] = curTotalExpenses;
+        curTotalReceiveData[res.data[i].day - 1] = curTotalReceive;
+      }
+      setTotalExpensesData(curTotalExpensesData);
+      setTotalReceiveData(curTotalReceiveData);
+    });
+  }, [choseMonth, choseYear, sDay, eDay, resetPage]);
+
   return (
-    <HighchartsReact highcharts={Highcharts} options={options(sDay, eDay)} />
+    <HighchartsReact
+      highcharts={Highcharts}
+      options={options(totalExpensesData, totalReceiveData, sDay, eDay)}
+    />
   );
 };
 

@@ -27,7 +27,8 @@ const DeleteTransactionDialog = ({
       data.hour,
       data.minute,
       data.second,
-      data.type
+      data.type,
+      data.moneytype
     );
     handleClose();
   };
@@ -212,6 +213,40 @@ const DeleteTransactionDialog = ({
               toDateString(time.year)}
           </Typography>
         </Box>
+
+        <Box sx={{ display: "flex", marginTop: "10px" }}>
+          <Typography
+            sx={{
+              width: "100px",
+              fontSize: theme.primary.small,
+              color: theme.primary.main,
+              fontFamily: theme.primary.fontFamily,
+              fontWeight: 600,
+              [theme.breakpoints.down("md")]: {
+                fontSize: theme.primary.smallMobile,
+              },
+              "&:hover": theme.primary.hoverDefault,
+            }}
+            textAlign="left"
+          >
+            Dạng:
+          </Typography>
+          <Typography
+            sx={{
+              fontSize: theme.primary.small,
+              color: theme.primary.sub,
+              fontFamily: theme.primary.fontFamily,
+              fontWeight: 600,
+              [theme.breakpoints.down("md")]: {
+                fontSize: theme.primary.smallMobile,
+              },
+              "&:hover": theme.primary.hoverDefault,
+            }}
+            textAlign="left"
+          >
+            {data.moneytype === 0 ? "Tiền mặt" : "Tiền gửi ngân hàng"}
+          </Typography>
+        </Box>
       </Box>
 
       <Button
@@ -220,7 +255,7 @@ const DeleteTransactionDialog = ({
           marginRight: "10px",
           display: "block",
           margin: "0 auto",
-          marginTop: "40px",
+          marginTop: "20px",
         }}
         onClick={submit}
       >

@@ -36,6 +36,7 @@ const UpdateTransactionDialog = ({
   const [tranMinute, setTranMinute] = useState(0);
   const [tranSecond, setTranSecond] = useState(0);
   const [tranType, setTranType] = useState(0);
+  const [tranMoneyType, setTranMoneyType] = useState(0);
 
   useEffect(() => {
     setTranType(data.type);
@@ -68,14 +69,14 @@ const UpdateTransactionDialog = ({
 
   const submit = () => {
     let finalTranCate2 =
-      Object.keys(EXPENSESCATEGORIES)[tranCate1] == "Tiết kiệm" ||
-      Object.keys(EXPENSESCATEGORIES)[tranCate1] == "Giáo dục" ||
-      Object.keys(EXPENSESCATEGORIES)[tranCate1] == "Giải thưởng" ||
-      Object.keys(EXPENSESCATEGORIES)[tranCate1] == "Tiền lãi" ||
-      Object.keys(EXPENSESCATEGORIES)[tranCate1] == "Tiền lương" ||
-      Object.keys(EXPENSESCATEGORIES)[tranCate1] == "Quà tặng" ||
-      Object.keys(EXPENSESCATEGORIES)[tranCate1] == "Bán đồ" ||
-      Object.keys(EXPENSESCATEGORIES)[tranCate1] == "Thu khác"
+      Object.keys(EXPENSESCATEGORIES)[tranCate1] === "Tiết kiệm" ||
+      Object.keys(EXPENSESCATEGORIES)[tranCate1] === "Giáo dục" ||
+      Object.keys(EXPENSESCATEGORIES)[tranCate1] === "Giải thưởng" ||
+      Object.keys(EXPENSESCATEGORIES)[tranCate1] === "Tiền lãi" ||
+      Object.keys(EXPENSESCATEGORIES)[tranCate1] === "Tiền lương" ||
+      Object.keys(EXPENSESCATEGORIES)[tranCate1] === "Quà tặng" ||
+      Object.keys(EXPENSESCATEGORIES)[tranCate1] === "Bán đồ" ||
+      Object.keys(EXPENSESCATEGORIES)[tranCate1] === "Thu khác"
         ? ""
         : EXPENSESCATEGORIES[Object.keys(EXPENSESCATEGORIES)[tranCate1]][
             tranCate2
@@ -92,6 +93,7 @@ const UpdateTransactionDialog = ({
         data.minute,
         data.second,
         data.type,
+        data.moneytype,
         tranName,
         Object.keys(EXPENSESCATEGORIES)[tranCate1],
         finalTranCate2,
@@ -99,7 +101,8 @@ const UpdateTransactionDialog = ({
         tranHour,
         tranMinute,
         tranSecond,
-        tranType
+        tranType,
+        tranMoneyType
       );
     } else {
       handleUpdateTrans(
@@ -111,6 +114,7 @@ const UpdateTransactionDialog = ({
         data.minute,
         data.second,
         data.type,
+        data.moneytype,
         tranName,
         RECEIVECATEGORIES[tranCate1],
         "",
@@ -118,7 +122,8 @@ const UpdateTransactionDialog = ({
         tranHour,
         tranMinute,
         tranSecond,
-        tranType
+        tranType,
+        tranMoneyType
       );
     }
 
@@ -593,6 +598,43 @@ const UpdateTransactionDialog = ({
               },
             }}
           />
+        </Box>
+
+        <Box sx={{ marginTop: "10px" }}>
+          <Typography
+            sx={{
+              fontSize: theme.primary.small,
+              color: theme.primary.main,
+              fontFamily: theme.primary.fontFamily,
+              fontWeight: 500,
+              marginBottom: "5px",
+              [theme.breakpoints.down("md")]: {
+                fontSize: theme.primary.smallMobile,
+              },
+              "&:hover": theme.primary.hoverDefault,
+            }}
+            textAlign="left"
+          >
+            Dạng tiền
+          </Typography>
+          <FormControl sx={{ minWidth: 60, height: "40px" }}>
+            <Select
+              displayEmpty
+              inputProps={{ "aria-label": "Without label" }}
+              value={tranMoneyType}
+              onChange={(e) => setTranMoneyType(e.target.value)}
+              sx={{
+                backgroundColor: "white",
+                width: "100%",
+                height: "40px",
+                borderRadius: theme.primary.borderRadius,
+              }}
+              MenuProps={{ PaperProps: { sx: { maxHeight: 120 } } }}
+            >
+              <MenuItem value={0}>Tiền mặt</MenuItem>
+              <MenuItem value={1}>Tiền gửi ngân hàng</MenuItem>
+            </Select>
+          </FormControl>
         </Box>
       </Box>
 

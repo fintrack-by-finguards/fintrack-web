@@ -28,8 +28,7 @@ const CarouselItem = ({
     className={`carousel-item ${className}`}
     sx={{
       paddingBottom: "20px",
-      width: "600px",
-      paddingLeft: "20px",
+      width: "650px",
     }}
   >
     <Paper
@@ -37,10 +36,9 @@ const CarouselItem = ({
       sx={{
         height: "400px",
         backgroundColor: "white",
-        margin: "0 auto",
         marginTop: "10px",
         borderRadius: "8px",
-        marginRight: "10px",
+        width: "650px",
       }}
       boxShadow={4}
     >
@@ -157,46 +155,111 @@ const CarouselItem = ({
                   justifyContent: "start",
                   alignItems: "start",
                   marginLeft: "20px",
-                  width: "180px",
+                  width: "250px",
                 }}
               >
-                <Typography
-                  sx={{
-                    color: "#192841",
-                    fontSize: "1.7vh",
-                    fontWeight: 600,
-                    fontFamily: "Montserrat",
-                  }}
-                >
-                  {his.category1} {his.category2 === "" ? "" : "- "}
-                  {his.category2}
-                </Typography>
+                <Box sx={{ display: "flex", justifyContent: "start" }}>
+                  <Typography
+                    sx={{
+                      color: "#FFB000",
+                      fontSize: "1.7vh",
+                      fontWeight: 600,
+                      fontFamily: "Montserrat",
+                      width: "50px",
+                    }}
+                    textAlign="left"
+                  >
+                    Mục:
+                  </Typography>
+                  <Typography
+                    sx={{
+                      color: "#192841",
+                      fontSize: "1.7vh",
+                      fontWeight: 600,
+                      fontFamily: "Montserrat",
+                    }}
+                  >
+                    {his.category1} {his.category2 === "" ? "" : "- "}
+                    {his.category2}
+                  </Typography>
+                </Box>
 
-                <Typography
-                  sx={{
-                    color: "#192841",
-                    fontSize: "1.7vh",
-                    fontWeight: 600,
-                    fontFamily: "Montserrat",
-                  }}
-                >
-                  {his.name}
-                </Typography>
-
-                <Typography
-                  sx={{
-                    color: "#192841",
-                    fontSize: "1.7vh",
-                    fontWeight: 600,
-                    fontFamily: "Montserrat",
-                  }}
-                >
-                  {(his.hour < 10 ? "0" + his.hour : his.hour) +
-                    ":" +
-                    (his.minute < 10 ? "0" + his.minute : his.minute) +
-                    ":" +
-                    (his.second < 10 ? "0" + his.second : his.second)}
-                </Typography>
+                <Box sx={{ display: "flex", justifyContent: "start" }}>
+                  <Typography
+                    sx={{
+                      color: "#FFB000",
+                      fontSize: "1.7vh",
+                      fontWeight: 600,
+                      fontFamily: "Montserrat",
+                      width: "50px",
+                    }}
+                    textAlign="left"
+                  >
+                    Tên:
+                  </Typography>
+                  <Typography
+                    sx={{
+                      color: "#192841",
+                      fontSize: "1.7vh",
+                      fontWeight: 600,
+                      fontFamily: "Montserrat",
+                    }}
+                  >
+                    {his.name}
+                  </Typography>
+                </Box>
+                <Box sx={{ display: "flex", justifyContent: "start" }}>
+                  <Typography
+                    sx={{
+                      color: "#FFB000",
+                      fontSize: "1.7vh",
+                      fontWeight: 600,
+                      fontFamily: "Montserrat",
+                      width: "50px",
+                    }}
+                    textAlign="left"
+                  >
+                    Dạng:
+                  </Typography>
+                  <Typography
+                    sx={{
+                      color: "#192841",
+                      fontSize: "1.7vh",
+                      fontWeight: 600,
+                      fontFamily: "Montserrat",
+                    }}
+                  >
+                    {his.moneytype === 0 ? "Tiền mặt" : "Tiền gửi ngân hàng"}
+                  </Typography>
+                </Box>
+                <Box sx={{ display: "flex", justifyContent: "start" }}>
+                  <Typography
+                    sx={{
+                      color: "#FFB000",
+                      fontSize: "1.7vh",
+                      fontWeight: 600,
+                      fontFamily: "Montserrat",
+                      width: "50px",
+                    }}
+                    textAlign="left"
+                  >
+                    T/g:
+                  </Typography>
+                  <Typography
+                    sx={{
+                      color: "#192841",
+                      fontSize: "1.7vh",
+                      fontWeight: 600,
+                      fontFamily: "Montserrat",
+                    }}
+                  >
+                    {(his.hour < 10 ? "0" + his.hour : his.hour) +
+                      ":" +
+                      (his.minute < 10 ? "0" + his.minute : his.minute) +
+                      ":" +
+                      (his.second < 10 ? "0" + his.second : his.second)}
+                  </Typography>
+                </Box>
               </Box>
               <Typography
                 sx={{
@@ -205,7 +268,7 @@ const CarouselItem = ({
                   fontWeight: 600,
                   fontFamily: "Montserrat",
                   marginLeft: "5px",
-                  width: "130px",
+                  width: "160px",
                 }}
                 textAlign="left"
               >

@@ -32,3 +32,16 @@ export function getCurrentTime() {
     second: d.getSeconds(),
   };
 }
+
+export function getDays(year, month) {
+  let d = new Date();
+  if (month === d.getMonth() + 1 && year === d.getFullYear())
+    return d.getDate();
+  else return new Date(year, month, 0).getDate();
+}
+
+export function sortBy(field) {
+  return function (a, b) {
+    return (a[field] < b[field]) - (a[field] > b[field]);
+  };
+}
