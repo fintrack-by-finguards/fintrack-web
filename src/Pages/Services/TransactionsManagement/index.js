@@ -67,7 +67,8 @@ const TransactionsManagement = () => {
     _minute,
     _second,
     _type,
-    _moneytype
+    _moneytype,
+    _saving
   ) => {
     postApi(
       {
@@ -205,6 +206,29 @@ const TransactionsManagement = () => {
             console.log(res);
           });
         }
+
+        if (Number(_type) === 0 && _cate1 === "Tiết kiệm") {
+          postApi(
+            {
+              username: username,
+              id: _saving,
+              tran_id: res.tran_id,
+              day: Number(displayDay),
+              month: Number(choseMonth),
+              year: Number(choseYear),
+              name: _name,
+              money: Number(_money),
+              hour: Number(_hour),
+              minute: Number(_minute),
+              second: Number(_second),
+              moneytype: _moneytype,
+            },
+            `${SERVER}/goals/add_transaction`
+          ).then((res) => {
+            console.log(res);
+          });
+        }
+
         handleChangeData(res);
         setResetPage(!resetPage);
         enqueueSnackbar("Tạo giao dịch thành công!", {
@@ -245,6 +269,22 @@ const TransactionsManagement = () => {
           console.log(res);
         });
 
+        if (Number(data.type) === 0 && data.category1 === "Tiết kiệm") {
+          console.log({
+            username: username,
+            tran_id: data.tran_id,
+          });
+          postApi(
+            {
+              username: username,
+              tran_id: data.tran_id,
+            },
+            `${SERVER}/goals/delete_transaction`
+          ).then((res) => {
+            console.log(res);
+          });
+        }
+
         handleChangeData(res);
         setResetPage(!resetPage);
         enqueueSnackbar("Xoá giao dịch thành công!", {
@@ -270,7 +310,8 @@ const TransactionsManagement = () => {
     new_minute,
     new_second,
     new_type,
-    new_moneytype
+    new_moneytype,
+    _saving
   ) => {
     postApi(
       {
@@ -304,6 +345,42 @@ const TransactionsManagement = () => {
         ).then((res) => {
           console.log(res);
         });
+
+        if (Number(data.type) === 0 && data.category1 === "Tiết kiệm") {
+          console.log({
+            username: username,
+            tran_id: data.tran_id,
+          });
+          postApi(
+            {
+              username: username,
+              tran_id: data.tran_id,
+            },
+            `${SERVER}/goals/delete_transaction`
+          ).then((res) => {
+            if (Number(new_type) === 0 && new_cate1 === "Tiết kiệm") {
+              postApi(
+                {
+                  username: username,
+                  id: _saving,
+                  tran_id: data.tran_id,
+                  day: Number(displayDay),
+                  month: Number(choseMonth),
+                  year: Number(choseYear),
+                  name: new_name,
+                  money: Number(new_money),
+                  hour: Number(new_hour),
+                  minute: Number(new_minute),
+                  second: Number(new_second),
+                  moneytype: new_moneytype,
+                },
+                `${SERVER}/goals/add_transaction`
+              ).then((res) => {
+                console.log(res);
+              });
+            }
+          });
+        }
 
         if (Number(new_type) === 1) {
           postApi(

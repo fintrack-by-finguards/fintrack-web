@@ -1,5 +1,8 @@
 import * as React from "react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
+import { GlobalContext } from "../../../../context/GlobalState";
+import { SERVER } from "../../../../constant/index";
+import { postApi } from "../../../../others/database";
 
 import DialogTitle from "@mui/material/DialogTitle";
 import Dialog from "@mui/material/Dialog";
@@ -26,6 +29,7 @@ const AddTransactionDialog = ({
   handleAddTrans,
 }) => {
   const theme = useTheme();
+  const { username } = useContext(GlobalContext);
 
   const [tranName, setTranName] = useState("");
   const [tranMoney, setTranMoney] = useState(0);
@@ -36,6 +40,22 @@ const AddTransactionDialog = ({
   const [tranSecond, setTranSecond] = useState(0);
   const [tranType, setTranType] = useState(0);
   const [tranMoneyType, setTranMoneyType] = useState(0);
+  const [tranSaving, setTranSaving] = useState(0);
+
+  const [savingData, setSavingData] = useState([]);
+
+  useEffect(() => {
+    postApi(
+      {
+        username: username,
+      },
+      `${SERVER}/goals/get`
+    ).then((res) => {
+      if (res.status === "success") {
+        setSavingData(res.data);
+      }
+    });
+  }, []);
 
   const handleClose = () => {
     handleCloseDialog();
@@ -71,7 +91,8 @@ const AddTransactionDialog = ({
         tranMinute,
         tranSecond,
         tranType,
-        tranMoneyType
+        tranMoneyType,
+        savingData[tranSaving]._id
       );
     } else {
       handleAddTrans(
@@ -83,7 +104,8 @@ const AddTransactionDialog = ({
         tranMinute,
         tranSecond,
         tranType,
-        tranMoneyType
+        tranMoneyType,
+        savingData[tranSaving]._id
       );
     }
 
@@ -314,6 +336,33 @@ const AddTransactionDialog = ({
                 <MenuItem value={3}>Tiền nhà</MenuItem>
                 <MenuItem value={4}>Sức khoẻ</MenuItem>
                 <MenuItem value={5}>Gia đình</MenuItem>
+              </Select>
+            </FormControl>
+          ) : (
+            ""
+          )}
+
+          {tranCate1 === 1 ? (
+            <FormControl sx={{ minWidth: 60, height: "40px" }}>
+              <Select
+                displayEmpty
+                inputProps={{ "aria-label": "Without label" }}
+                value={tranSaving}
+                onChange={(e) => setTranSaving(e.target.value)}
+                sx={{
+                  backgroundColor: "white",
+                  width: "100%",
+                  height: "40px",
+                  borderRadius: theme.primary.borderRadius,
+                  marginLeft: "15px",
+                }}
+                MenuProps={{ PaperProps: { sx: { maxHeight: 120 } } }}
+              >
+                {savingData.map((saving, idx) => (
+                  <MenuItem value={idx} key={idx}>
+                    {saving.name}
+                  </MenuItem>
+                ))}
               </Select>
             </FormControl>
           ) : (

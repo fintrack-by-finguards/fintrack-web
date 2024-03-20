@@ -17,11 +17,14 @@ const CarouselItem = ({
   setOpen,
   handleAddTrans,
   openDelete,
-  setOpenDelete,
+  handleOpenDelete,
   handleDeleteTrans,
+  setOpenDelete,
   openUpdate,
-  setOpenUpdate,
+  handleOpenUpdate,
   handleUpdateTrans,
+  setOpenUpdate,
+  choseTransactionId,
   time,
 }) => (
   <Grid
@@ -284,10 +287,10 @@ const CarouselItem = ({
               >
                 <DeleteIcon
                   sx={{ color: "grey" }}
-                  onClick={() => setOpenDelete(true)}
+                  onClick={() => handleOpenDelete(his.tran_id)}
                 />
                 <DeleteTransactionDialog
-                  openDialog={openDelete}
+                  openDialog={openDelete && his.tran_id === choseTransactionId}
                   handleCloseDialog={() => setOpenDelete(false)}
                   handleDeleteTrans={handleDeleteTrans}
                   time={time}
@@ -295,10 +298,10 @@ const CarouselItem = ({
                 />
                 <ChangeCircleIcon
                   sx={{ color: "grey", marginLeft: "5px" }}
-                  onClick={() => setOpenUpdate(true)}
+                  onClick={() => handleOpenUpdate(his.tran_id)}
                 />
                 <UpdateTransactionDialog
-                  openDialog={openUpdate}
+                  openDialog={openUpdate && his.tran_id === choseTransactionId}
                   handleCloseDialog={() => setOpenUpdate(false)}
                   handleUpdateTrans={handleUpdateTrans}
                   time={time}
@@ -370,6 +373,18 @@ const Carousel = ({
   const [openUpdateTransactionDialog, setOpenUpdateTransactionDialog] =
     useState(false);
 
+  const [choseTransactionId, setChoseTransactionId] = useState("");
+
+  const handleOpenDeleteDialog = (tran_id) => {
+    setChoseTransactionId(tran_id);
+    setOpenDeleteTransactionDialog(true);
+  };
+
+  const handleOpenUpdateDialog = (tran_id) => {
+    setChoseTransactionId(tran_id);
+    setOpenUpdateTransactionDialog(true);
+  };
+
   return (
     <Box container sx={{ marginLeft: "20px" }}>
       <CarouselItem
@@ -380,11 +395,14 @@ const Carousel = ({
         setOpen={setOpenAddTransactionDialog}
         handleAddTrans={handleAddTrans}
         openDelete={openDeleteTransactionDialog}
-        setOpenDelete={setOpenDeleteTransactionDialog}
+        handleOpenDelete={handleOpenDeleteDialog}
         handleDeleteTrans={handleDeleteTrans}
+        setOpenDelete={setOpenDeleteTransactionDialog}
         openUpdate={openUpdateTransactionDialog}
-        setOpenUpdate={setOpenUpdateTransactionDialog}
+        handleOpenUpdate={handleOpenUpdateDialog}
         handleUpdateTrans={handleUpdateTrans}
+        setOpenUpdate={setOpenUpdateTransactionDialog}
+        choseTransactionId={choseTransactionId}
         time={{ day: day, month: month, year: year }}
       ></CarouselItem>
     </Box>

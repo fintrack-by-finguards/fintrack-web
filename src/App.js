@@ -1,5 +1,5 @@
 import "./App.css";
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { Box } from "@mui/material";
 import Header from "./Components/Header";
 import Footer from "./Components/Footer";
@@ -16,12 +16,28 @@ import Community from "./Pages/Community";
 import { GlobalContext } from "./context/GlobalState";
 import { SnackbarProvider } from "notistack";
 import GoalsManagement from "./Pages/Services/GoalsManagement";
+import { postApi } from "./others/database";
+import { SERVER } from "./constant/index";
+import ProvideInformation from "./Components/ProvideInformation";
 
 const menuItems = ["Trang chủ", "Sản phẩm", "Cộng đồng", "Về chúng tôi"];
 
 function App() {
   const [curNav, setCurNav] = useState("Trang chủ");
   const { username } = useContext(GlobalContext);
+
+  const [provideDone, setProvideDone] = useState(false);
+
+  const [userData, setUserData] = useState({
+    username: username,
+    activate: false,
+  });
+
+  useEffect(() => {
+    postApi({ username: username }, `${SERVER}/user/getOne`).then((res) => {
+      setUserData(res.data);
+    });
+  }, [username, provideDone]);
 
   return (
     <SnackbarProvider maxSnack={3}>
@@ -35,31 +51,43 @@ function App() {
         }}
       >
         <Header menuItems={menuItems} curNav={curNav} setCurNav={setCurNav} />
-        {curNav === "Trang chủ" ? <Home /> : ""}
-        {curNav === "Sản phẩm" ? <Services /> : ""}
-        {curNav === "Về chúng tôi" ? <AboutUs /> : ""}
-        {curNav === "Cộng đồng" ? <Community /> : ""}
-        {curNav === "Kế hoạch tài chính" ? (
-          <Box> {username ? <FinancialPlans /> : <EmptyPage />}</Box>
+        {!userData.activate && username ? (
+          <ProvideInformation
+            setProvideDone={setProvideDone}
+            setCurNav={setCurNav}
+          />
         ) : (
-          ""
+          <Box>
+            {curNav === "Trang chủ" ? <Home /> : ""}
+            {curNav === "Sản phẩm" ? <Services /> : ""}
+            {curNav === "Về chúng tôi" ? <AboutUs /> : ""}
+            {curNav === "Cộng đồng" ? <Community /> : ""}
+            {curNav === "Kế hoạch tài chính" ? (
+              <Box> {username ? <FinancialPlans /> : <EmptyPage />}</Box>
+            ) : (
+              ""
+            )}
+            {curNav === "Mục tiêu tài chính" ? (
+              <Box> {username ? <GoalsManagement /> : <EmptyPage />}</Box>
+            ) : (
+              ""
+            )}
+            {curNav === "Quản lý chi tiêu" ? (
+              <Box>
+                {" "}
+                {username ? <TransactionsManagement /> : <EmptyPage />}
+              </Box>
+            ) : (
+              ""
+            )}
+            {curNav === "Quản lý tài chính" ? (
+              <Box> {username ? <AssetsManagement /> : <EmptyPage />}</Box>
+            ) : (
+              ""
+            )}
+            {/* {curNav === "Thử nghiệm" ? <Experiment /> : ""} */}
+          </Box>
         )}
-        {curNav === "Mục tiêu tài chính" ? (
-          <Box> {username ? <GoalsManagement /> : <EmptyPage />}</Box>
-        ) : (
-          ""
-        )}
-        {curNav === "Quản lý chi tiêu" ? (
-          <Box> {username ? <TransactionsManagement /> : <EmptyPage />}</Box>
-        ) : (
-          ""
-        )}
-        {curNav === "Quản lý tài chính" ? (
-          <Box> {username ? <AssetsManagement /> : <EmptyPage />}</Box>
-        ) : (
-          ""
-        )}
-        {/* {curNav === "Thử nghiệm" ? <Experiment /> : ""} */}
         {curNav === "Đăng nhập" ? <Login setCurNav={setCurNav} /> : ""}
         <Footer />
       </Box>

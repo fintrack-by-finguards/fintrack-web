@@ -1,121 +1,230 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Box, Typography, Container, Grid, Button } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
-import { numToMoney } from "../../Functions/text";
+import { numToMoney, toDay, getEndDay } from "../../Functions/text";
+import { postApi } from "../../../others/database";
+import { GlobalContext } from "../../../context/GlobalState";
+import { SERVER, TIME } from "../../../constant";
+import { useSnackbar } from "notistack";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import CardMedia from "@mui/material/CardMedia";
 import LinearProgress from "@mui/material/LinearProgress";
 import FiberManualRecordIcon from "@mui/icons-material/FiberManualRecord";
 import CreateGoalDialog from "./CreateGoalDialog";
-
-const financialGoal = [
-  {
-    id: 0,
-    name: "Tiết kiệm tiền đi du học",
-    money: 200000000,
-    time: 3,
-    unit: 0,
-    start: "13/03/2024",
-    end: "13/03/2027",
-    progress: 10000000,
-    img: "https://www.edroots.com/uploads/media/education%20fair60a4b5f337460.jpg",
-    type: 1,
-  },
-  {
-    id: 1,
-    name: "Mua máy tính",
-    money: 15000000,
-    time: 10,
-    unit: 1,
-    start: "15/02/2024",
-    end: "15/12/2024",
-    progress: 3000000,
-    img: "https://cdn2.cellphones.com.vn/insecure/rs:fill:358:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/t/e/text_ng_n_6__17.png",
-    type: 0,
-  },
-];
-
-const completedGoals = [
-  {
-    id: 0,
-    name: "Tiết kiệm tiền đi du lịch",
-    money: 200000000,
-    time: 3,
-    unit: 0,
-    end: "13/03/2024",
-    img: "https://umovetravel.com/upload/images/Phong%20c%C3%A1ch%20du%20l%E1%BB%8Bch/du-lich-nghi-duong-la-gi.jpg",
-    type: 1,
-  },
-  {
-    id: 1,
-    name: "Mua Ipad",
-    money: 80000000,
-    time: 4,
-    unit: 1,
-    end: "12/01/2023",
-    img: "https://vtv1.mediacdn.vn/zoom/640_400/2022/10/22/gsmarena002-16664179513151637538550-crop-1666417958742447613554.jpg",
-    type: 0,
-  },
-];
+import DeleteIcon from "@mui/icons-material/Delete";
+import ChangeCircleIcon from "@mui/icons-material/ChangeCircle";
+import DeleteGoalDialog from "../GoalsManagement/DeleteGoalDialog";
+import UpdateGoalDialog from "../GoalsManagement/UpdateGoalDialog";
+import GoalInDetail from "./GoalInDetail";
+import WarningIcon from "@mui/icons-material/Warning";
 
 const GoalsManagement = () => {
   const theme = useTheme();
+  const { enqueueSnackbar } = useSnackbar();
 
   const [openCreateDialog, setOpenCreateDialog] = useState(false);
-  const [targetType, setTargetType] = useState(0);
+  const { username } = useContext(GlobalContext);
+
+  const [openDelete, setOpenDelete] = useState(false);
+  const [openUpdate, setOpenUpdate] = useState(false);
+  const [openDetail, setOpenDetail] = useState(false);
+  const [choseGoalId, setChoseGoalId] = useState("");
+
+  const [resetPage, setResetPage] = useState(false);
+  const [filterGoal, setFilterGoal] = useState(null);
+
+  const [goalData, setGoalData] = useState({ data: [] });
+
+  const handleOpenDelete = (goalId) => {
+    setChoseGoalId(goalId);
+    setOpenDelete(true);
+  };
+
+  const handleOpenUpdate = (goalId) => {
+    setChoseGoalId(goalId);
+    setOpenUpdate(true);
+  };
+
+  const handleOpenDetails = (goalId) => {
+    setChoseGoalId(goalId);
+    setOpenDetail(true);
+  };
+
+  useEffect(() => {
+    postApi(
+      {
+        username: username,
+      },
+      `${SERVER}/goals/get`
+    ).then((res) => {
+      if (res.status === "success") {
+        if (filterGoal !== null) {
+          let filteredRes = res.data.filter((goal) => goal.type === filterGoal);
+          setGoalData({ data: filteredRes });
+        } else {
+          setGoalData(res);
+        }
+      }
+    });
+  }, [resetPage, filterGoal]);
 
   const createGoal = (name, money, time, unit, img) => {
     const d = new Date();
     let day = Number(d.getDate());
     let month = Number(d.getMonth() + 1);
     let year = Number(d.getFullYear());
-    let endMonth =
-      unit === 1
-        ? month + time > 12
-          ? month + time - 12
-          : month + time
-        : month;
-    let endYear = unit === 0 ? year + time : Math.floor((month + time) / 12);
 
     let type = 0;
     if (unit === 0) {
-      if (time > 3 && time < 10) {
+      if (time >= 3 && time < 10) {
         type = 1;
       } else if (time >= 10) {
         type = 2;
       }
     } else {
-      if (time > 36 && time < 60) {
+      if (time >= 36 && time < 60) {
         type = 1;
       } else if (time >= 60) {
         type = 2;
       }
     }
 
-    console.log(day);
-    console.log(type);
-    financialGoal.push({
-      id: financialGoal.length,
-      name: name,
-      money: money,
-      time: time,
-      unit: unit,
-      start:
-        day < 10
-          ? "0" + String(day)
-          : String(day) + "/" + month < 10
-          ? "0" + String(month)
-          : String(month) + "/" + String(year),
-      end:
-        day < 10
-          ? "0" + String(day)
-          : String(day) + "/" + endMonth < 10
-          ? "0" + String(endMonth)
-          : String(endMonth) + "/" + String(endYear),
-      progress: 0,
-      img: img,
-      type: type,
-    });
+    postApi(
+      {
+        username: username,
+        day: Number(day),
+        month: Number(month),
+        year: Number(year),
+        name: name,
+        money: money,
+        time: time,
+        unit: unit,
+        img: img,
+        type: type,
+      },
+      `${SERVER}/goals/add`
+    )
+      .then((res) => {
+        if (res.status === "success") {
+          console.log(res);
+          setResetPage(!resetPage);
+          enqueueSnackbar("Tạo mục tiêu thành công!", {
+            variant: "success",
+            autoHideDuration: 5000,
+          });
+        } else {
+          enqueueSnackbar("Tạo mục tiêu thất bại!", {
+            variant: "error",
+            autoHideDuration: 5000,
+          });
+        }
+      })
+      .catch((error) => {
+        enqueueSnackbar("Tạo mục tiêu thất bại!", {
+          variant: "error",
+          autoHideDuration: 5000,
+        });
+      });
+  };
+
+  const handleUpdateGoal = (
+    goal_id,
+    new_day,
+    new_month,
+    new_year,
+    new_name,
+    new_money,
+    new_time,
+    new_unit,
+    new_img
+  ) => {
+    let day = new_day;
+    let month = new_month;
+    let year = new_year;
+
+    let type = 0;
+    if (new_unit === 0) {
+      if (new_time > 3 && new_time < 10) {
+        type = 1;
+      } else if (new_time >= 10) {
+        type = 2;
+      }
+    } else {
+      if (new_time > 36 && new_time < 60) {
+        type = 1;
+      } else if (new_time >= 60) {
+        type = 2;
+      }
+    }
+
+    postApi(
+      {
+        username: username,
+        id: goal_id,
+        day: Number(day),
+        month: Number(month),
+        year: Number(year),
+        name: new_name,
+        money: new_money,
+        time: new_time,
+        unit: new_unit,
+        img: new_img,
+        type: type,
+      },
+      `${SERVER}/goals/update`
+    )
+      .then((res) => {
+        if (res.status === "success") {
+          console.log(res);
+          setResetPage(!resetPage);
+          enqueueSnackbar("Chỉnh sửa mục tiêu thành công!", {
+            variant: "success",
+            autoHideDuration: 5000,
+          });
+        } else {
+          enqueueSnackbar("Chỉnh sửa mục tiêu thất bại!", {
+            variant: "error",
+            autoHideDuration: 5000,
+          });
+        }
+      })
+      .catch((error) => {
+        enqueueSnackbar("Chỉnh sửa mục tiêu thất bại!", {
+          variant: "error",
+          autoHideDuration: 5000,
+        });
+      });
+  };
+
+  const handleDeleteGoal = (id) => {
+    postApi(
+      {
+        username: username,
+        id: id,
+      },
+      `${SERVER}/goals/delete`
+    )
+      .then((res) => {
+        if (res.status === "success") {
+          console.log(res);
+          setResetPage(!resetPage);
+          enqueueSnackbar("Xoá mục tiêu thành công!", {
+            variant: "success",
+            autoHideDuration: 5000,
+          });
+        } else {
+          enqueueSnackbar("Xoá mục tiêu thất bại!", {
+            variant: "error",
+            autoHideDuration: 5000,
+          });
+        }
+      })
+      .catch((error) => {
+        enqueueSnackbar("Xoá mục tiêu thất bại!", {
+          variant: "error",
+          autoHideDuration: 5000,
+        });
+      });
   };
 
   const handleCloseCreateDialog = () => {
@@ -176,10 +285,12 @@ const GoalsManagement = () => {
           <Button
             sx={{
               backgroundColor:
-                targetType === 0 ? theme.primary.sub : theme.primary.greyLight,
+                filterGoal === null
+                  ? theme.primary.sub
+                  : theme.primary.greyLight,
               marginRight: "10px",
             }}
-            onClick={() => setTargetType(0)}
+            onClick={() => setFilterGoal(null)}
           >
             <Typography
               sx={{
@@ -195,10 +306,10 @@ const GoalsManagement = () => {
           <Button
             sx={{
               backgroundColor:
-                targetType === 1 ? theme.primary.sub : theme.primary.greyLight,
+                filterGoal === 0 ? theme.primary.sub : theme.primary.greyLight,
               marginRight: "10px",
             }}
-            onClick={() => setTargetType(1)}
+            onClick={() => setFilterGoal(0)}
           >
             <Typography
               sx={{
@@ -214,10 +325,10 @@ const GoalsManagement = () => {
           <Button
             sx={{
               backgroundColor:
-                targetType === 2 ? theme.primary.sub : theme.primary.greyLight,
+                filterGoal === 1 ? theme.primary.sub : theme.primary.greyLight,
               marginRight: "10px",
             }}
-            onClick={() => setTargetType(2)}
+            onClick={() => setFilterGoal(1)}
           >
             <Typography
               sx={{
@@ -233,10 +344,10 @@ const GoalsManagement = () => {
           <Button
             sx={{
               backgroundColor:
-                targetType === 3 ? theme.primary.sub : theme.primary.greyLight,
+                filterGoal === 2 ? theme.primary.sub : theme.primary.greyLight,
               marginRight: "10px",
             }}
-            onClick={() => setTargetType(3)}
+            onClick={() => setFilterGoal(2)}
           >
             <Typography
               sx={{
@@ -268,12 +379,12 @@ const GoalsManagement = () => {
         container
         sx={{ marginTop: "30px", justifyContent: "space-around" }}
       >
-        {financialGoal.map((goal, idx) => (
+        {goalData.data.map((goal, idx) => (
           <Grid
             xs={5}
             boxShadow={3}
             sx={{
-              height: "240px",
+              height: "260px",
               backgroundColor: "white",
               borderRadius: theme.primary.borderRadius,
               display: "flex",
@@ -286,26 +397,61 @@ const GoalsManagement = () => {
               component="img"
               sx={{
                 width: "200px",
-                height: "240px",
+                height: "260px",
                 borderTopLeftRadius: theme.primary.borderRadius,
                 borderBottomLeftRadius: theme.primary.borderRadius,
               }}
               image={goal.img}
               alt="Paella dish"
             />
-
-            <Box sx={{ padding: "20px" }}>
-              <Typography
+            <Box sx={{ padding: "20px", marginTop: "10px" }}>
+              <Box
                 sx={{
-                  color: theme.primary.main,
-                  fontSize: "17px",
-                  fontWeight: 700,
-                  fontFamily: theme.primary.fontFamily,
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
                 }}
-                textAlign="left"
               >
-                {goal.name}
-              </Typography>
+                <Typography
+                  sx={{
+                    color: theme.primary.main,
+                    fontSize: "17px",
+                    fontWeight: 700,
+                    fontFamily: theme.primary.fontFamily,
+                  }}
+                  textAlign="left"
+                >
+                  {goal.name}
+                </Typography>
+                <Box
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    width: "50px",
+                  }}
+                >
+                  <DeleteIcon
+                    sx={{ color: "grey" }}
+                    onClick={() => handleOpenDelete(goal._id)}
+                  />
+                  <DeleteGoalDialog
+                    openDialog={openDelete && goal._id === choseGoalId}
+                    handleCloseDialog={() => setOpenDelete(false)}
+                    handleDeleteGoal={handleDeleteGoal}
+                    data={goal}
+                  />
+                  <ChangeCircleIcon
+                    sx={{ color: "grey", marginLeft: "5px" }}
+                    onClick={() => handleOpenUpdate(goal._id)}
+                  />
+                  <UpdateGoalDialog
+                    openDialog={openUpdate && goal._id === choseGoalId}
+                    handleCloseDialog={() => setOpenUpdate(false)}
+                    handleUpdateGoal={handleUpdateGoal}
+                    data={goal}
+                  />
+                </Box>
+              </Box>
 
               <Box
                 sx={{
@@ -423,7 +569,7 @@ const GoalsManagement = () => {
                     marginLeft: "5px",
                   }}
                 >
-                  {goal.start}
+                  {toDay(goal.day, goal.month, goal.year)}
                 </Typography>
               </Box>
 
@@ -463,7 +609,13 @@ const GoalsManagement = () => {
                     marginLeft: "5px",
                   }}
                 >
-                  {goal.end}
+                  {getEndDay(
+                    goal.day,
+                    goal.month,
+                    goal.year,
+                    goal.unit,
+                    goal.time
+                  )}
                 </Typography>
               </Box>
 
@@ -574,267 +726,71 @@ const GoalsManagement = () => {
                   marginTop: "5px",
                 }}
               >
-                <Typography
+                <Button
                   sx={{
-                    fontFamily: theme.primary.fontFamily,
-                    fontWeight: "400",
-                    fontSize: "11px",
-                    marginLeft: "5px",
-                    marginBottom: "10px",
-                    fontStyle: "italic",
-                    "&:hover": theme.primary.hoverDefault,
-                    [theme.breakpoints.down("md")]: {
-                      fontSize: theme.primary.medium,
-                    },
-                  }}
-                  textAlign="left"
-                >
-                  {"Chi tiết"}
-                </Typography>
-              </Box>
-            </Box>
-          </Grid>
-        ))}
-        {financialGoal.length % 2 === 1 ? <Grid xs={5} /> : ""}
-      </Grid>
-
-      <Box
-        sx={{
-          marginTop: "50px",
-          display: "flex",
-          justifyContent: "space-between",
-          width: "100%",
-        }}
-      >
-        <Typography
-          sx={{
-            color: "white",
-            fontSize: theme.primary.small,
-            fontWeight: 600,
-            fontFamily: theme.primary.fontFamily,
-            backgroundColor: theme.primary.main,
-            padding: "5px",
-            width: "80px",
-            borderRadius: "5px",
-            marginLeft: "5px",
-            marginTop: "10px",
-          }}
-        >
-          LỊCH SỬ
-        </Typography>
-      </Box>
-
-      <Grid
-        container
-        sx={{ marginTop: "10px", justifyContent: "space-around" }}
-      >
-        {completedGoals.map((goal, idx) => (
-          <Grid
-            xs={5}
-            boxShadow={3}
-            sx={{
-              height: "160px",
-              backgroundColor: "white",
-              borderRadius: theme.primary.borderRadius,
-              display: "flex",
-              position: "relative",
-              marginTop: "30px",
-            }}
-            key={idx}
-          >
-            <CardMedia
-              component="img"
-              sx={{
-                width: "200px",
-                height: "160px",
-                borderTopLeftRadius: theme.primary.borderRadius,
-                borderBottomLeftRadius: theme.primary.borderRadius,
-              }}
-              image={goal.img}
-              alt="Paella dish"
-            />
-
-            <Box sx={{ padding: "20px" }}>
-              <Typography
-                sx={{
-                  color: theme.primary.main,
-                  fontSize: "17px",
-                  fontWeight: 700,
-                  fontFamily: theme.primary.fontFamily,
-                }}
-                textAlign="left"
-              >
-                {goal.name}
-              </Typography>
-
-              <Box
-                sx={{
-                  display: "flex",
-                  marginLeft: "10px",
-                  alignItems: "center",
-                  marginTop: "5px",
-                }}
-              >
-                <FiberManualRecordIcon
-                  sx={{
-                    color: theme.primary.main,
-                    fontSize: "12px",
-                  }}
-                />
-
-                <Typography
-                  sx={{
-                    color: theme.primary.main,
-                    fontSize: theme.primary.small,
-                    fontWeight: 600,
-                    fontFamily: theme.primary.fontFamily,
-                    marginLeft: "5px",
-                  }}
-                >
-                  Số tiền:
-                </Typography>
-
-                <Typography
-                  sx={{
-                    color: theme.primary.main,
-                    fontSize: theme.primary.small,
-                    fontWeight: 500,
-                    fontFamily: theme.primary.fontFamily,
-                    marginLeft: "5px",
-                  }}
-                >
-                  {numToMoney(goal.money)}
-                </Typography>
-              </Box>
-
-              <Box
-                sx={{
-                  display: "flex",
-                  marginLeft: "10px",
-                  alignItems: "center",
-                  marginTop: "5px",
-                }}
-              >
-                <FiberManualRecordIcon
-                  sx={{
-                    color: theme.primary.main,
-                    fontSize: "12px",
-                  }}
-                />
-
-                <Typography
-                  sx={{
-                    color: theme.primary.main,
-                    fontSize: theme.primary.small,
-                    fontWeight: 600,
-                    fontFamily: theme.primary.fontFamily,
-                    marginLeft: "5px",
-                  }}
-                >
-                  Thời gian:
-                </Typography>
-
-                <Typography
-                  sx={{
-                    color: theme.primary.main,
-                    fontSize: theme.primary.small,
-                    fontWeight: 500,
-                    fontFamily: theme.primary.fontFamily,
-                    marginLeft: "5px",
-                  }}
-                >
-                  {goal.time + " " + (goal.unit === 0 ? "năm" : "tháng")}
-                </Typography>
-              </Box>
-
-              <Box
-                sx={{
-                  display: "flex",
-                  marginLeft: "10px",
-                  alignItems: "center",
-                  marginTop: "5px",
-                }}
-              >
-                <FiberManualRecordIcon
-                  sx={{
-                    color: theme.primary.main,
-                    fontSize: "12px",
-                  }}
-                />
-
-                <Typography
-                  sx={{
-                    color: theme.primary.main,
-                    fontSize: theme.primary.small,
-                    fontWeight: 600,
-                    fontFamily: theme.primary.fontFamily,
-                    marginLeft: "5px",
-                  }}
-                >
-                  Kết thúc:
-                </Typography>
-
-                <Typography
-                  sx={{
-                    color: theme.primary.main,
-                    fontSize: theme.primary.small,
-                    fontWeight: 500,
-                    fontFamily: theme.primary.fontFamily,
-                    marginLeft: "5px",
-                  }}
-                >
-                  {goal.end}
-                </Typography>
-              </Box>
-
-              <Box sx={{ position: "absolute", bottom: -15, right: -20 }}>
-                <Typography
-                  sx={{
-                    color: "white",
-                    fontSize: theme.primary.small,
-                    fontWeight: 600,
-                    fontFamily: theme.primary.fontFamily,
-                    marginLeft: "5px",
                     width: "100px",
-                    backgroundColor: goal.type === 0 ? "#EE4B2B" : "#458933",
-                    padding: "5px",
-                    borderRadius: theme.primary.borderRadius,
+                    backgroundColor: theme.primary.sub,
+                    height: "20px",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    borderRadius: "5px",
                   }}
+                  onClick={() => handleOpenDetails(goal._id)}
                 >
-                  {goal.type === 0 ? "Thất bại" : "Thành công"}
-                </Typography>
-              </Box>
-
-              <Box
-                sx={{
-                  display: "flex",
-                  height: "100%",
-                  justifyContent: "end",
-                  marginTop: "5px",
-                }}
-              >
-                <Typography
-                  sx={{
-                    fontFamily: theme.primary.fontFamily,
-                    fontWeight: "400",
-                    fontSize: "11px",
-                    marginLeft: "5px",
-                    marginBottom: "10px",
-                    fontStyle: "italic",
-                    "&:hover": theme.primary.hoverDefault,
-                    [theme.breakpoints.down("md")]: {
-                      fontSize: theme.primary.medium,
-                    },
-                  }}
-                  textAlign="left"
-                >
-                  {"Chi tiết"}
-                </Typography>
+                  <Typography
+                    sx={{
+                      fontFamily: theme.primary.fontFamily,
+                      fontWeight: "600",
+                      fontSize: "11px",
+                      fontStyle: "italic",
+                      "&:hover": theme.primary.hoverDefault,
+                      [theme.breakpoints.down("md")]: {
+                        fontSize: theme.primary.medium,
+                      },
+                      color: theme.primary.main,
+                    }}
+                    textAlign="left"
+                  >
+                    {"Chi tiết"}
+                  </Typography>
+                </Button>
+                <GoalInDetail
+                  openDialog={openDetail && goal._id === choseGoalId}
+                  goal={goal}
+                  handleCloseDialog={() => setOpenDetail(false)}
+                />
               </Box>
             </Box>
           </Grid>
         ))}
-        {financialGoal.length % 2 === 1 ? <Grid xs={5} /> : ""}
+        {goalData.data.length % 2 === 1 ? <Grid xs={5} /> : ""}
+        {goalData.data.length === 0 ? (
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <WarningIcon
+              sx={{ color: "#192841", fontSize: "100px", marginTop: "30px" }}
+            />
+            <Typography
+              sx={{
+                color: "#192841",
+                fontSize: "2.5vh",
+                fontWeight: 600,
+                fontFamily: "Montserrat",
+              }}
+            >
+              Không có dữ liệu!
+            </Typography>
+          </Box>
+        ) : (
+          ""
+        )}
       </Grid>
     </Container>
   );

@@ -45,3 +45,21 @@ export function sortBy(field) {
     return (a[field] < b[field]) - (a[field] > b[field]);
   };
 }
+
+export function toDay(day, month, year) {
+  let _day = day < 10 ? "0" + day : day;
+  let _month = month < 10 ? "0" + month : month;
+  return _day + "/" + _month + "/" + year;
+}
+
+export function getEndDay(day, month, year, unit, time) {
+  let endMonth =
+    unit === 1 ? (month + time > 12 ? month + time - 12 : month + time) : month;
+  let _month = endMonth < 10 ? "0" + endMonth : endMonth;
+  let endYear =
+    unit === 0 ? year + time : year + Math.floor((month + time) / 12);
+
+  let _day = day < 10 ? "0" + day : day;
+
+  return _day + "/" + _month + "/" + endYear;
+}

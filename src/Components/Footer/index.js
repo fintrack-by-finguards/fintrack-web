@@ -300,10 +300,10 @@ const Footer = () => {
                 }}
               >
                 {[
-                  "Lộ trình tài chính cá nhân hoá",
-                  "Quản lý tài sản",
-                  "Quản lý chi tiêu",
+                  "Mục tiêu tài chính",
                   "Kế hoạch tài chính",
+                  "Quản lý chi tiêu",
+                  "Quản lý tài chính",
                 ].map((value, idx) => (
                   <Typography
                     sx={{
