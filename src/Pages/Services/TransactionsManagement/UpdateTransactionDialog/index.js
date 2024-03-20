@@ -85,15 +85,7 @@ const UpdateTransactionDialog = ({
     console.log(finalTranCate2);
     if (tranType === 0) {
       handleUpdateTrans(
-        data.name,
-        data.category1,
-        data.category2,
-        data.money,
-        data.hour,
-        data.minute,
-        data.second,
-        data.type,
-        data.moneytype,
+        data,
         tranName,
         Object.keys(EXPENSESCATEGORIES)[tranCate1],
         finalTranCate2,
@@ -106,15 +98,7 @@ const UpdateTransactionDialog = ({
       );
     } else {
       handleUpdateTrans(
-        data.name,
-        data.category1,
-        data.category2,
-        data.money,
-        data.hour,
-        data.minute,
-        data.second,
-        data.type,
-        data.moneytype,
+        data,
         tranName,
         RECEIVECATEGORIES[tranCate1],
         "",

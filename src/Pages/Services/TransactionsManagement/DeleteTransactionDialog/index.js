@@ -19,17 +19,7 @@ const DeleteTransactionDialog = ({
   };
 
   const submit = () => {
-    handleDeleteTrans(
-      data.name,
-      data.category1,
-      data.category2,
-      data.money,
-      data.hour,
-      data.minute,
-      data.second,
-      data.type,
-      data.moneytype
-    );
+    handleDeleteTrans(data);
     handleClose();
   };
 

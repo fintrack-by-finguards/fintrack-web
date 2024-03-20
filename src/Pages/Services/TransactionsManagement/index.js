@@ -215,52 +215,34 @@ const TransactionsManagement = () => {
     });
   };
 
-  const handleDeleteTrans = (
-    _name,
-    _cate1,
-    _cate2,
-    _money,
-    _hour,
-    _minute,
-    _second,
-    _type,
-    _moneytype
-  ) => {
+  const handleDeleteTrans = (data) => {
     postApi(
       {
         username: username,
         day: displayDay,
         month: choseMonth,
         year: choseYear,
-        name: _name,
-        category1: _cate1,
-        category2: _cate2,
-        money: _money,
-        hour: _hour,
-        minute: _minute,
-        second: _second,
-        type: _type,
-        moneytype: _moneytype,
+        tran_id: data.tran_id,
       },
       `${SERVER}/transactions/delete`
     ).then((res) => {
       if (res.status === "success") {
-        postApi(
-          {
-            username: username,
-            day: Number(displayDay),
-            month: Number(choseMonth),
-            year: Number(choseYear),
-            name: _name,
-            money: _money,
-            hour: _hour,
-            minute: _minute,
-            second: _second,
-          },
-          `${SERVER}/assets/delete`
-        ).then((res) => {
-          console.log(res);
-        });
+        // postApi(
+        //   {
+        //     username: username,
+        //     day: Number(displayDay),
+        //     month: Number(choseMonth),
+        //     year: Number(choseYear),
+        //     name: _name,
+        //     money: _money,
+        //     hour: _hour,
+        //     minute: _minute,
+        //     second: _second,
+        //   },
+        //   `${SERVER}/assets/delete`
+        // ).then((res) => {
+        //   console.log(res);
+        // });
 
         handleChangeData(res);
         setResetPage(!resetPage);
@@ -278,15 +260,7 @@ const TransactionsManagement = () => {
   };
 
   const handleUpdateTrans = (
-    _name,
-    _cate1,
-    _cate2,
-    _money,
-    _hour,
-    _minute,
-    _second,
-    _type,
-    _moneytype,
+    data,
     new_name,
     new_cate1,
     new_cate2,
@@ -303,15 +277,7 @@ const TransactionsManagement = () => {
         day: displayDay,
         month: choseMonth,
         year: choseYear,
-        name: _name,
-        category1: _cate1,
-        category2: _cate2,
-        money: _money,
-        hour: _hour,
-        minute: _minute,
-        second: _second,
-        type: _type,
-        moneytype: _moneytype,
+        tran_id: data.tran_id,
         new_name: new_name,
         new_category1: new_cate1,
         new_category2: new_cate2,

@@ -647,7 +647,10 @@ const AssetsChart = ({ day, month, year }) => {
       <Box
         sx={{
           height:
-            checkNoAssetsTimeData || checkNoDebtTimeData ? "300px" : "430px",
+            (graphCategory === 0 && checkNoAssetsTimeData) ||
+            (graphCategory === 1 && checkNoDebtTimeData)
+              ? "300px"
+              : "430px",
           borderRadius: theme.primary.borderRadius,
           marginTop: "30px",
           display: "flex",

@@ -20,7 +20,7 @@ import { sha256 } from "js-sha256";
 import { useSnackbar } from "notistack";
 import { GlobalContext } from "../../context/GlobalState";
 import { SERVER } from "../../constant";
-import { toDateString } from "../Functions/text";
+import { toDateString, getCurrentTime } from "../Functions/text";
 import { JOBS, UNIS } from "../../constant/index";
 
 const Login = ({ setCurNav }) => {
@@ -143,6 +143,19 @@ const Login = ({ setCurNav }) => {
         updateConnect(true);
         updateName(res.data.name);
         updateUsername(res.data.username);
+
+        let currentDate = getCurrentTime();
+
+        postApi(
+          {
+            username: res.data.username,
+            day: currentDate.day,
+            month: currentDate.month,
+            year: currentDate.year,
+          },
+          `${SERVER}/assets/getOne`
+        ).then((res) => {});
+
         setCurNav("Trang chủ");
         enqueueSnackbar("Chào mừng bạn!", {
           variant: "success",
