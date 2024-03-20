@@ -34,9 +34,11 @@ function App() {
   });
 
   useEffect(() => {
-    postApi({ username: username }, `${SERVER}/user/getOne`).then((res) => {
-      setUserData(res.data);
-    });
+    if (username) {
+      postApi({ username: username }, `${SERVER}/user/getOne`).then((res) => {
+        setUserData(res.data);
+      });
+    }
   }, [username, provideDone]);
 
   return (

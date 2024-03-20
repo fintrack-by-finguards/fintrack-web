@@ -481,7 +481,14 @@ const AssetsChart = ({ day, month, year }) => {
                   options={options1(assetsData)}
                 />
 
-                <Box sx={{ display: "flex", alignItems: "center" }}>
+                <Box
+                  sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "start",
+                    justifyContent: "center",
+                  }}
+                >
                   {getTop5(assetsData)[0].data.map((chartData, idx) => (
                     <Box sx={{ display: "flex", alignItems: "center" }}>
                       <Box
@@ -574,13 +581,25 @@ const AssetsChart = ({ day, month, year }) => {
             </Box>
 
             {!checkNoDebtData ? (
-              <Box sx={{ display: "flex", justifyContent: "center" }}>
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "center",
+                }}
+              >
                 <HighchartsReact
                   highcharts={Highcharts}
                   options={options1(debtData)}
                 />
 
-                <Box sx={{ display: "flex", alignItems: "center" }}>
+                <Box
+                  sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "start",
+                    justifyContent: "center",
+                  }}
+                >
                   {getTop5(debtData)[0].data.map((chartData, idx) => (
                     <Box sx={{ display: "flex", alignItems: "center" }}>
                       <Box

@@ -8,18 +8,19 @@ import { getCurrentTime, getDays, createArray } from "../../Functions/text";
 import { TIME } from "../../../constant/index";
 
 const AssetsManagement = () => {
-  let currentTime = getCurrentTime();
-
   const theme = useTheme();
 
-  const [choseMonth, setChoseMonth] = useState(currentTime.month);
-  const [choseYear, setChoseYear] = useState(currentTime.year);
+  const [choseMonth, setChoseMonth] = useState(1);
+  const [choseYear, setChoseYear] = useState(2023);
 
-  const [startDay, setStartDay] = useState("01");
-  const [endDay, setEndDay] = useState(currentTime.day);
+  const [displayDay, setDisplayDay] = useState(1);
 
-  const [displayDay, setDisplayDay] = useState(currentTime.day);
-  const [resetPage, setResetPage] = useState(false);
+  useEffect(() => {
+    let currentTime = getCurrentTime();
+    setChoseMonth(currentTime.month);
+    setChoseYear(currentTime.year);
+    setDisplayDay(currentTime.day);
+  }, []);
 
   const handleChangeTime = (data) => {
     console.log(data);
