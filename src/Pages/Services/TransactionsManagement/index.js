@@ -103,6 +103,7 @@ const TransactionsManagement = () => {
               minute: Number(_minute),
               second: Number(_second),
               type: 0,
+              tran_id: res.tran_id,
             },
             `${SERVER}/assets/add`
           ).then((res) => {
@@ -125,6 +126,7 @@ const TransactionsManagement = () => {
               minute: Number(_minute),
               second: Number(_second),
               type: 0,
+              tran_id: res.tran_id,
             },
             `${SERVER}/assets/add`
           ).then((res) => {
@@ -147,6 +149,7 @@ const TransactionsManagement = () => {
               minute: Number(_minute),
               second: Number(_second),
               type: 1,
+              tran_id: res.tran_id,
             },
             `${SERVER}/assets/add`
           ).then((res) => {
@@ -172,6 +175,7 @@ const TransactionsManagement = () => {
               minute: Number(_minute),
               second: Number(_second),
               type: 0,
+              tran_id: res.tran_id,
             },
             `${SERVER}/assets/add`
           ).then((res) => {
@@ -194,6 +198,7 @@ const TransactionsManagement = () => {
               minute: Number(_minute),
               second: Number(_second),
               type: 1,
+              tran_id: res.tran_id,
             },
             `${SERVER}/assets/add`
           ).then((res) => {
@@ -227,22 +232,18 @@ const TransactionsManagement = () => {
       `${SERVER}/transactions/delete`
     ).then((res) => {
       if (res.status === "success") {
-        // postApi(
-        //   {
-        //     username: username,
-        //     day: Number(displayDay),
-        //     month: Number(choseMonth),
-        //     year: Number(choseYear),
-        //     name: _name,
-        //     money: _money,
-        //     hour: _hour,
-        //     minute: _minute,
-        //     second: _second,
-        //   },
-        //   `${SERVER}/assets/delete`
-        // ).then((res) => {
-        //   console.log(res);
-        // });
+        postApi(
+          {
+            username: username,
+            day: Number(displayDay),
+            month: Number(choseMonth),
+            year: Number(choseYear),
+            parent_id: data.tran_id,
+          },
+          `${SERVER}/assets/delete`
+        ).then((res) => {
+          console.log(res);
+        });
 
         handleChangeData(res);
         setResetPage(!resetPage);
@@ -291,6 +292,139 @@ const TransactionsManagement = () => {
       `${SERVER}/transactions/update`
     ).then((res) => {
       if (res.status === "success") {
+        postApi(
+          {
+            username: username,
+            day: Number(displayDay),
+            month: Number(choseMonth),
+            year: Number(choseYear),
+            parent_id: data.tran_id,
+          },
+          `${SERVER}/assets/delete`
+        ).then((res) => {
+          console.log(res);
+        });
+
+        if (Number(new_type) === 1) {
+          postApi(
+            {
+              username: username,
+              day: Number(displayDay),
+              month: Number(choseMonth),
+              year: Number(choseYear),
+              name: new_name,
+              category1: "Tài sản",
+              category2:
+                new_moneytype === 0 ? "Tiền mặt" : "Tiền gửi ngân hàng",
+              money: Number(new_money),
+              hour: Number(new_hour),
+              minute: Number(new_minute),
+              second: Number(new_second),
+              type: 0,
+              tran_id: data.tran_id,
+            },
+            `${SERVER}/assets/add`
+          ).then((res) => {
+            console.log(res);
+          });
+        }
+
+        if (Number(new_type) === 1 && new_cate1 === "Vay nợ") {
+          postApi(
+            {
+              username: username,
+              day: Number(displayDay),
+              month: Number(choseMonth),
+              year: Number(choseYear),
+              name: new_name,
+              category1: "Nợ",
+              category2: "Tiền mặt",
+              money: Number(new_money),
+              hour: Number(new_hour),
+              minute: Number(new_minute),
+              second: Number(new_second),
+              type: 0,
+              tran_id: data.tran_id,
+            },
+            `${SERVER}/assets/add`
+          ).then((res) => {
+            console.log(res);
+          });
+        }
+
+        if (Number(new_type) === 0) {
+          postApi(
+            {
+              username: username,
+              day: Number(displayDay),
+              month: Number(choseMonth),
+              year: Number(choseYear),
+              name: new_name,
+              category1: "Tài sản",
+              category2:
+                new_moneytype === 0 ? "Tiền mặt" : "Tiền gửi ngân hàng",
+              money: Number(new_money),
+              hour: Number(new_hour),
+              minute: Number(new_minute),
+              second: Number(new_second),
+              type: 1,
+              tran_id: data.tran_id,
+            },
+            `${SERVER}/assets/add`
+          ).then((res) => {
+            console.log(res);
+          });
+        }
+
+        if (
+          Number(new_type) === 0 &&
+          (new_cate2 === "Đầu tư" || new_cate2 === "Bất động sản")
+        ) {
+          postApi(
+            {
+              username: username,
+              day: Number(displayDay),
+              month: Number(choseMonth),
+              year: Number(choseYear),
+              name: new_name,
+              category1: "Tài sản",
+              category2: new_cate2,
+              money: Number(new_money),
+              hour: Number(new_hour),
+              minute: Number(new_minute),
+              second: Number(new_second),
+              type: 0,
+              tran_id: data.tran_id,
+            },
+            `${SERVER}/assets/add`
+          ).then((res) => {
+            console.log(res);
+          });
+        }
+
+        if (Number(new_type) === 0 && new_cate1 === "Trả nợ") {
+          postApi(
+            {
+              username: username,
+              day: Number(displayDay),
+              month: Number(choseMonth),
+              year: Number(choseYear),
+              name: new_name,
+              category1: "Nợ",
+              category2: "Tiền mặt",
+              money: Number(new_money),
+              hour: Number(new_hour),
+              minute: Number(new_minute),
+              second: Number(new_second),
+              type: 1,
+              tran_id: res.tran_id,
+            },
+            `${SERVER}/assets/add`
+          ).then((res) => {
+            console.log(res);
+          });
+        }
+
         handleChangeData(res);
         setResetPage(!resetPage);
         enqueueSnackbar("Cập nhật giao dịch thành công!", {
