@@ -8,6 +8,13 @@ import CommentIcon from "@mui/icons-material/Comment";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import PostDetail from "./PostDetail";
 
+import Post00 from "../../assets/Post00.png";
+import Post01 from "../../assets/Post01.png";
+import Post02 from "../../assets/Post02.png";
+import Post03 from "../../assets/Post03.png";
+import Post04 from "../../assets/Post04.png";
+import Post05 from "../../assets/Post05.png";
+
 const content = [
   {
     id: "0",
@@ -18,7 +25,7 @@ const content = [
       "Với tâm lý cứ “cố thêm tí nữa” là mua được hàng giá rẻ, deal hời đã khiến cho việc săn sale trở thành một thói quen lúc nào không hay, đến mùa sale không săn là thấy bồn chồn mà theo ngôn ngữ của tuổi teen thì nó là “cứ thiếu thiếu”.",
       "Việc này đã gây ra những hậu quả vô cùng nghiêm trọng không chỉ liên quan đến vấn đề sức khỏe mà nó còn ảnh hưởng đến việc chi tiêu quá mức dẫn đến tâm lý “hối hận” sau mỗi mùa sale.",
     ],
-    img: "https://scontent.fhan3-2.fna.fbcdn.net/v/t39.30808-6/431339090_122133651518103751_470812467328444163_n.jpg?_nc_cat=107&ccb=1-7&_nc_sid=5f2048&_nc_eui2=AeEaFkghDk2CqNky_V4tprdog-j3cq3MJxOD6PdyrcwnExQOYLkFgQAEeebQWisU_96lsxSKNayppCXYGEQtNWry&_nc_ohc=0u6JYK09iGQAX-XeqQe&_nc_zt=23&_nc_ht=scontent.fhan3-2.fna&oh=00_AfB9XLSy8VOXqI4HmvxaH_nS6mrXfZTowSVjKC7yTsmNOw&oe=65F5BC8C",
+    img: Post00,
   },
   {
     id: "1",
@@ -40,7 +47,7 @@ const content = [
       "9. Đừng ngại trả lại hàng khi “lỡ” bỏ vào giỏ",
       "Trên đây là những tip nhỏ mà bọn mình rút ra trong suốt những thời gian bị bào mòn túi tiền, các bạn có cách nào hay hơn thì cmt ở dưới nhé!",
     ],
-    img: "https://scontent.fhan3-2.fna.fbcdn.net/v/t39.30808-6/429673737_122133106820103751_6772340851854959524_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=5f2048&_nc_eui2=AeHh0upq8xqLuEQ4BvO2Wx5CxnFWwTguvnPGcVbBOC6-cw2dPPdDU4ryfMXptauxULH2cuVecbRVmA3BTzhcFThZ&_nc_ohc=si_0BiiJX2cAX8l2jM5&_nc_zt=23&_nc_ht=scontent.fhan3-2.fna&oh=00_AfAE-Fi1eQRl7PGQ9FLpM-5ZIohy-u7S8yS1PSG8ZT3CAw&oe=65F57503",
+    img: Post01,
   },
   {
     id: "2",
@@ -62,7 +69,7 @@ const content = [
       "🎯 Lọ thứ 6: 5% thu nhập cho quỹ từ thiện:",
       "Với tinh thần san sẻ yêu thương, mỗi tháng bạn có thể trích ra 5% thu nhập cho quỹ này.",
     ],
-    img: "https://scontent.fhan3-2.fna.fbcdn.net/v/t39.30808-6/429657726_122132330378103751_8716106126594379248_n.jpg?_nc_cat=107&ccb=1-7&_nc_sid=5f2048&_nc_eui2=AeEB1JitTA8P9PKdIMruT5VVMAG98lHPCAIwAb3yUc8IAilNrfC3FqoscbWkVeJb6Y0uslc_LZ-FEjanmiVmRbxV&_nc_ohc=ACaCjdQJvZQAX_KWdZi&_nc_zt=23&_nc_ht=scontent.fhan3-2.fna&oh=00_AfBan_dh1TBi20CttUqlrt0JDw9mY2eop_h8f1pHnam5TQ&oe=65F44AF8",
+    img: Post02,
   },
   {
     id: "3",
@@ -78,7 +85,7 @@ const content = [
       "Tổ chức chương trình giáo dục tài chính không chỉ là một cơ hội mà còn là một trách nhiệm, giúp xây dựng cộng đồng thông thái về tài chính và góp phần vào sự phát triển bền vững của xã hội. Hãy cùng nhau học hỏi và chia sẻ kiến thức để mỗi người có thể tự do tài chính và hướng tới tương lai đầy triển vọng trên FinTrack.",
       "Lọ này dành cho việc đầu tư vào giáo dục và phát triển bản thân, cũng như cho việc đầu tư vào giáo dục của con cái. Khoản tiết kiệm này sẽ giúp tạo ra cơ hội tăng cường kiến thức và kỹ năng.",
     ],
-    img: "https://scontent.fhan3-1.fna.fbcdn.net/v/t39.30808-6/425899183_122128297802103751_3260111450300328039_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=5f2048&_nc_eui2=AeFQMsDJH1a93RrGdarD9ZPdEiR-z4CnCQ8SJH7PgKcJD9GcczV3pc7IrMO01XFOo1E2yDktuVX4jUGkr-BHHpUU&_nc_ohc=Q5UBL0wAxPoAX-IxaNZ&_nc_zt=23&_nc_ht=scontent.fhan3-1.fna&oh=00_AfDYSLeDMgVuHdz3IhoxSepVJt5utoXZYXN-Tbdg9iR6ng&oe=65F4F965",
+    img: Post03,
   },
   {
     id: "4",
@@ -92,7 +99,17 @@ const content = [
       "5️⃣ Sử dụng ví điện tử thanh toán có thể sẽ giúp giảm giá tiền hơn nhé! Tuy nhiên lưu ý vì ví điện tử mặc dù rất tiện lợi khi chúng ta thanh toán nhưng vì nó liên kết sẵn với ngân hàng của mình nên dễ dẫn đến tình trạng “tiêu quá tay” hoặc nếu chúng ta sử dụng ví trả sau của momo thì nhớ cẩn trọng đừng để bản thân lâm vào tình trạng “nợ quá nhiều”. ",
       "✅Chúng mình đã áp dụng và có hiệu quả, còn bạn thì sao? Nếu có mẹo hay hơn hãy để lại bình luận bên dưới nhé.",
     ],
-    img: "https://scontent.fhan17-1.fna.fbcdn.net/v/t39.30808-6/431903525_122135167292103751_8741297609560337090_n.jpg?_nc_cat=108&ccb=1-7&_nc_sid=5f2048&_nc_eui2=AeH09Ks0PVxOf44YbN-dMZnd4u5YL9FUYIHi7lgv0VRggaO0UwRTWPmCuEXd6gs31nrEVMYkRCx9x6VL-BJZu87f&_nc_ohc=R2cVejhWil0AX-05bTi&_nc_ht=scontent.fhan17-1.fna&oh=00_AfCuPNOnZ2JT_glr0IGOipXILB15wHIj6d3wfULLCxnvpA&oe=65F73960",
+    img: Post04,
+  },
+  {
+    id: "5",
+    title: "Một vài lời bàn về người nổi tiếng và lối sống tiết kiệm!",
+    content: [
+      'Thomas Corley, tác giả của cuốn "Thói quen thành công hàng ngày của những người giàu có", đã chỉ ra một đặc điểm chung của những tỷ phú đó là họ luôn thực hành tiết kiệm. Điển hình như tỷ phú người Mỹ Warren Buffett đã thể hiện quan điểm của mình về tiết kiệm khi nói rằng: "Nếu bạn mua thứ bạn không cần, bạn sẽ sớm phải bán thứ bạn cần". Warren Buffett sống một cuộc sống vô cùng giản dị, ưa chuộng đồ ăn từ cửa hàng tiện lợi, sử dụng xe ô tô cũ và sống trong căn nhà 3 phòng ngủ từ năm 1958, mặc dù ông sở hữu một khối tài sản khổng lồ. Hay chắc hẳn các bạn đều biết đến người sáng lập Facebook - Mark Zuckerberg. Anh ấy thường xuyên xuất hiện với những bộ đồ hết sức giản dị, nắm tay vợ đi đến một siêu thị giá rẻ để sắm đồ và việc này đã khiến mọi người ngạc nhiên. Vậy cái cảm xúc này của người ta vì sao lại có?',
+      'Câu trả lời có rất nhiều, riêng cá nhân mình thì nghĩ rằng họ sẽ đặt câu hỏi “sau anh ta giàu thế mà phải đến cửa hàng bình dân mua sắm?”. Thực chất, những người thành công họ rất giỏi trong việc quản lý tài chính, họ biết sắp xếp và lên kế hoạch về những món đồ mình cần mua, họ biết kiểm soát chi tiêu của mình và quý trọng những đồng tiền dù là nhỏ nhất. Hiểu rõ hơn ai hết về giá trị của những đồng tiền lẻ, ông Nguyễn Bá Diệp - đồng sáng lập kiêm Phó Chủ tịch MoMo chia sẻ trong show Tự do tài chính - Moneytalk: "Mình thấy tất cả những người thành công đều là những người tiết kiệm, rất rất tiết kiệm".',
+      "🤔Sau khi tham khảo các ví dụ về những người tỷ phú tiêu biểu, tôi nhận ra rằng thay vì phải tự hỏi mỗi cuối tháng về việc tại sao chúng ta lại hết tiền, tại sao chúng ta lại mua một thứ này và bỏ qua một thứ khác, thì tốt hơn hết là tự thưởng cho bản thân mình bằng cách quản lý tài chính thông minh và tiết kiệm mỗi tháng. Tự thưởng bản thân mỗi khi đạt được mục tiêu tiết kiệm, chúng ta sẽ tự thấy hạnh phúc và hứng khởi hơn. Một năm sau, chúng ta sẽ có một khoản tiết kiệm đáng kể, thể hiện giá trị của việc tích tiểu thành đại trong tiết kiệm. Đây cũng là con đường tiến tới tự do tài chính mà mọi người nên bắt đầu thực hiện sớm, hoặc ít nhất là có thể tự chủ trong việc chi tiêu của mình.💯",
+    ],
+    img: Post05,
   },
 ];
 

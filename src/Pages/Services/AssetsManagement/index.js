@@ -17,7 +17,6 @@ const AssetsManagement = () => {
   const [displayDay, setDisplayDay] = useState(currentTime.day);
 
   const handleChangeTime = (data) => {
-    console.log(data);
     setChoseMonth(data.month);
     setChoseYear(data.year);
   };

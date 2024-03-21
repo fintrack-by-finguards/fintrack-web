@@ -19,7 +19,6 @@ export const GlobalProvider = (props) => {
 
   const updateName = (_name) => {
     dispatch({ type: "UPDATE_NAME", payload: _name });
-    console.log(_name);
   };
 
   const updateUsername = (_username) => {

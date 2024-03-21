@@ -47,7 +47,6 @@ const Header = ({ menuItems, curNav, setCurNav }) => {
     }
   };
 
-  console.log(isMobile);
   // create an event listener
   useEffect(() => {
     handleResize();

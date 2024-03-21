@@ -3,6 +3,7 @@ import { useState, useEffect, useContext } from "react";
 import { GlobalContext } from "../../../../context/GlobalState";
 import { SERVER } from "../../../../constant/index";
 import { postApi } from "../../../../others/database";
+import NumberInput from "../../../../Components/NumberInput";
 
 import DialogTitle from "@mui/material/DialogTitle";
 import Dialog from "@mui/material/Dialog";
@@ -17,7 +18,7 @@ import {
   Button,
 } from "@mui/material";
 
-import { getCurrentTime } from "../../../Functions/text";
+import { getCurrentTime, inputMoneyToNum } from "../../../Functions/text";
 import {
   EXPENSESCATEGORIES,
   RECEIVECATEGORIES,
@@ -86,7 +87,7 @@ const AddTransactionDialog = ({
         tranName,
         Object.keys(EXPENSESCATEGORIES)[tranCate1],
         finalTranCate2,
-        tranMoney,
+        inputMoneyToNum(tranMoney),
         tranHour,
         tranMinute,
         tranSecond,
@@ -102,7 +103,7 @@ const AddTransactionDialog = ({
         tranName,
         RECEIVECATEGORIES[tranCate1],
         "",
-        tranMoney,
+        inputMoneyToNum(tranMoney),
         tranHour,
         tranMinute,
         tranSecond,
@@ -248,34 +249,7 @@ const AddTransactionDialog = ({
         >
           Số tiền
         </Typography>
-        <TextField
-          id="outlined-basic"
-          variant="outlined"
-          value={tranMoney}
-          onChange={(e) => setTranMoney(e.target.value)}
-          sx={{
-            backgroundColor: "white",
-            width: "100%",
-            marginRight: "10px",
-            borderRadius: theme.primary.borderRadius,
-            "& .MuiOutlinedInput-root": {
-              "& fieldset": {
-                borderRadius: theme.primary.borderRadius,
-                fontFamily: theme.primary.fontFamily,
-              },
-              "&.Mui-focused fieldset": {
-                border: `3px solid ${theme.primary.sub}`,
-                color: theme.primary.sub,
-              },
-            },
-          }}
-          InputLabelProps={{ shrink: false, style: { fontSize: 0 } }}
-          inputProps={{
-            style: {
-              height: "7px",
-            },
-          }}
-        />
+        <NumberInput value={tranMoney} onChange={setTranMoney} />
       </Box>
 
       {tranType === 0 ? (

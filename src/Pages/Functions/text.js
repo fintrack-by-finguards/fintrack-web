@@ -6,11 +6,14 @@ export function toDateString(date) {
   }
 }
 
+export function inputMoneyToNum(string) {
+  return Number(string.replaceAll(",", ""));
+}
 export function numToMoney(num) {
   let res =
     String(num).replace(
       /(?:(^\d{1,3})(?=(?:\d{3})*$)|(\d{3}))(?!$)/gm,
-      "$1$2."
+      "$1$2,"
     ) + "đ";
   res = res.replace(/^0+/, "");
   while (res.charAt(0) === "0") {

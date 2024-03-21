@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Menu, Button, MenuItem, Typography } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 
-const MyMenu = ({ curNav, item, setCurNav }) => {
+const AboutUs = ({ curNav, item, setCurNav }) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const theme = useTheme();
   const [open, setOpen] = useState(false);
@@ -46,7 +46,7 @@ const MyMenu = ({ curNav, item, setCurNav }) => {
         onClick={handleOpen}
         style={{ zIndex: 1301 }}
       >
-        Sản phẩm
+        Về chúng tôi
       </Button>
       <Menu
         id="simple-menu"
@@ -65,7 +65,7 @@ const MyMenu = ({ curNav, item, setCurNav }) => {
       >
         <MenuItem>
           <Button
-            // onClick={() => handleCloseAndOpenNewTab("Giới thiệu sản phẩm")}
+            onClick={() => handleCloseAndOpenNewTab("Giới thiệu")}
             sx={{ width: "100%" }}
           >
             <Typography
@@ -84,7 +84,7 @@ const MyMenu = ({ curNav, item, setCurNav }) => {
         </MenuItem>
         <MenuItem>
           <Button
-            onClick={() => handleCloseAndOpenNewTab("Mục tiêu tài chính")}
+            onClick={() => handleCloseAndOpenNewTab("Đội ngũ")}
             sx={{ width: "100%" }}
           >
             <Typography
@@ -97,13 +97,13 @@ const MyMenu = ({ curNav, item, setCurNav }) => {
               }}
               textAlign="left"
             >
-              Mục tiêu tài chính
+              Đội ngũ
             </Typography>
           </Button>
         </MenuItem>
         <MenuItem>
           <Button
-            onClick={() => handleCloseAndOpenNewTab("Kế hoạch tài chính")}
+            onClick={() => handleCloseAndOpenNewTab("Sứ mệnh")}
             sx={{ width: "100%" }}
           >
             <Typography
@@ -116,13 +116,13 @@ const MyMenu = ({ curNav, item, setCurNav }) => {
               }}
               textAlign="left"
             >
-              Kế hoạch tài chính
+              Sứ mệnh
             </Typography>
           </Button>
         </MenuItem>
         <MenuItem>
           <Button
-            onClick={() => handleCloseAndOpenNewTab("Quản lý chi tiêu")}
+            onClick={() => handleCloseAndOpenNewTab("Mục tiêu")}
             sx={{ width: "100%" }}
           >
             <Typography
@@ -135,13 +135,13 @@ const MyMenu = ({ curNav, item, setCurNav }) => {
               }}
               textAlign="left"
             >
-              Quản lý chi tiêu
+              Mục tiêu
             </Typography>
           </Button>
         </MenuItem>
         <MenuItem>
           <Button
-            onClick={() => handleCloseAndOpenNewTab("Quản lý tài chính")}
+            onClick={() => handleCloseAndOpenNewTab("Kế hoạch phát triên")}
             sx={{ width: "100%" }}
           >
             <Typography
@@ -154,7 +154,7 @@ const MyMenu = ({ curNav, item, setCurNav }) => {
               }}
               textAlign="left"
             >
-              Quản lý tài chính
+              Kế hoạch phát triển
             </Typography>
           </Button>
         </MenuItem>
@@ -163,4 +163,4 @@ const MyMenu = ({ curNav, item, setCurNav }) => {
   );
 };
 
-export default MyMenu;
+export default AboutUs;

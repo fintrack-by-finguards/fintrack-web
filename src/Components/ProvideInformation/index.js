@@ -2,10 +2,11 @@ import { useState, useContext } from "react";
 import { Box, Typography, Container, Button, TextField } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import LockOpenIcon from "@mui/icons-material/LockOpen";
-import { getCurrentTime } from "../../Pages/Functions/text";
+import { getCurrentTime, inputMoneyToNum } from "../../Pages/Functions/text";
 import { SERVER } from "../../constant/index";
 import { postApi } from "../../others/database";
 import { GlobalContext } from "../../context/GlobalState";
+import NumberInput from "../NumberInput";
 
 const ProvideInformation = ({ setProvideDone, setCurNav }) => {
   const currentTime = getCurrentTime();
@@ -26,17 +27,17 @@ const ProvideInformation = ({ setProvideDone, setCurNav }) => {
 
   const handleSubmit = async () => {
     let curAssets = [0, 0, 0, 0, 0];
-    curAssets[0] = asset1 !== "" ? Number(asset1) : 0;
-    curAssets[1] = asset2 !== "" ? Number(asset2) : 0;
-    curAssets[2] = asset3 !== "" ? Number(asset3) : 0;
-    curAssets[3] = asset4 !== "" ? Number(asset4) : 0;
-    curAssets[4] = asset5 !== "" ? Number(asset5) : 0;
+    curAssets[0] = asset1 !== "" ? inputMoneyToNum(asset1) : 0;
+    curAssets[1] = asset2 !== "" ? inputMoneyToNum(asset2) : 0;
+    curAssets[2] = asset3 !== "" ? inputMoneyToNum(asset3) : 0;
+    curAssets[3] = asset4 !== "" ? inputMoneyToNum(asset4) : 0;
+    curAssets[4] = asset5 !== "" ? inputMoneyToNum(asset5) : 0;
 
     let curDebts = [0, 0, 0, 0];
-    curDebts[0] = debt1 !== "" ? Number(debt1) : 0;
-    curDebts[1] = debt2 !== "" ? Number(debt2) : 0;
-    curDebts[2] = debt3 !== "" ? Number(debt3) : 0;
-    curDebts[3] = debt4 !== "" ? Number(debt4) : 0;
+    curDebts[0] = debt1 !== "" ? inputMoneyToNum(debt1) : 0;
+    curDebts[1] = debt2 !== "" ? inputMoneyToNum(debt2) : 0;
+    curDebts[2] = debt3 !== "" ? inputMoneyToNum(debt3) : 0;
+    curDebts[3] = debt4 !== "" ? inputMoneyToNum(debt4) : 0;
 
     await postApi(
       {
@@ -48,25 +49,13 @@ const ProvideInformation = ({ setProvideDone, setCurNav }) => {
         debt: curDebts,
       },
       `${SERVER}/assets/create`
-    ).then((res) => {
-      console.log(res);
-    });
+    ).then((res) => {});
 
     let userData = await postApi(
       { username: username },
       `${SERVER}/user/getOne`
     );
 
-    // console.log(userData);
-    console.log({
-      username: username,
-      name: userData.data.name,
-      birthday: userData.data.birthday,
-      job: userData.data.job,
-      university: userData.data.university,
-      income: income !== "" ? income : 0,
-      activate: true,
-    });
     postApi(
       {
         username: username,
@@ -81,88 +70,7 @@ const ProvideInformation = ({ setProvideDone, setCurNav }) => {
     ).then((res) => {
       setProvideDone(true);
       setCurNav("Trang chủ");
-      console.log(res);
     });
-  };
-
-  const handleChangeIncome = (event) => {
-    if (event.target.value.match(/[^0-9]/)) {
-      event.preventDefault();
-    } else {
-      setIncome(event.target.value);
-    }
-  };
-
-  const handleChangeAsset1 = (event) => {
-    if (event.target.value.match(/[^0-9]/)) {
-      event.preventDefault();
-    } else {
-      setAsset1(event.target.value);
-    }
-  };
-
-  const handleChangeAsset2 = (event) => {
-    if (event.target.value.match(/[^0-9]/)) {
-      event.preventDefault();
-    } else {
-      setAsset2(event.target.value);
-    }
-  };
-
-  const handleChangeAsset3 = (event) => {
-    if (event.target.value.match(/[^0-9]/)) {
-      event.preventDefault();
-    } else {
-      setAsset3(event.target.value);
-    }
-  };
-
-  const handleChangeAsset4 = (event) => {
-    if (event.target.value.match(/[^0-9]/)) {
-      event.preventDefault();
-    } else {
-      setAsset4(event.target.value);
-    }
-  };
-
-  const handleChangeAsset5 = (event) => {
-    if (event.target.value.match(/[^0-9]/)) {
-      event.preventDefault();
-    } else {
-      setAsset5(event.target.value);
-    }
-  };
-
-  const handleChangeDebt1 = (event) => {
-    if (event.target.value.match(/[^0-9]/)) {
-      event.preventDefault();
-    } else {
-      setDebt1(event.target.value);
-    }
-  };
-
-  const handleChangeDebt2 = (event) => {
-    if (event.target.value.match(/[^0-9]/)) {
-      event.preventDefault();
-    } else {
-      setDebt2(event.target.value);
-    }
-  };
-
-  const handleChangeDebt3 = (event) => {
-    if (event.target.value.match(/[^0-9]/)) {
-      event.preventDefault();
-    } else {
-      setDebt3(event.target.value);
-    }
-  };
-
-  const handleChangeDebt4 = (event) => {
-    if (event.target.value.match(/[^0-9]/)) {
-      event.preventDefault();
-    } else {
-      setDebt4(event.target.value);
-    }
   };
 
   return (
@@ -296,35 +204,7 @@ const ProvideInformation = ({ setProvideDone, setCurNav }) => {
             >
               Thu nhập của bạn là (đơn vị: đ)
             </Typography>
-            <TextField
-              id="outlined-basic"
-              variant="outlined"
-              value={income}
-              onChange={handleChangeIncome}
-              sx={{
-                backgroundColor: "white",
-                width: "100%",
-                marginRight: "10px",
-                borderRadius: theme.primary.borderRadius,
-                "& .MuiOutlinedInput-root": {
-                  "& fieldset": {
-                    borderRadius: theme.primary.borderRadius,
-                    fontFamily: theme.primary.fontFamily,
-                  },
-                  "&.Mui-focused fieldset": {
-                    border: `3px solid ${theme.primary.sub}`,
-                    color: theme.primary.sub,
-                  },
-                },
-              }}
-              InputLabelProps={{ shrink: false, style: { fontSize: 0 } }}
-              inputProps={{
-                style: {
-                  inputMode: "numeric",
-                  height: "7px",
-                },
-              }}
-            />
+            <NumberInput value={income} onChange={setIncome} />
           </Box>
 
           <Typography
@@ -368,35 +248,7 @@ const ProvideInformation = ({ setProvideDone, setCurNav }) => {
             >
               Tài sản bằng <b>"Tiền mặt"</b> của bạn (đơn vị: đ)
             </Typography>
-            <TextField
-              id="outlined-basic"
-              variant="outlined"
-              value={asset1}
-              onChange={handleChangeAsset1}
-              sx={{
-                backgroundColor: "white",
-                width: "100%",
-                marginRight: "10px",
-                borderRadius: theme.primary.borderRadius,
-                "& .MuiOutlinedInput-root": {
-                  "& fieldset": {
-                    borderRadius: theme.primary.borderRadius,
-                    fontFamily: theme.primary.fontFamily,
-                  },
-                  "&.Mui-focused fieldset": {
-                    border: `3px solid ${theme.primary.sub}`,
-                    color: theme.primary.sub,
-                  },
-                },
-              }}
-              InputLabelProps={{ shrink: false, style: { fontSize: 0 } }}
-              inputProps={{
-                style: {
-                  inputMode: "numeric",
-                  height: "7px",
-                },
-              }}
-            />
+            <NumberInput value={asset1} onChange={setAsset1} />
           </Box>
 
           <Box
@@ -423,35 +275,7 @@ const ProvideInformation = ({ setProvideDone, setCurNav }) => {
             >
               Tài sản bằng <b>"Tiền gửi ngân hàng"</b> của bạn (đơn vị: đ)
             </Typography>
-            <TextField
-              id="outlined-basic"
-              variant="outlined"
-              value={asset2}
-              onChange={handleChangeAsset2}
-              sx={{
-                backgroundColor: "white",
-                width: "100%",
-                marginRight: "10px",
-                borderRadius: theme.primary.borderRadius,
-                "& .MuiOutlinedInput-root": {
-                  "& fieldset": {
-                    borderRadius: theme.primary.borderRadius,
-                    fontFamily: theme.primary.fontFamily,
-                  },
-                  "&.Mui-focused fieldset": {
-                    border: `3px solid ${theme.primary.sub}`,
-                    color: theme.primary.sub,
-                  },
-                },
-              }}
-              InputLabelProps={{ shrink: false, style: { fontSize: 0 } }}
-              inputProps={{
-                style: {
-                  inputMode: "numeric",
-                  height: "7px",
-                },
-              }}
-            />
+            <NumberInput value={asset2} onChange={setAsset2} />
           </Box>
 
           <Box
@@ -478,35 +302,7 @@ const ProvideInformation = ({ setProvideDone, setCurNav }) => {
             >
               Tài sản <b>"Cho vay"</b> của bạn (đơn vị: đ)
             </Typography>
-            <TextField
-              id="outlined-basic"
-              variant="outlined"
-              value={asset3}
-              onChange={handleChangeAsset3}
-              sx={{
-                backgroundColor: "white",
-                width: "100%",
-                marginRight: "10px",
-                borderRadius: theme.primary.borderRadius,
-                "& .MuiOutlinedInput-root": {
-                  "& fieldset": {
-                    borderRadius: theme.primary.borderRadius,
-                    fontFamily: theme.primary.fontFamily,
-                  },
-                  "&.Mui-focused fieldset": {
-                    border: `3px solid ${theme.primary.sub}`,
-                    color: theme.primary.sub,
-                  },
-                },
-              }}
-              InputLabelProps={{ shrink: false, style: { fontSize: 0 } }}
-              inputProps={{
-                style: {
-                  inputMode: "numeric",
-                  height: "7px",
-                },
-              }}
-            />
+            <NumberInput value={asset3} onChange={setAsset3} />
           </Box>
 
           <Box
@@ -533,35 +329,7 @@ const ProvideInformation = ({ setProvideDone, setCurNav }) => {
             >
               Tài sản dưới dạng <b>"Đầu tư"</b> của bạn (đơn vị: đ)
             </Typography>
-            <TextField
-              id="outlined-basic"
-              variant="outlined"
-              value={asset4}
-              onChange={handleChangeAsset4}
-              sx={{
-                backgroundColor: "white",
-                width: "100%",
-                marginRight: "10px",
-                borderRadius: theme.primary.borderRadius,
-                "& .MuiOutlinedInput-root": {
-                  "& fieldset": {
-                    borderRadius: theme.primary.borderRadius,
-                    fontFamily: theme.primary.fontFamily,
-                  },
-                  "&.Mui-focused fieldset": {
-                    border: `3px solid ${theme.primary.sub}`,
-                    color: theme.primary.sub,
-                  },
-                },
-              }}
-              InputLabelProps={{ shrink: false, style: { fontSize: 0 } }}
-              inputProps={{
-                style: {
-                  inputMode: "numeric",
-                  height: "7px",
-                },
-              }}
-            />
+            <NumberInput value={asset4} onChange={setAsset4} />
           </Box>
 
           <Box
@@ -588,35 +356,7 @@ const ProvideInformation = ({ setProvideDone, setCurNav }) => {
             >
               Tài sản dưới dạng <b>"Bất động sản"</b> của bạn (đơn vị: đ)
             </Typography>
-            <TextField
-              id="outlined-basic"
-              variant="outlined"
-              value={asset5}
-              onChange={handleChangeAsset5}
-              sx={{
-                backgroundColor: "white",
-                width: "100%",
-                marginRight: "10px",
-                borderRadius: theme.primary.borderRadius,
-                "& .MuiOutlinedInput-root": {
-                  "& fieldset": {
-                    borderRadius: theme.primary.borderRadius,
-                    fontFamily: theme.primary.fontFamily,
-                  },
-                  "&.Mui-focused fieldset": {
-                    border: `3px solid ${theme.primary.sub}`,
-                    color: theme.primary.sub,
-                  },
-                },
-              }}
-              InputLabelProps={{ shrink: false, style: { fontSize: 0 } }}
-              inputProps={{
-                style: {
-                  inputMode: "numeric",
-                  height: "7px",
-                },
-              }}
-            />
+            <NumberInput value={asset5} onChange={setAsset5} />
           </Box>
 
           <Typography
@@ -660,35 +400,7 @@ const ProvideInformation = ({ setProvideDone, setCurNav }) => {
             >
               Khoản nợ <b>"Tiền mặt"</b> của bạn (đơn vị: đ)
             </Typography>
-            <TextField
-              id="outlined-basic"
-              variant="outlined"
-              value={debt1}
-              onChange={handleChangeDebt1}
-              sx={{
-                backgroundColor: "white",
-                width: "100%",
-                marginRight: "10px",
-                borderRadius: theme.primary.borderRadius,
-                "& .MuiOutlinedInput-root": {
-                  "& fieldset": {
-                    borderRadius: theme.primary.borderRadius,
-                    fontFamily: theme.primary.fontFamily,
-                  },
-                  "&.Mui-focused fieldset": {
-                    border: `3px solid ${theme.primary.sub}`,
-                    color: theme.primary.sub,
-                  },
-                },
-              }}
-              InputLabelProps={{ shrink: false, style: { fontSize: 0 } }}
-              inputProps={{
-                style: {
-                  inputMode: "numeric",
-                  height: "7px",
-                },
-              }}
-            />
+            <NumberInput value={debt1} onChange={setDebt1} />
           </Box>
 
           <Box
@@ -715,35 +427,7 @@ const ProvideInformation = ({ setProvideDone, setCurNav }) => {
             >
               Khoản nợ <b>"Trả góp"</b> của bạn (đơn vị: đ)
             </Typography>
-            <TextField
-              id="outlined-basic"
-              variant="outlined"
-              value={debt2}
-              onChange={handleChangeDebt2}
-              sx={{
-                backgroundColor: "white",
-                width: "100%",
-                marginRight: "10px",
-                borderRadius: theme.primary.borderRadius,
-                "& .MuiOutlinedInput-root": {
-                  "& fieldset": {
-                    borderRadius: theme.primary.borderRadius,
-                    fontFamily: theme.primary.fontFamily,
-                  },
-                  "&.Mui-focused fieldset": {
-                    border: `3px solid ${theme.primary.sub}`,
-                    color: theme.primary.sub,
-                  },
-                },
-              }}
-              InputLabelProps={{ shrink: false, style: { fontSize: 0 } }}
-              inputProps={{
-                style: {
-                  inputMode: "numeric",
-                  height: "7px",
-                },
-              }}
-            />
+            <NumberInput value={debt2} onChange={setDebt2} />
           </Box>
           <Box
             sx={{
@@ -769,35 +453,7 @@ const ProvideInformation = ({ setProvideDone, setCurNav }) => {
             >
               Khoản nợ <b>"Thế chấp"</b> của bạn (đơn vị: đ)
             </Typography>
-            <TextField
-              id="outlined-basic"
-              variant="outlined"
-              value={debt3}
-              onChange={handleChangeDebt3}
-              sx={{
-                backgroundColor: "white",
-                width: "100%",
-                marginRight: "10px",
-                borderRadius: theme.primary.borderRadius,
-                "& .MuiOutlinedInput-root": {
-                  "& fieldset": {
-                    borderRadius: theme.primary.borderRadius,
-                    fontFamily: theme.primary.fontFamily,
-                  },
-                  "&.Mui-focused fieldset": {
-                    border: `3px solid ${theme.primary.sub}`,
-                    color: theme.primary.sub,
-                  },
-                },
-              }}
-              InputLabelProps={{ shrink: false, style: { fontSize: 0 } }}
-              inputProps={{
-                style: {
-                  inputMode: "numeric",
-                  height: "7px",
-                },
-              }}
-            />
+            <NumberInput value={debt3} onChange={setDebt3} />
           </Box>
           <Box
             sx={{
@@ -823,35 +479,7 @@ const ProvideInformation = ({ setProvideDone, setCurNav }) => {
             >
               Khoản nợ <b>"Thấu chi"</b> của bạn (đơn vị: đ)
             </Typography>
-            <TextField
-              id="outlined-basic"
-              variant="outlined"
-              value={debt4}
-              onChange={handleChangeDebt4}
-              sx={{
-                backgroundColor: "white",
-                width: "100%",
-                marginRight: "10px",
-                borderRadius: theme.primary.borderRadius,
-                "& .MuiOutlinedInput-root": {
-                  "& fieldset": {
-                    borderRadius: theme.primary.borderRadius,
-                    fontFamily: theme.primary.fontFamily,
-                  },
-                  "&.Mui-focused fieldset": {
-                    border: `3px solid ${theme.primary.sub}`,
-                    color: theme.primary.sub,
-                  },
-                },
-              }}
-              InputLabelProps={{ shrink: false, style: { fontSize: 0 } }}
-              inputProps={{
-                style: {
-                  inputMode: "numeric",
-                  height: "7px",
-                },
-              }}
-            />
+            <NumberInput value={debt4} onChange={setDebt4} />
           </Box>
           <Button
             sx={{

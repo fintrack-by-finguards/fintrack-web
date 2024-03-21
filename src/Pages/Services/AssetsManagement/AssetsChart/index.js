@@ -45,7 +45,6 @@ function getTop5(data) {
     }
   }
 
-  console.log([{ name: "Tỷ trọng", colorByPoint: true, data: res }]);
   return [{ name: "Tỷ trọng", colorByPoint: true, data: res }];
 }
 
@@ -408,8 +407,6 @@ const AssetsChart = ({ day, month, year }) => {
       }
     });
   }, [day, month, year]);
-
-  console.log(assetsData);
 
   const { username } = useContext(GlobalContext);
 

@@ -144,13 +144,10 @@ const Experiment = () => {
               } catch {
                 setError(true);
                 setError(false);
-                console.log(res.data);
                 setLoading(false);
               }
             });
-          } catch (err) {
-            console.log(err);
-          }
+          } catch (err) {}
         });
       }
     );
@@ -172,7 +169,6 @@ const Experiment = () => {
       autoHideDuration: 5000,
     });
     setRefresh(!refresh);
-    console.log(res);
   };
 
   return (

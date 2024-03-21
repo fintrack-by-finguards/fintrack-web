@@ -17,7 +17,6 @@ const Footer = () => {
     }
   };
 
-  console.log(isMobile);
   // create an event listener
   useEffect(() => {
     handleResize();

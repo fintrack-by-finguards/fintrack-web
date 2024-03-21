@@ -99,7 +99,6 @@ const FinancialPlans = () => {
         let fund6 = 0;
         for (let i = 0; i < data.data.length; ++i) {
           for (let j = 0; j < data.data[i].history.length; ++j) {
-            console.log(data.data[i].history[j]);
             if (data.data[i].history[j].category1 === "Chi tiêu cần thiết")
               fund1 += data.data[i].history[j].money;
             else if (data.data[i].history[j].category1 === "Tiết kiệm")
@@ -150,8 +149,6 @@ const FinancialPlans = () => {
       });
     });
   }, []);
-
-  console.log(userData);
 
   return (
     <Container

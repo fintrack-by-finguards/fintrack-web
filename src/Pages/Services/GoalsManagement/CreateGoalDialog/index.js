@@ -13,6 +13,8 @@ import {
   TextField,
   Button,
 } from "@mui/material";
+import NumberInput from "../../../../Components/NumberInput";
+import { inputMoneyToNum } from "../../../Functions/text";
 
 const CreateGoalDialog = ({ openDialog, handleCloseDialog, createGoal }) => {
   const theme = useTheme();
@@ -35,7 +37,7 @@ const CreateGoalDialog = ({ openDialog, handleCloseDialog, createGoal }) => {
   const submit = () => {
     createGoal(
       goalName,
-      Number(goalMoney),
+      inputMoneyToNum(goalMoney),
       Number(goalTime),
       Number(goalUnit),
       goalImage
@@ -135,34 +137,7 @@ const CreateGoalDialog = ({ openDialog, handleCloseDialog, createGoal }) => {
         >
           Số tiền
         </Typography>
-        <TextField
-          id="outlined-basic"
-          variant="outlined"
-          value={goalMoney}
-          onChange={(e) => setGoalMoney(e.target.value)}
-          sx={{
-            backgroundColor: "white",
-            width: "100%",
-            marginRight: "10px",
-            borderRadius: theme.primary.borderRadius,
-            "& .MuiOutlinedInput-root": {
-              "& fieldset": {
-                borderRadius: theme.primary.borderRadius,
-                fontFamily: theme.primary.fontFamily,
-              },
-              "&.Mui-focused fieldset": {
-                border: `3px solid ${theme.primary.sub}`,
-                color: theme.primary.sub,
-              },
-            },
-          }}
-          InputLabelProps={{ shrink: false, style: { fontSize: 0 } }}
-          inputProps={{
-            style: {
-              height: "7px",
-            },
-          }}
-        />
+        <NumberInput value={goalMoney} onChange={setGoalMoney} />
       </Box>
 
       <Box sx={{ marginTop: "10px" }}>

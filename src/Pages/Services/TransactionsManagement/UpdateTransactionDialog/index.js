@@ -17,7 +17,12 @@ import {
   Button,
 } from "@mui/material";
 
-import { getCurrentTime } from "../../../Functions/text";
+import {
+  getCurrentTime,
+  inputMoneyToNum,
+  numToMoney,
+} from "../../../Functions/text";
+import NumberInput from "../../../../Components/NumberInput";
 import {
   EXPENSESCATEGORIES,
   RECEIVECATEGORIES,
@@ -45,7 +50,9 @@ const UpdateTransactionDialog = ({
   useEffect(() => {
     setTranType(data.type);
     setTranName(data.name);
-    setTranMoney(data.money);
+    setTranMoney(
+      numToMoney(data.money).substring(0, numToMoney(data.money).length - 1)
+    );
     if (data.type === 0)
       setTranCate1(Object.keys(EXPENSESCATEGORIES).indexOf(data.category1));
     else setTranCate1(RECEIVECATEGORIES.indexOf(data.category1));
@@ -60,7 +67,9 @@ const UpdateTransactionDialog = ({
     handleCloseDialog();
     setTranType(data.type);
     setTranName(data.name);
-    setTranMoney(data.money);
+    setTranMoney(
+      numToMoney(data.money).substring(0, numToMoney(data.money).length - 1)
+    );
     if (data.type === 0)
       setTranCate1(Object.keys(EXPENSESCATEGORIES).indexOf(data.category1));
     else setTranCate1(RECEIVECATEGORIES.indexOf(data.category1));
@@ -103,20 +112,22 @@ const UpdateTransactionDialog = ({
             tranCate2
           ];
 
-    console.log(finalTranCate2);
     if (tranType === 0) {
       handleUpdateTrans(
         data,
         tranName,
         Object.keys(EXPENSESCATEGORIES)[tranCate1],
         finalTranCate2,
-        tranMoney,
+        inputMoneyToNum(tranMoney),
         tranHour,
         tranMinute,
         tranSecond,
         tranType,
         tranMoneyType,
-        savingData[tranSaving]._id
+        Object.keys(EXPENSESCATEGORIES)[tranCate1] === "Tiết kiệm" &&
+          savingData.length > 0
+          ? savingData[tranSaving]._id
+          : ""
       );
     } else {
       handleUpdateTrans(
@@ -124,13 +135,16 @@ const UpdateTransactionDialog = ({
         tranName,
         RECEIVECATEGORIES[tranCate1],
         "",
-        tranMoney,
+        inputMoneyToNum(tranMoney),
         tranHour,
         tranMinute,
         tranSecond,
         tranType,
         tranMoneyType,
-        savingData[tranSaving]._id
+        Object.keys(EXPENSESCATEGORIES)[tranCate1] === "Tiết kiệm" &&
+          savingData.length > 0
+          ? savingData[tranSaving]._id
+          : ""
       );
     }
 
@@ -284,34 +298,7 @@ const UpdateTransactionDialog = ({
         >
           Số tiền
         </Typography>
-        <TextField
-          id="outlined-basic"
-          variant="outlined"
-          value={tranMoney}
-          onChange={(e) => setTranMoney(e.target.value)}
-          sx={{
-            backgroundColor: "white",
-            width: "100%",
-            marginRight: "10px",
-            borderRadius: theme.primary.borderRadius,
-            "& .MuiOutlinedInput-root": {
-              "& fieldset": {
-                borderRadius: theme.primary.borderRadius,
-                fontFamily: theme.primary.fontFamily,
-              },
-              "&.Mui-focused fieldset": {
-                border: `3px solid ${theme.primary.sub}`,
-                color: theme.primary.sub,
-              },
-            },
-          }}
-          InputLabelProps={{ shrink: false, style: { fontSize: 0 } }}
-          inputProps={{
-            style: {
-              height: "7px",
-            },
-          }}
-        />
+        <NumberInput value={tranMoney} onChange={setTranMoney} />
       </Box>
 
       {tranType === 0 ? (

@@ -107,7 +107,6 @@ const Login = ({ setCurNav }) => {
       };
 
       const res = await postApi(newUserInfo, `${SERVER}/user/create`);
-      console.log(res);
       if (res.status === "success") {
         updateConnect(true);
         updateName(res.data.name);
@@ -128,9 +127,7 @@ const Login = ({ setCurNav }) => {
           autoHideDuration: 5000,
         });
       }
-    } catch (err) {
-      console.log(err);
-    }
+    } catch (err) {}
   };
 
   const logIn = async () => {
@@ -140,7 +137,7 @@ const Login = ({ setCurNav }) => {
       };
 
       const res = await postApi(data, `${SERVER}/user/getOne`);
-      console.log(res);
+
       const hashedPassword = sha256(signInPassword);
       if (res.status === "false") {
         enqueueSnackbar("Vui lòng đăng ký tài khoản để sử dụng", {
@@ -177,9 +174,7 @@ const Login = ({ setCurNav }) => {
           });
         }
       }
-    } catch (err) {
-      console.log(err);
-    }
+    } catch (err) {}
   };
 
   const changeTabToSignIn = () => {

@@ -13,7 +13,6 @@ export async function postApi(data, url) {
     let res = await json_respon.json();
     return res;
   } catch (err) {
-    console.log(err.message);
     return {
       err: true,
     };
@@ -35,7 +34,6 @@ export async function getApi(data, url) {
     let res = await json_respon.json();
     return res;
   } catch (err) {
-    console.log(err.message);
     return {
       err: true,
     };

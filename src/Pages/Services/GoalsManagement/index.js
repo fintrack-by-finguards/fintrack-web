@@ -106,7 +106,6 @@ const GoalsManagement = () => {
     )
       .then((res) => {
         if (res.status === "success") {
-          console.log(res);
           setResetPage(!resetPage);
           enqueueSnackbar("Tạo mục tiêu thành công!", {
             variant: "success",
@@ -175,7 +174,6 @@ const GoalsManagement = () => {
     )
       .then((res) => {
         if (res.status === "success") {
-          console.log(res);
           setResetPage(!resetPage);
           enqueueSnackbar("Chỉnh sửa mục tiêu thành công!", {
             variant: "success",
@@ -206,7 +204,6 @@ const GoalsManagement = () => {
     )
       .then((res) => {
         if (res.status === "success") {
-          console.log(res);
           setResetPage(!resetPage);
           enqueueSnackbar("Xoá mục tiêu thành công!", {
             variant: "success",

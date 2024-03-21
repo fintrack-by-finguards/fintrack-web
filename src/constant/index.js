@@ -12,7 +12,7 @@ import CallToActionIcon from "@mui/icons-material/CallToAction";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 
 // export const SERVER = "http://202.158.244.6:8000";
-export const SERVER = "http://localhost:8000";
+export const SERVER = "http://95.111.229.214:8000";
 
 export const JOBS = [
   "Sinh viên",

@@ -53,7 +53,6 @@ const TransactionsManagement = () => {
       },
       `${SERVER}/transactions/getOne`
     ).then((res) => {
-      console.log(res);
       handleChangeData(res);
     });
   }, [displayDay, choseMonth, choseYear, resetPage]);
@@ -107,9 +106,7 @@ const TransactionsManagement = () => {
               tran_id: res.tran_id,
             },
             `${SERVER}/assets/add`
-          ).then((res) => {
-            console.log(res);
-          });
+          ).then((res) => {});
         }
 
         if (Number(_type) === 1 && _cate1 === "Vay nợ") {
@@ -130,9 +127,7 @@ const TransactionsManagement = () => {
               tran_id: res.tran_id,
             },
             `${SERVER}/assets/add`
-          ).then((res) => {
-            console.log(res);
-          });
+          ).then((res) => {});
         }
 
         if (Number(_type) === 0) {
@@ -153,9 +148,7 @@ const TransactionsManagement = () => {
               tran_id: res.tran_id,
             },
             `${SERVER}/assets/add`
-          ).then((res) => {
-            console.log(res);
-          });
+          ).then((res) => {});
         }
 
         if (
@@ -179,9 +172,7 @@ const TransactionsManagement = () => {
               tran_id: res.tran_id,
             },
             `${SERVER}/assets/add`
-          ).then((res) => {
-            console.log(res);
-          });
+          ).then((res) => {});
         }
 
         if (Number(_type) === 0 && _cate1 === "Trả nợ") {
@@ -202,26 +193,10 @@ const TransactionsManagement = () => {
               tran_id: res.tran_id,
             },
             `${SERVER}/assets/add`
-          ).then((res) => {
-            console.log(res);
-          });
+          ).then((res) => {});
         }
 
         if (Number(_type) === 0 && _cate1 === "Tiết kiệm") {
-          console.log({
-            username: username,
-            id: _saving,
-            tran_id: res.tran_id,
-            day: Number(displayDay),
-            month: Number(choseMonth),
-            year: Number(choseYear),
-            name: _name,
-            money: Number(_money),
-            hour: Number(_hour),
-            minute: Number(_minute),
-            second: Number(_second),
-            moneytype: _moneytype,
-          });
           postApi(
             {
               username: username,
@@ -238,9 +213,7 @@ const TransactionsManagement = () => {
               moneytype: _moneytype,
             },
             `${SERVER}/goals/add_transaction`
-          ).then((res) => {
-            console.log(res);
-          });
+          ).then((res) => {});
         }
 
         handleChangeData(res);
@@ -279,24 +252,16 @@ const TransactionsManagement = () => {
             parent_id: data.tran_id,
           },
           `${SERVER}/assets/delete`
-        ).then((res) => {
-          console.log(res);
-        });
+        ).then((res) => {});
 
         if (Number(data.type) === 0 && data.category1 === "Tiết kiệm") {
-          console.log({
-            username: username,
-            tran_id: data.tran_id,
-          });
           postApi(
             {
               username: username,
               tran_id: data.tran_id,
             },
             `${SERVER}/goals/delete_transaction`
-          ).then((res) => {
-            console.log(res);
-          });
+          ).then((res) => {});
         }
 
         handleChangeData(res);
@@ -356,15 +321,9 @@ const TransactionsManagement = () => {
             parent_id: data.tran_id,
           },
           `${SERVER}/assets/delete`
-        ).then((res) => {
-          console.log(res);
-        });
+        ).then((res) => {});
 
         if (Number(data.type) === 0 && data.category1 === "Tiết kiệm") {
-          console.log({
-            username: username,
-            tran_id: data.tran_id,
-          });
           postApi(
             {
               username: username,
@@ -389,9 +348,7 @@ const TransactionsManagement = () => {
                   moneytype: new_moneytype,
                 },
                 `${SERVER}/goals/add_transaction`
-              ).then((res) => {
-                console.log(res);
-              });
+              ).then((res) => {});
             }
           });
         }
@@ -415,9 +372,7 @@ const TransactionsManagement = () => {
               tran_id: data.tran_id,
             },
             `${SERVER}/assets/add`
-          ).then((res) => {
-            console.log(res);
-          });
+          ).then((res) => {});
         }
 
         if (Number(new_type) === 1 && new_cate1 === "Vay nợ") {
@@ -438,9 +393,7 @@ const TransactionsManagement = () => {
               tran_id: data.tran_id,
             },
             `${SERVER}/assets/add`
-          ).then((res) => {
-            console.log(res);
-          });
+          ).then((res) => {});
         }
 
         if (Number(new_type) === 0) {
@@ -462,9 +415,7 @@ const TransactionsManagement = () => {
               tran_id: data.tran_id,
             },
             `${SERVER}/assets/add`
-          ).then((res) => {
-            console.log(res);
-          });
+          ).then((res) => {});
         }
 
         if (
@@ -488,9 +439,7 @@ const TransactionsManagement = () => {
               tran_id: data.tran_id,
             },
             `${SERVER}/assets/add`
-          ).then((res) => {
-            console.log(res);
-          });
+          ).then((res) => {});
         }
 
         if (Number(new_type) === 0 && new_cate1 === "Trả nợ") {
@@ -511,9 +460,7 @@ const TransactionsManagement = () => {
               tran_id: res.tran_id,
             },
             `${SERVER}/assets/add`
-          ).then((res) => {
-            console.log(res);
-          });
+          ).then((res) => {});
         }
 
         handleChangeData(res);
