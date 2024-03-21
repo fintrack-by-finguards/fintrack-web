@@ -57,6 +57,7 @@ function App() {
           <ProvideInformation
             setProvideDone={setProvideDone}
             setCurNav={setCurNav}
+            provideDone={provideDone}
           />
         ) : (
           <Box>

@@ -8,7 +8,7 @@ import { postApi } from "../../others/database";
 import { GlobalContext } from "../../context/GlobalState";
 import NumberInput from "../NumberInput";
 
-const ProvideInformation = ({ setProvideDone, setCurNav }) => {
+const ProvideInformation = ({ provideDone, setProvideDone, setCurNav }) => {
   const currentTime = getCurrentTime();
   const theme = useTheme();
   const { username } = useContext(GlobalContext);
@@ -63,12 +63,12 @@ const ProvideInformation = ({ setProvideDone, setCurNav }) => {
         birthday: userData.data.birthday,
         job: userData.data.job,
         university: userData.data.university,
-        income: income !== "" ? Number(income) : 0,
+        income: income !== "" ? inputMoneyToNum(income) : 0,
         activate: true,
       },
       `${SERVER}/user/update`
     ).then((res) => {
-      setProvideDone(true);
+      setProvideDone(!provideDone);
       setCurNav("Trang chủ");
     });
   };

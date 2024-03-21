@@ -7,7 +7,7 @@ export function toDateString(date) {
 }
 
 export function inputMoneyToNum(string) {
-  return Number(string.replaceAll(",", ""));
+  return Number(String(string).replace(/,/g, ""));
 }
 export function numToMoney(num) {
   let res =
