@@ -8,12 +8,20 @@ import PaymentIcon from "@mui/icons-material/Payment";
 import FlagIcon from "@mui/icons-material/Flag";
 
 const Impressive = () => {
+  const [time, setTime] = useState(Date.now());
   const theme = useTheme();
   const [appData, setAppData] = useState({
     user: 0,
     goal: 0,
     transaction: 0,
   });
+
+  useEffect(() => {
+    const interval = setInterval(() => setTime(Date.now()), 1000);
+    return () => {
+      clearInterval(interval);
+    };
+  }, []);
 
   useEffect(() => {
     postApi({}, `${SERVER}/user/info`).then((res) => {
