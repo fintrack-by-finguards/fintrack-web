@@ -208,6 +208,20 @@ const TransactionsManagement = () => {
         }
 
         if (Number(_type) === 0 && _cate1 === "Tiết kiệm") {
+          console.log({
+            username: username,
+            id: _saving,
+            tran_id: res.tran_id,
+            day: Number(displayDay),
+            month: Number(choseMonth),
+            year: Number(choseYear),
+            name: _name,
+            money: Number(_money),
+            hour: Number(_hour),
+            minute: Number(_minute),
+            second: Number(_second),
+            moneytype: _moneytype,
+          });
           postApi(
             {
               username: username,

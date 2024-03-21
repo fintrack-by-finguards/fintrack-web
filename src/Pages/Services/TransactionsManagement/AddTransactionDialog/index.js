@@ -92,7 +92,10 @@ const AddTransactionDialog = ({
         tranSecond,
         tranType,
         tranMoneyType,
-        savingData[tranSaving]._id
+        Object.keys(EXPENSESCATEGORIES)[tranCate1] === "Tiết kiệm" &&
+          savingData.length > 0
+          ? savingData[tranSaving]._id
+          : ""
       );
     } else {
       handleAddTrans(
@@ -105,7 +108,10 @@ const AddTransactionDialog = ({
         tranSecond,
         tranType,
         tranMoneyType,
-        savingData[tranSaving]._id
+        Object.keys(EXPENSESCATEGORIES)[tranCate1] === "Tiết kiệm" &&
+          savingData.length > 0
+          ? savingData[tranSaving]._id
+          : ""
       );
     }
 

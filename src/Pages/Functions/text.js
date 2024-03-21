@@ -13,6 +13,9 @@ export function numToMoney(num) {
       "$1$2."
     ) + "đ";
   res = res.replace(/^0+/, "");
+  while (res.charAt(0) === "0") {
+    res = res.substring(1);
+  }
   if (res === "đ") return "0đ";
   else return res;
 }

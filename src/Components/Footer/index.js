@@ -1,3 +1,4 @@
+import { useContext, useState, useEffect } from "react";
 import { Box, Typography } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import FacebookIcon from "@mui/icons-material/Facebook";
@@ -6,6 +7,22 @@ import EmailIcon from "@mui/icons-material/Email";
 
 const Footer = () => {
   const theme = useTheme();
+  const [isMobile, setIsMobile] = useState(false);
+
+  const handleResize = () => {
+    if (window.innerWidth < 720) {
+      setIsMobile(true);
+    } else {
+      setIsMobile(false);
+    }
+  };
+
+  console.log(isMobile);
+  // create an event listener
+  useEffect(() => {
+    handleResize();
+    window.addEventListener("resize", handleResize);
+  });
 
   return (
     <Box
@@ -27,16 +44,16 @@ const Footer = () => {
         <Box
           sx={{
             backgroundColor: theme.primary.main,
-            height: "260px",
             borderTopLeftRadius: "40px",
             display: "flex",
             paddingTop: "30px",
             justifyContent: "space-between",
-            paddingLeft: "150px",
-            paddingRight: "150px",
+            paddingLeft: isMobile ? "" : "150px",
+            paddingRight: isMobile ? "" : "150px",
             [theme.breakpoints.down("md")]: {
               flexDirection: "column",
-              height: "100px",
+              backgroundColor: theme.primary.main,
+              height: "550px",
               justifyContent: "center",
               width: "100%",
             },
@@ -67,7 +84,6 @@ const Footer = () => {
                   "&:hover": theme.primary.hoverDefault,
                   [theme.breakpoints.down("md")]: {
                     fontSize: "11px",
-                    marginTop: "10px",
                     width: "100%",
                   },
                 }}
@@ -86,7 +102,7 @@ const Footer = () => {
                 <FacebookIcon
                   sx={{
                     color: theme.primary.sub,
-                    fontSize: theme.primary.big,
+                    fontSize: isMobile ? "8vh" : theme.primary.big,
                   }}
                 />
                 <Box
@@ -95,6 +111,13 @@ const Footer = () => {
                     flexDirection: "column",
                     alignItems: "start",
                     marginLeft: "10px",
+                    [theme.breakpoints.down("md")]: {
+                      flexDirection: "column",
+                      backgroundColor: theme.primary.main,
+                      justifyContent: "center",
+                      alignItems: "start",
+                      width: "100%",
+                    },
                   }}
                 >
                   <Typography
@@ -107,11 +130,10 @@ const Footer = () => {
                       "&:hover": theme.primary.hoverDefault,
                       [theme.breakpoints.down("md")]: {
                         fontSize: "11px",
-                        marginTop: "10px",
                         width: "100%",
                       },
                     }}
-                    textAlign="center"
+                    textAlign={isMobile ? "left" : "center"}
                   >
                     Địa chỉ FaceBook
                   </Typography>
@@ -129,7 +151,7 @@ const Footer = () => {
                         width: "100%",
                       },
                     }}
-                    textAlign="center"
+                    textAlign={isMobile ? "left" : "center"}
                   >
                     fb.com/fintrackbyfinguards
                   </Typography>
@@ -147,7 +169,7 @@ const Footer = () => {
                 <EmailIcon
                   sx={{
                     color: theme.primary.sub,
-                    fontSize: theme.primary.big,
+                    fontSize: isMobile ? "8vh" : theme.primary.big,
                   }}
                 />
                 <Box
@@ -156,6 +178,13 @@ const Footer = () => {
                     flexDirection: "column",
                     alignItems: "start",
                     marginLeft: "10px",
+                    [theme.breakpoints.down("md")]: {
+                      flexDirection: "column",
+                      backgroundColor: theme.primary.main,
+                      justifyContent: "center",
+                      alignItems: "start",
+                      width: "100%",
+                    },
                   }}
                 >
                   <Typography
@@ -168,11 +197,11 @@ const Footer = () => {
                       "&:hover": theme.primary.hoverDefault,
                       [theme.breakpoints.down("md")]: {
                         fontSize: "11px",
-                        marginTop: "10px",
+                        marginTop: "0px",
                         width: "100%",
                       },
                     }}
-                    textAlign="center"
+                    textAlign={isMobile ? "left" : "center"}
                   >
                     Địa chỉ Email
                   </Typography>
@@ -190,7 +219,7 @@ const Footer = () => {
                         width: "100%",
                       },
                     }}
-                    textAlign="center"
+                    textAlign={isMobile ? "left" : "center"}
                   >
                     fintrackbyfinguards@gmail.com
                   </Typography>
@@ -199,8 +228,8 @@ const Footer = () => {
               <Box
                 sx={{
                   display: "flex",
-                  width: "200px",
-                  justifyContent: "start",
+                  width: isMobile ? "260px" : "200px",
+                  justifyContent: isMobile ? "center" : "start",
                   alignItems: "center",
                   marginTop: "10px",
                 }}
@@ -208,7 +237,7 @@ const Footer = () => {
                 <LocalPhoneIcon
                   sx={{
                     color: theme.primary.sub,
-                    fontSize: theme.primary.big,
+                    fontSize: isMobile ? "8vh" : theme.primary.big,
                   }}
                 />
                 <Box
@@ -217,6 +246,13 @@ const Footer = () => {
                     flexDirection: "column",
                     alignItems: "start",
                     marginLeft: "10px",
+                    [theme.breakpoints.down("md")]: {
+                      flexDirection: "column",
+                      backgroundColor: theme.primary.main,
+                      justifyContent: "center",
+                      alignItems: "start",
+                      width: "100%",
+                    },
                   }}
                 >
                   <Typography
@@ -229,11 +265,11 @@ const Footer = () => {
                       "&:hover": theme.primary.hoverDefault,
                       [theme.breakpoints.down("md")]: {
                         fontSize: "11px",
-                        marginTop: "10px",
+                        marginTop: "0px",
                         width: "100%",
                       },
                     }}
-                    textAlign="center"
+                    textAlign={isMobile ? "left" : "center"}
                   >
                     Số điện thoại
                   </Typography>
@@ -251,7 +287,7 @@ const Footer = () => {
                         width: "100%",
                       },
                     }}
-                    textAlign="center"
+                    textAlign={isMobile ? "left" : "center"}
                   >
                     {"(+84) 935 898 689"}
                   </Typography>
@@ -260,38 +296,14 @@ const Footer = () => {
             </Box>
           </Box>
 
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-            }}
-          >
+          {!isMobile ? (
             <Box
               sx={{
                 display: "flex",
                 flexDirection: "column",
-                alignItems: "start",
+                alignItems: "center",
               }}
             >
-              <Typography
-                sx={{
-                  fontFamily: theme.primary.fontFamily,
-                  fontWeight: "600",
-                  fontSize: theme.primary.medium,
-                  color: "white",
-                  marginBottom: "15px",
-                  "&:hover": theme.primary.hoverDefault,
-                  [theme.breakpoints.down("md")]: {
-                    fontSize: "11px",
-                    marginTop: "10px",
-                    width: "100%",
-                  },
-                }}
-                textAlign="center"
-              >
-                Sản phẩm chính
-              </Typography>
               <Box
                 sx={{
                   display: "flex",
@@ -299,67 +311,71 @@ const Footer = () => {
                   alignItems: "start",
                 }}
               >
-                {[
-                  "Mục tiêu tài chính",
-                  "Kế hoạch tài chính",
-                  "Quản lý chi tiêu",
-                  "Quản lý tài chính",
-                ].map((value, idx) => (
-                  <Typography
-                    sx={{
-                      fontFamily: theme.primary.fontFamily,
-                      fontWeight: "400",
-                      fontSize: theme.primary.small,
-                      color: "white",
-                      marginBottom: "5px",
-                      "&:hover": theme.primary.hoverDefault,
-                      [theme.breakpoints.down("md")]: {
-                        fontSize: "11px",
-                        marginTop: "10px",
-                        width: "100%",
-                      },
-                    }}
-                    textAlign="center"
-                  >
-                    {value}
-                  </Typography>
-                ))}
+                <Typography
+                  sx={{
+                    fontFamily: theme.primary.fontFamily,
+                    fontWeight: "600",
+                    fontSize: theme.primary.medium,
+                    color: "white",
+                    marginBottom: "15px",
+                    "&:hover": theme.primary.hoverDefault,
+                    [theme.breakpoints.down("md")]: {
+                      fontSize: "11px",
+                      marginTop: "10px",
+                      width: "100%",
+                    },
+                  }}
+                  textAlign="center"
+                >
+                  Sản phẩm chính
+                </Typography>
+                <Box
+                  sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "start",
+                  }}
+                >
+                  {[
+                    "Mục tiêu tài chính",
+                    "Kế hoạch tài chính",
+                    "Quản lý chi tiêu",
+                    "Quản lý tài chính",
+                  ].map((value, idx) => (
+                    <Typography
+                      sx={{
+                        fontFamily: theme.primary.fontFamily,
+                        fontWeight: "400",
+                        fontSize: theme.primary.small,
+                        color: "white",
+                        marginBottom: "5px",
+                        "&:hover": theme.primary.hoverDefault,
+                        [theme.breakpoints.down("md")]: {
+                          fontSize: "11px",
+                          marginTop: "10px",
+                          width: "100%",
+                        },
+                      }}
+                      textAlign="center"
+                    >
+                      {value}
+                    </Typography>
+                  ))}
+                </Box>
               </Box>
             </Box>
-          </Box>
+          ) : (
+            ""
+          )}
 
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-            }}
-          >
+          {!isMobile ? (
             <Box
               sx={{
                 display: "flex",
                 flexDirection: "column",
-                alignItems: "start",
+                alignItems: "center",
               }}
             >
-              <Typography
-                sx={{
-                  fontFamily: theme.primary.fontFamily,
-                  fontWeight: "600",
-                  fontSize: theme.primary.medium,
-                  color: "white",
-                  marginBottom: "15px",
-                  "&:hover": theme.primary.hoverDefault,
-                  [theme.breakpoints.down("md")]: {
-                    fontSize: "11px",
-                    marginTop: "10px",
-                    width: "100%",
-                  },
-                }}
-                textAlign="center"
-              >
-                Về chúng tôi
-              </Typography>
               <Box
                 sx={{
                   display: "flex",
@@ -367,20 +383,94 @@ const Footer = () => {
                   alignItems: "start",
                 }}
               >
-                {[
-                  "Giới thiệu",
-                  "Đội ngũ",
-                  "Sứ mệnh",
-                  "Mục tiêu",
-                  "Kế hoạch phát triển",
-                ].map((value, idx) => (
+                <Typography
+                  sx={{
+                    fontFamily: theme.primary.fontFamily,
+                    fontWeight: "600",
+                    fontSize: theme.primary.medium,
+                    color: "white",
+                    marginBottom: "15px",
+                    "&:hover": theme.primary.hoverDefault,
+                    [theme.breakpoints.down("md")]: {
+                      fontSize: "11px",
+                      marginTop: "10px",
+                      width: "100%",
+                    },
+                  }}
+                  textAlign="center"
+                >
+                  Về chúng tôi
+                </Typography>
+                <Box
+                  sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "start",
+                  }}
+                >
+                  {[
+                    "Giới thiệu",
+                    "Đội ngũ",
+                    "Sứ mệnh",
+                    "Mục tiêu",
+                    "Kế hoạch phát triển",
+                  ].map((value, idx) => (
+                    <Typography
+                      sx={{
+                        fontFamily: theme.primary.fontFamily,
+                        fontWeight: "400",
+                        fontSize: theme.primary.small,
+                        color: "white",
+                        marginBottom: "5px",
+                        "&:hover": theme.primary.hoverDefault,
+                        [theme.breakpoints.down("md")]: {
+                          fontSize: "11px",
+                          marginTop: "10px",
+                          width: "100%",
+                        },
+                      }}
+                      textAlign="center"
+                    >
+                      {value}
+                    </Typography>
+                  ))}
+                </Box>
+              </Box>
+            </Box>
+          ) : (
+            ""
+          )}
+
+          {isMobile ? (
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "space-around",
+                paddingLeft: isMobile ? "20px" : 0,
+                paddingRight: isMobile ? "20px" : 0,
+              }}
+            >
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                }}
+              >
+                <Box
+                  sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "start",
+                  }}
+                >
                   <Typography
                     sx={{
                       fontFamily: theme.primary.fontFamily,
-                      fontWeight: "400",
-                      fontSize: theme.primary.small,
+                      fontWeight: "600",
+                      fontSize: theme.primary.medium,
                       color: "white",
-                      marginBottom: "5px",
+                      marginBottom: "15px",
                       "&:hover": theme.primary.hoverDefault,
                       [theme.breakpoints.down("md")]: {
                         fontSize: "11px",
@@ -390,12 +480,116 @@ const Footer = () => {
                     }}
                     textAlign="center"
                   >
-                    {value}
+                    Sản phẩm chính
                   </Typography>
-                ))}
+                  <Box
+                    sx={{
+                      display: "flex",
+                      flexDirection: "column",
+                      alignItems: "start",
+                    }}
+                  >
+                    {[
+                      "Mục tiêu tài chính",
+                      "Kế hoạch tài chính",
+                      "Quản lý chi tiêu",
+                      "Quản lý tài chính",
+                    ].map((value, idx) => (
+                      <Typography
+                        sx={{
+                          fontFamily: theme.primary.fontFamily,
+                          fontWeight: "400",
+                          fontSize: theme.primary.small,
+                          color: "white",
+                          marginBottom: "5px",
+                          "&:hover": theme.primary.hoverDefault,
+                          [theme.breakpoints.down("md")]: {
+                            fontSize: "11px",
+                            marginTop: "5px",
+                            width: "100%",
+                          },
+                        }}
+                        textAlign="center"
+                      >
+                        {value}
+                      </Typography>
+                    ))}
+                  </Box>
+                </Box>
+              </Box>
+
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                }}
+              >
+                <Box
+                  sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "start",
+                  }}
+                >
+                  <Typography
+                    sx={{
+                      fontFamily: theme.primary.fontFamily,
+                      fontWeight: "600",
+                      fontSize: theme.primary.medium,
+                      color: "white",
+                      marginBottom: "15px",
+                      "&:hover": theme.primary.hoverDefault,
+                      [theme.breakpoints.down("md")]: {
+                        fontSize: "11px",
+                        marginTop: "10px",
+                        width: "100%",
+                      },
+                    }}
+                    textAlign="center"
+                  >
+                    Về chúng tôi
+                  </Typography>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      flexDirection: "column",
+                      alignItems: "start",
+                    }}
+                  >
+                    {[
+                      "Giới thiệu",
+                      "Đội ngũ",
+                      "Sứ mệnh",
+                      "Mục tiêu",
+                      "Kế hoạch phát triển",
+                    ].map((value, idx) => (
+                      <Typography
+                        sx={{
+                          fontFamily: theme.primary.fontFamily,
+                          fontWeight: "400",
+                          fontSize: theme.primary.small,
+                          color: "white",
+                          marginBottom: "5px",
+                          "&:hover": theme.primary.hoverDefault,
+                          [theme.breakpoints.down("md")]: {
+                            fontSize: "11px",
+                            marginTop: "5px",
+                            width: "100%",
+                          },
+                        }}
+                        textAlign="center"
+                      >
+                        {value}
+                      </Typography>
+                    ))}
+                  </Box>
+                </Box>
               </Box>
             </Box>
-          </Box>
+          ) : (
+            ""
+          )}
         </Box>
         <Box
           sx={{
@@ -417,6 +611,7 @@ const Footer = () => {
               [theme.breakpoints.down("md")]: {
                 fontSize: "11px",
                 marginTop: "10px",
+                marginBottom: "20px",
                 width: "100%",
               },
             }}

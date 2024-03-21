@@ -98,15 +98,16 @@ const Login = ({ setCurNav }) => {
   const createNewUser = async () => {
     try {
       let newUserInfo = {
-        name: signUpName,
-        password: sha256(signUpPassword),
         username: signUpUserName,
+        password: sha256(signUpPassword),
+        name: signUpName,
         birthday: day + "/" + month + "/" + year,
         job: job,
         university: uni,
       };
 
       const res = await postApi(newUserInfo, `${SERVER}/user/create`);
+      console.log(res);
       if (res.status === "success") {
         updateConnect(true);
         updateName(res.data.name);
@@ -137,35 +138,44 @@ const Login = ({ setCurNav }) => {
       const data = {
         username: signInUserName,
       };
+
       const res = await postApi(data, `${SERVER}/user/getOne`);
+      console.log(res);
       const hashedPassword = sha256(signInPassword);
-      if (hashedPassword === res.data.password) {
-        updateConnect(true);
-        updateName(res.data.name);
-        updateUsername(res.data.username);
-
-        let currentDate = getCurrentTime();
-
-        postApi(
-          {
-            username: res.data.username,
-            day: currentDate.day,
-            month: currentDate.month,
-            year: currentDate.year,
-          },
-          `${SERVER}/assets/getOne`
-        ).then((res) => {});
-
-        setCurNav("Trang chủ");
-        enqueueSnackbar("Chào mừng bạn!", {
-          variant: "success",
-          autoHideDuration: 5000,
-        });
-      } else {
-        enqueueSnackbar("Sai mật khẩu, vui lòng xem lại!", {
+      if (res.status === "false") {
+        enqueueSnackbar("Vui lòng đăng ký tài khoản để sử dụng", {
           variant: "error",
           autoHideDuration: 5000,
         });
+      } else {
+        if (hashedPassword === res.data.password) {
+          updateConnect(true);
+          updateName(res.data.name);
+          updateUsername(res.data.username);
+
+          let currentDate = getCurrentTime();
+
+          postApi(
+            {
+              username: res.data.username,
+              day: currentDate.day,
+              month: currentDate.month,
+              year: currentDate.year,
+            },
+            `${SERVER}/assets/getOne`
+          ).then((res) => {});
+
+          setCurNav("Trang chủ");
+          enqueueSnackbar("Chào mừng bạn!", {
+            variant: "success",
+            autoHideDuration: 5000,
+          });
+        } else {
+          enqueueSnackbar("Sai mật khẩu, vui lòng xem lại!", {
+            variant: "error",
+            autoHideDuration: 5000,
+          });
+        }
       }
     } catch (err) {
       console.log(err);

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import {
   Box,
   Typography,
@@ -14,71 +14,61 @@ import {
 import SavingsIcon from "@mui/icons-material/Savings";
 import ArrowLeftIcon from "@mui/icons-material/ArrowLeft";
 import { useTheme } from "@mui/material/styles";
-import { toDateString, numToMoney } from "../../Functions/text";
+import { toDateString, numToMoney, getCurrentTime } from "../../Functions/text";
 import State1 from "../../../assets/1.png";
 import State2 from "../../../assets/2.png";
 import State3 from "../../../assets/3.png";
 import State4 from "../../../assets/4.png";
 import State5 from "../../../assets/5.png";
-
-const financialDistribution = [
-  {
-    name: "Chi tiêu cần thiết",
-    value: "0.55",
-    money: 5500000,
-    current: "0.2",
-  },
-  {
-    name: "Tiết kiệm dài hạn",
-    value: "0.1",
-    money: 1000000,
-    current: "0.15",
-  },
-  {
-    name: "Quỹ giáo dục",
-    value: "0.1",
-    money: 1000000,
-    current: "0.15",
-  },
-  {
-    name: "Hưởng thụ",
-    value: "0.1",
-    money: 1000000,
-    current: "0.15",
-  },
-  {
-    name: "Tự do tài chính",
-    value: "0.1",
-    money: 1000000,
-    current: "0.15",
-  },
-  {
-    name: "Quỹ từ thiện",
-    value: "0.05",
-    money: 1000000,
-    current: "0",
-  },
-];
+import { postApi } from "../../../others/database";
+import { GlobalContext } from "../../../context/GlobalState";
+import { SERVER, TIME } from "../../../constant";
 
 const FinancialPlans = () => {
+  const { username } = useContext(GlobalContext);
   const theme = useTheme();
 
   const [month, setMonth] = useState("03");
   const [year, setYear] = useState("2024");
 
-  const createArray = (N) => {
-    return Array.apply(null, { length: N }).map(Number.call, Number);
-  };
-
-  const getYear = () => {
-    var currentYear = new Date().getFullYear();
-    var years = [];
-    var startYear = 1980;
-    for (var i = startYear; i <= currentYear; i++) {
-      years.push(startYear++);
-    }
-    return years;
-  };
+  const [userData, setUserData] = useState([
+    {
+      name: "Chi tiêu cần thiết",
+      value: "0.55",
+      money: 0,
+      current: "0.2",
+    },
+    {
+      name: "Tiết kiệm dài hạn",
+      value: "0.1",
+      money: 1000000,
+      current: "0.15",
+    },
+    {
+      name: "Quỹ giáo dục",
+      value: "0.1",
+      money: 1000000,
+      current: "0.15",
+    },
+    {
+      name: "Hưởng thụ",
+      value: "0.1",
+      money: 1000000,
+      current: "0.15",
+    },
+    {
+      name: "Tự do tài chính",
+      value: "0.1",
+      money: 1000000,
+      current: "0.15",
+    },
+    {
+      name: "Quỹ từ thiện",
+      value: "0.05",
+      money: 1000000,
+      current: "0",
+    },
+  ]);
 
   const handleChangeMonth = (e) => {
     setMonth(e.target.value);
@@ -87,6 +77,81 @@ const FinancialPlans = () => {
   const handleChangeYear = (e) => {
     setYear(e.target.value);
   };
+
+  useEffect(() => {
+    postApi({ username: username }, `${SERVER}/user/getOne`).then((res) => {
+      let userIncome = res.data.income;
+
+      let currentTime = getCurrentTime();
+      postApi(
+        {
+          username: username,
+          month: currentTime.month,
+          year: currentTime.year,
+        },
+        `${SERVER}/transactions/getMonthYear`
+      ).then((data) => {
+        let fund1 = 0;
+        let fund2 = 0;
+        let fund3 = 0;
+        let fund4 = 0;
+        let fund5 = 0;
+        let fund6 = 0;
+        for (let i = 0; i < data.data.length; ++i) {
+          for (let j = 0; j < data.data[i].history.length; ++j) {
+            console.log(data.data[i].history[j]);
+            if (data.data[i].history[j].category1 === "Chi tiêu cần thiết")
+              fund1 += data.data[i].history[j].money;
+            else if (data.data[i].history[j].category1 === "Tiết kiệm")
+              fund2 += data.data[i].history[j].money;
+            else if (data.data[i].history[j].category1 === "Giáo dục")
+              fund3 += data.data[i].history[j].money;
+            else if (data.data[i].history[j].category1 === "Hưởng thụ")
+              fund4 += data.data[i].history[j].money;
+            else if (data.data[i].history[j].category1 === "Tự do tài chính")
+              fund5 += data.data[i].history[j].money;
+            else if (data.data[i].history[j].category1 === "Quà và từ thiện")
+              fund6 += data.data[i].history[j].money;
+          }
+        }
+
+        setUserData([
+          {
+            name: "Chi tiêu cần thiết",
+            money: userIncome * 0.55,
+            current: fund1,
+          },
+          {
+            name: "Tiết kiệm dài hạn",
+            money: userIncome * 0.1,
+            current: fund2,
+          },
+          {
+            name: "Quỹ giáo dục",
+            money: userIncome * 0.1,
+            current: fund3,
+          },
+          {
+            name: "Hưởng thụ",
+            money: userIncome * 0.1,
+            current: fund4,
+          },
+          {
+            name: "Tự do tài chính",
+            money: userIncome * 0.1,
+            current: fund5,
+          },
+          {
+            name: "Quỹ từ thiện",
+            money: userIncome * 0.05,
+            current: fund6,
+          },
+        ]);
+      });
+    });
+  }, []);
+
+  console.log(userData);
 
   return (
     <Container
@@ -106,7 +171,7 @@ const FinancialPlans = () => {
           justifyContent: "space-around",
         }}
       >
-        <Box
+        {/* <Box
           sx={{
             display: "flex",
             alignItems: "center",
@@ -190,7 +255,7 @@ const FinancialPlans = () => {
               ))}
             </Select>
           </FormControl>
-        </Box>
+        </Box> */}
 
         <Box sx={{ display: "flex", justifyContent: "center" }}>
           <Typography
@@ -216,7 +281,7 @@ const FinancialPlans = () => {
           </Typography>
         </Box>
 
-        <Box sx={{ width: "250px", display: "flex", justifyContent: "center" }}>
+        {/* <Box sx={{ width: "250px", display: "flex", justifyContent: "center" }}>
           <Button sx={{ backgroundColor: theme.primary.sub }}>
             <Typography
               sx={{
@@ -229,11 +294,11 @@ const FinancialPlans = () => {
               Chi tiết
             </Typography>
           </Button>
-        </Box>
+            </Box> */}
       </Box>
 
       <Box sx={{ display: "flex" }}>
-        <Box
+        {/* <Box
           sx={{
             width: "50px",
             top: "50%",
@@ -242,13 +307,13 @@ const FinancialPlans = () => {
           }}
         >
           <ArrowLeftIcon sx={{ fontSize: "100px" }} />
-        </Box>
+        </Box> */}
         <Grid container sx={{ marginTop: "30px" }}>
-          {financialDistribution.map((item, idx) => (
+          {userData.map((item, idx) => (
             <Grid xs={4} sx={{ marginBottom: "15px" }}>
               <Rating
                 name="customized-color"
-                value={item.current}
+                value={item.current / item.money}
                 precision={0.05}
                 max={1}
                 readOnly
@@ -277,7 +342,7 @@ const FinancialPlans = () => {
                     fontFamily: theme.primary.fontFamily,
                   }}
                 >
-                  {numToMoney(item.money * item.current)}
+                  {numToMoney(item.current)}
                 </Typography>
                 <Typography
                   sx={{
@@ -296,7 +361,7 @@ const FinancialPlans = () => {
         </Grid>
       </Box>
       {/* #Calendar and Picky/ */}
-      <Grid container>
+      {/* <Grid container>
         <Grid xs={7}>
           <Box
             sx={{
@@ -450,7 +515,7 @@ const FinancialPlans = () => {
               </Typography>
             </Box>
           </Box>
-          {/* Chỉnh thời gian */}
+
         </Grid>
 
         <Grid
@@ -472,7 +537,7 @@ const FinancialPlans = () => {
             alt="Paella dish"
           />
         </Grid>
-      </Grid>
+      </Grid> */}
     </Container>
   );
 };

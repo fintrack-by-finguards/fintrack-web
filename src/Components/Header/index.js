@@ -13,6 +13,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import { GlobalContext } from "../../context/GlobalState";
 import MyMenu from "./MyMenu";
 import ClearIcon from "@mui/icons-material/Clear";
+import SorryDialog from "./SorryDialog";
 
 const ITEM_HEIGHT = 48;
 
@@ -22,12 +23,17 @@ const Header = ({ menuItems, curNav, setCurNav }) => {
   const { name, updateConnect, updateName, updateUsername } =
     useContext(GlobalContext);
 
+  const [openSorry, setOpenSorry] = useState(false);
+
   useEffect(() => {}, [name]);
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
+
   const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
+    setOpenSorry(true);
+    // setAnchorEl(event.currentTarget);
   };
+
   const handleClose = () => {
     setAnchorEl(null);
   };
@@ -151,17 +157,23 @@ const Header = ({ menuItems, curNav, setCurNav }) => {
               }}
             >
               {name === "" ? (
-                <Box
-                  sx={{
-                    display: "flex",
-                  }}
-                  onClick={() => setCurNav("Đăng nhập")}
-                >
-                  <PersonIcon
+                <Box>
+                  <Box
                     sx={{
-                      color: "white",
-                      fontSize: theme.primary.medium,
+                      display: "flex",
                     }}
+                    onClick={() => handleClick()}
+                  >
+                    <PersonIcon
+                      sx={{
+                        color: "white",
+                        fontSize: theme.primary.medium,
+                      }}
+                    />
+                  </Box>
+                  <SorryDialog
+                    openDialog={openSorry}
+                    handleCloseDialog={() => setOpenSorry(false)}
                   />
                 </Box>
               ) : (
