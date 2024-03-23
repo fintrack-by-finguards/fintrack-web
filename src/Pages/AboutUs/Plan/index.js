@@ -10,6 +10,16 @@ import TimelineDot from "@mui/lab/TimelineDot";
 
 const Plan = () => {
   const theme = useTheme();
+  const [isMobile, setIsMobile] = useState(false);
+
+  //choose the screen size
+  const handleResize = () => {
+    if (window.innerWidth < 720) {
+      setIsMobile(true);
+    } else {
+      setIsMobile(false);
+    }
+  };
 
   return (
     <Box container sx={{ marginBottom: "50px", width: "100%" }}>
@@ -61,6 +71,10 @@ const Plan = () => {
                   width: "300px",
                   backgroundColor: theme.primary.main,
                   borderRadius: theme.primary.borderRadius,
+                  [theme.breakpoints.down("md")]: {
+                    width: "100px",
+                    padding: "10px",
+                  },
                 }}
               >
                 <Typography
@@ -71,7 +85,8 @@ const Plan = () => {
                     color: "white",
                     marginLeft: "10px",
                     [theme.breakpoints.down("md")]: {
-                      fontSize: theme.primary.medium,
+                      fontSize: "1.2vh",
+                      marginLeft: 0,
                     },
                     "&:hover": theme.primary.hoverDefault,
                   }}
@@ -90,7 +105,8 @@ const Plan = () => {
                   color: theme.primary.main,
                   marginLeft: "10px",
                   [theme.breakpoints.down("md")]: {
-                    fontSize: theme.primary.medium,
+                    fontSize: "1.5vh",
+                    marginLeft: 0,
                   },
                   "&:hover": theme.primary.hoverDefault,
                 }}
@@ -113,7 +129,8 @@ const Plan = () => {
                   color: theme.primary.main,
                   marginRight: "10px",
                   [theme.breakpoints.down("md")]: {
-                    fontSize: theme.primary.medium,
+                    fontSize: "1.5vh",
+                    marginRight: 0,
                   },
                   "&:hover": theme.primary.hoverDefault,
                 }}
@@ -126,6 +143,10 @@ const Plan = () => {
                   width: "300px",
                   backgroundColor: theme.primary.main,
                   borderRadius: theme.primary.borderRadius,
+                  [theme.breakpoints.down("md")]: {
+                    width: "100px",
+                    padding: "10px",
+                  },
                 }}
               >
                 <Typography
@@ -136,7 +157,8 @@ const Plan = () => {
                     color: "white",
                     marginLeft: "10px",
                     [theme.breakpoints.down("md")]: {
-                      fontSize: theme.primary.medium,
+                      fontSize: "1.2vh",
+                      marginLeft: 0,
                     },
                     "&:hover": theme.primary.hoverDefault,
                   }}
@@ -161,6 +183,10 @@ const Plan = () => {
                   width: "300px",
                   backgroundColor: theme.primary.main,
                   borderRadius: theme.primary.borderRadius,
+                  [theme.breakpoints.down("md")]: {
+                    width: "100px",
+                    padding: "10px",
+                  },
                 }}
               >
                 <Typography
@@ -171,11 +197,12 @@ const Plan = () => {
                     color: "white",
                     marginLeft: "10px",
                     [theme.breakpoints.down("md")]: {
-                      fontSize: theme.primary.medium,
+                      fontSize: "1.2vh",
+                      marginLeft: 0,
                     },
                     "&:hover": theme.primary.hoverDefault,
                   }}
-                  align="justify"
+                  align={isMobile ? "center" : "justify"}
                 >
                   Gọi vốn Series A, B, và C để tiếp tục mở rộng và cải thiện sản
                   phẩm. Phát triển các tính năng mới và mở rộng hợp tác, bao gồm
@@ -190,7 +217,7 @@ const Plan = () => {
                   color: theme.primary.main,
                   marginLeft: "10px",
                   [theme.breakpoints.down("md")]: {
-                    fontSize: theme.primary.medium,
+                    fontSize: "1.5vh",
                   },
                   "&:hover": theme.primary.hoverDefault,
                 }}
@@ -212,7 +239,8 @@ const Plan = () => {
                   color: theme.primary.main,
                   marginRight: "10px",
                   [theme.breakpoints.down("md")]: {
-                    fontSize: theme.primary.medium,
+                    fontSize: "1.5vh",
+                    marginRight: 0,
                   },
                   "&:hover": theme.primary.hoverDefault,
                 }}
@@ -225,6 +253,10 @@ const Plan = () => {
                   width: "300px",
                   backgroundColor: theme.primary.main,
                   borderRadius: theme.primary.borderRadius,
+                  [theme.breakpoints.down("md")]: {
+                    width: "100px",
+                    padding: "10px",
+                  },
                 }}
               >
                 <Typography
@@ -235,11 +267,12 @@ const Plan = () => {
                     color: "white",
                     marginLeft: "10px",
                     [theme.breakpoints.down("md")]: {
-                      fontSize: theme.primary.medium,
+                      fontSize: "1.2vh",
+                      marginLeft: 0,
                     },
                     "&:hover": theme.primary.hoverDefault,
                   }}
-                  align="justify"
+                  align={isMobile ? "center" : "justify"}
                 >
                   Phát triển các kênh truyền thông như Youtube và Tiktok, mở
                   rộng quảng bá sản phẩm qua LinkedIn và các cộng đồng sinh

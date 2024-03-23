@@ -40,6 +40,9 @@ const NumberInput = ({ value, onChange }) => {
       inputProps={{
         style: {
           height: "7px",
+          [theme.breakpoints.down("md")]: {
+            fontSize: "1.5vh",
+          },
         },
       }}
     />

@@ -9,6 +9,7 @@ import { GlobalContext } from "../../../../context/GlobalState";
 import { postApi } from "../../../../others/database";
 import { SERVER } from "../../../../constant";
 import IndeterminateCheckBoxIcon from "@mui/icons-material/IndeterminateCheckBox";
+import ReportIcon from "@mui/icons-material/Report";
 
 const Fluctuations = ({ month, year }) => {
   const [fluctuationsHistory, setFluctuationHistory] = useState([
@@ -53,6 +54,12 @@ const Fluctuations = ({ month, year }) => {
         flexDirection: "column",
         alignItems: "center",
         marginBottom: "30px",
+        [theme.breakpoints.down("md")]: {
+          marginTop: "30px",
+          display: "block",
+          margin: "0 auto",
+          width: "95%",
+        },
       }}
       boxShadow={3}
     >
@@ -63,6 +70,9 @@ const Fluctuations = ({ month, year }) => {
           fontWeight: 700,
           fontFamily: theme.primary.fontFamily,
           marginTop: "20px",
+          [theme.breakpoints.down("md")]: {
+            paddingTop: "20px",
+          },
         }}
         textAlign="center"
       >
@@ -115,7 +125,6 @@ const Fluctuations = ({ month, year }) => {
               }}
             ></Box>
           </Box>
-
           {data.history.map((his, idx) => (
             <Box
               sx={{
@@ -266,6 +275,39 @@ const Fluctuations = ({ month, year }) => {
               </Box>
             </Box>
           ))}
+          {fluctuationsHistory.reduce(
+            (accumulator, currentValue) =>
+              accumulator + currentValue?.history.length
+          ) === 0 || fluctuationsHistory.length === 0 ? (
+            <Box>
+              <ReportIcon
+                sx={{
+                  fontSize: "70px",
+                  color: theme.primary.main,
+                }}
+              />
+              <Typography
+                sx={{
+                  fontSize: theme.primary.small,
+                  color: theme.primary.main,
+                  fontFamily: theme.primary.fontFamily,
+                  fontWeight: 700,
+                  marginRight: "5px",
+                  marginLeft: "5px",
+                  "&:hover": theme.primary.hoverDefault,
+                  [theme.breakpoints.down("md")]: {
+                    fontSize: theme.primary.smallMobile,
+                    marginBottom: "10px",
+                    marginRight: "0px",
+                  },
+                }}
+              >
+                Chưa có dữ liệu để phân tích!
+              </Typography>
+            </Box>
+          ) : (
+            ""
+          )}
         </Box>
       ))}
     </Box>

@@ -97,11 +97,13 @@ const Login = ({ setCurNav }) => {
 
   const createNewUser = async () => {
     try {
+      let currentTime = getCurrentTime();
       let newUserInfo = {
         username: signUpUserName,
         password: sha256(signUpPassword),
         name: signUpName,
         birthday: day + "/" + month + "/" + year,
+        createday: currentTime.day + "/" + currentTime.month + "/" + year,
         job: job,
         university: uni,
       };

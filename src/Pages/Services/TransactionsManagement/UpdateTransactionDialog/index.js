@@ -165,8 +165,11 @@ const UpdateTransactionDialog = ({
       PaperProps={{
         sx: {
           width: "520px",
-          height: "520px",
+          height: "570px",
           padding: "30px",
+          [theme.breakpoints.down("md")]: {
+            width: "95%",
+          },
         },
       }}
     >
@@ -176,28 +179,14 @@ const UpdateTransactionDialog = ({
           fontSize: theme.primary.medium,
           fontWeight: 700,
           fontFamily: theme.primary.fontFamily,
-        }}
-        textAlign="center"
-      >
-        Sửa thông tin giao dịch
-      </DialogTitle>
-      <Typography
-        sx={{
-          fontSize: "1.5vh",
-          color: "grey",
-          fontFamily: theme.primary.fontFamily,
-          fontWeight: 500,
-          marginBottom: "5px",
-          fontStyle: "italic",
           [theme.breakpoints.down("md")]: {
-            fontSize: theme.primary.smallMobile,
+            fontSize: "2vh",
           },
-          "&:hover": theme.primary.hoverDefault,
         }}
         textAlign="center"
       >
-        Vui lòng kiểm tra các thông tin ở dưới!
-      </Typography>
+        Thêm giao dịch trong ngày
+      </DialogTitle>
       <Box sx={{ marginTop: "10px" }}>
         <Typography
           sx={{
@@ -207,7 +196,7 @@ const UpdateTransactionDialog = ({
             fontWeight: 500,
             marginBottom: "5px",
             [theme.breakpoints.down("md")]: {
-              fontSize: theme.primary.smallMobile,
+              fontSize: "2vh",
             },
             "&:hover": theme.primary.hoverDefault,
           }}
@@ -226,11 +215,32 @@ const UpdateTransactionDialog = ({
               width: "100%",
               height: "40px",
               borderRadius: theme.primary.borderRadius,
+              [theme.breakpoints.down("md")]: {
+                fontSize: "2vh",
+              },
             }}
             MenuProps={{ PaperProps: { sx: { maxHeight: 120 } } }}
           >
-            <MenuItem value={0}>Giao dịch chi</MenuItem>
-            <MenuItem value={1}>Giao dịch thu</MenuItem>
+            <MenuItem
+              value={0}
+              sx={{
+                [theme.breakpoints.down("md")]: {
+                  fontSize: "2vh",
+                },
+              }}
+            >
+              Giao dịch chi
+            </MenuItem>
+            <MenuItem
+              value={1}
+              sx={{
+                [theme.breakpoints.down("md")]: {
+                  fontSize: "2vh",
+                },
+              }}
+            >
+              Giao dịch thu
+            </MenuItem>
           </Select>
         </FormControl>
       </Box>
@@ -243,7 +253,7 @@ const UpdateTransactionDialog = ({
             fontWeight: 500,
             marginBottom: "5px",
             [theme.breakpoints.down("md")]: {
-              fontSize: theme.primary.smallMobile,
+              fontSize: "2vh",
             },
             "&:hover": theme.primary.hoverDefault,
           }}
@@ -290,7 +300,7 @@ const UpdateTransactionDialog = ({
             fontWeight: 500,
             marginBottom: "5px",
             [theme.breakpoints.down("md")]: {
-              fontSize: theme.primary.smallMobile,
+              fontSize: "2vh",
             },
             "&:hover": theme.primary.hoverDefault,
           }}
@@ -302,7 +312,15 @@ const UpdateTransactionDialog = ({
       </Box>
 
       {tranType === 0 ? (
-        <Box sx={{ marginTop: "10px" }}>
+        <Box
+          sx={{
+            marginTop: "10px",
+            [theme.breakpoints.down("md")]: {
+              display: "flex",
+              flexDirection: "column",
+            },
+          }}
+        >
           <Typography
             sx={{
               fontSize: theme.primary.small,
@@ -311,7 +329,7 @@ const UpdateTransactionDialog = ({
               fontWeight: 500,
               marginBottom: "5px",
               [theme.breakpoints.down("md")]: {
-                fontSize: theme.primary.smallMobile,
+                fontSize: "2vh",
               },
               "&:hover": theme.primary.hoverDefault,
             }}
@@ -330,15 +348,82 @@ const UpdateTransactionDialog = ({
                 width: "100%",
                 height: "40px",
                 borderRadius: theme.primary.borderRadius,
+                [theme.breakpoints.down("md")]: {
+                  fontSize: "2vh",
+                },
               }}
               MenuProps={{ PaperProps: { sx: { maxHeight: 120 } } }}
             >
-              <MenuItem value={0}>Chi tiêu cần thiết</MenuItem>
-              <MenuItem value={1}>Tiết kiệm</MenuItem>
-              <MenuItem value={2}>Giáo dục</MenuItem>
-              <MenuItem value={3}>Hưởng thụ</MenuItem>
-              <MenuItem value={4}>Tự do tài chính</MenuItem>
-              <MenuItem value={5}>Quà và từ thiện</MenuItem>
+              <MenuItem
+                value={0}
+                sx={{
+                  [theme.breakpoints.down("md")]: {
+                    fontSize: "2vh",
+                  },
+                }}
+              >
+                Chi tiêu cần thiết
+              </MenuItem>
+              <MenuItem
+                value={1}
+                sx={{
+                  [theme.breakpoints.down("md")]: {
+                    fontSize: "2vh",
+                  },
+                }}
+              >
+                Tiết kiệm
+              </MenuItem>
+              <MenuItem
+                value={2}
+                sx={{
+                  [theme.breakpoints.down("md")]: {
+                    fontSize: "2vh",
+                  },
+                }}
+              >
+                Giáo dục
+              </MenuItem>
+              <MenuItem
+                value={3}
+                sx={{
+                  [theme.breakpoints.down("md")]: {
+                    fontSize: "2vh",
+                  },
+                }}
+              >
+                Hưởng thụ
+              </MenuItem>
+              <MenuItem
+                value={4}
+                sx={{
+                  [theme.breakpoints.down("md")]: {
+                    fontSize: "2vh",
+                  },
+                }}
+              >
+                Tự do tài chính
+              </MenuItem>
+              <MenuItem
+                value={5}
+                sx={{
+                  [theme.breakpoints.down("md")]: {
+                    fontSize: "2vh",
+                  },
+                }}
+              >
+                Quà và từ thiện
+              </MenuItem>
+              <MenuItem
+                value={6}
+                sx={{
+                  [theme.breakpoints.down("md")]: {
+                    fontSize: "2vh",
+                  },
+                }}
+              >
+                Trả nợ
+              </MenuItem>
             </Select>
           </FormControl>
 
@@ -355,15 +440,74 @@ const UpdateTransactionDialog = ({
                   height: "40px",
                   borderRadius: theme.primary.borderRadius,
                   marginLeft: "15px",
+                  [theme.breakpoints.down("md")]: {
+                    fontSize: "2vh",
+                    marginLeft: "0px",
+                    marginTop: "10px",
+                  },
                 }}
                 MenuProps={{ PaperProps: { sx: { maxHeight: 120 } } }}
               >
-                <MenuItem value={0}>Ăn uống</MenuItem>
-                <MenuItem value={1}>Hoá đơn</MenuItem>
-                <MenuItem value={2}>Đi lại</MenuItem>
-                <MenuItem value={3}>Tiền nhà</MenuItem>
-                <MenuItem value={4}>Sức khoẻ</MenuItem>
-                <MenuItem value={5}>Gia đình</MenuItem>
+                <MenuItem
+                  value={0}
+                  sx={{
+                    [theme.breakpoints.down("md")]: {
+                      fontSize: "2vh",
+                    },
+                  }}
+                >
+                  Ăn uống
+                </MenuItem>
+                <MenuItem
+                  value={1}
+                  sx={{
+                    [theme.breakpoints.down("md")]: {
+                      fontSize: "2vh",
+                    },
+                  }}
+                >
+                  Hoá đơn
+                </MenuItem>
+                <MenuItem
+                  value={2}
+                  sx={{
+                    [theme.breakpoints.down("md")]: {
+                      fontSize: "2vh",
+                    },
+                  }}
+                >
+                  Đi lại
+                </MenuItem>
+                <MenuItem
+                  value={3}
+                  sx={{
+                    [theme.breakpoints.down("md")]: {
+                      fontSize: "2vh",
+                    },
+                  }}
+                >
+                  Tiền nhà
+                </MenuItem>
+                <MenuItem
+                  value={4}
+                  sx={{
+                    [theme.breakpoints.down("md")]: {
+                      fontSize: "2vh",
+                    },
+                  }}
+                >
+                  Sức khoẻ
+                </MenuItem>
+                <MenuItem
+                  value={5}
+                  sx={{
+                    [theme.breakpoints.down("md")]: {
+                      fontSize: "2vh",
+                    },
+                  }}
+                >
+                  Gia đình
+                </MenuItem>
               </Select>
             </FormControl>
           ) : (
@@ -383,11 +527,24 @@ const UpdateTransactionDialog = ({
                   height: "40px",
                   borderRadius: theme.primary.borderRadius,
                   marginLeft: "15px",
+                  [theme.breakpoints.down("md")]: {
+                    fontSize: "2vh",
+                    marginLeft: "0px",
+                    marginTop: "10px",
+                  },
                 }}
                 MenuProps={{ PaperProps: { sx: { maxHeight: 120 } } }}
               >
                 {savingData.map((saving, idx) => (
-                  <MenuItem value={idx} key={idx}>
+                  <MenuItem
+                    value={idx}
+                    key={idx}
+                    sx={{
+                      [theme.breakpoints.down("md")]: {
+                        fontSize: "2vh",
+                      },
+                    }}
+                  >
                     {saving.name}
                   </MenuItem>
                 ))}
@@ -410,13 +567,54 @@ const UpdateTransactionDialog = ({
                   height: "40px",
                   borderRadius: theme.primary.borderRadius,
                   marginLeft: "15px",
+                  [theme.breakpoints.down("md")]: {
+                    fontSize: "2vh",
+                    marginLeft: "0px",
+                    marginTop: "10px",
+                  },
                 }}
                 MenuProps={{ PaperProps: { sx: { maxHeight: 120 } } }}
               >
-                <MenuItem value={0}>Mua sắm</MenuItem>
-                <MenuItem value={1}>Xem phim</MenuItem>
-                <MenuItem value={2}>Trò chơi</MenuItem>
-                <MenuItem value={3}>Nhà hàng</MenuItem>
+                <MenuItem
+                  value={0}
+                  sx={{
+                    [theme.breakpoints.down("md")]: {
+                      fontSize: "2vh",
+                    },
+                  }}
+                >
+                  Mua sắm
+                </MenuItem>
+                <MenuItem
+                  value={1}
+                  sx={{
+                    [theme.breakpoints.down("md")]: {
+                      fontSize: "2vh",
+                    },
+                  }}
+                >
+                  Xem phim
+                </MenuItem>
+                <MenuItem
+                  value={2}
+                  sx={{
+                    [theme.breakpoints.down("md")]: {
+                      fontSize: "2vh",
+                    },
+                  }}
+                >
+                  Trò chơi
+                </MenuItem>
+                <MenuItem
+                  value={3}
+                  sx={{
+                    [theme.breakpoints.down("md")]: {
+                      fontSize: "2vh",
+                    },
+                  }}
+                >
+                  Nhà hàng
+                </MenuItem>
               </Select>
             </FormControl>
           ) : (
@@ -439,10 +637,46 @@ const UpdateTransactionDialog = ({
                 }}
                 MenuProps={{ PaperProps: { sx: { maxHeight: 120 } } }}
               >
-                <MenuItem value={0}>Bảo hiểm</MenuItem>
-                <MenuItem value={1}>Tiết kiệm hưu trí</MenuItem>
-                <MenuItem value={2}>Đầu tư</MenuItem>
-                <MenuItem value={3}>Bất động sản</MenuItem>
+                <MenuItem
+                  value={0}
+                  sx={{
+                    [theme.breakpoints.down("md")]: {
+                      fontSize: "2vh",
+                    },
+                  }}
+                >
+                  Bảo hiểm
+                </MenuItem>
+                <MenuItem
+                  value={1}
+                  sx={{
+                    [theme.breakpoints.down("md")]: {
+                      fontSize: "2vh",
+                    },
+                  }}
+                >
+                  Tiết kiệm hưu trí
+                </MenuItem>
+                <MenuItem
+                  value={2}
+                  sx={{
+                    [theme.breakpoints.down("md")]: {
+                      fontSize: "2vh",
+                    },
+                  }}
+                >
+                  Đầu tư
+                </MenuItem>
+                <MenuItem
+                  value={3}
+                  sx={{
+                    [theme.breakpoints.down("md")]: {
+                      fontSize: "2vh",
+                    },
+                  }}
+                >
+                  Bất động sản
+                </MenuItem>
               </Select>
             </FormControl>
           ) : (
@@ -462,11 +696,101 @@ const UpdateTransactionDialog = ({
                   height: "40px",
                   borderRadius: theme.primary.borderRadius,
                   marginLeft: "15px",
+                  [theme.breakpoints.down("md")]: {
+                    fontSize: "2vh",
+                    marginLeft: "0px",
+                    marginTop: "10px",
+                  },
                 }}
                 MenuProps={{ PaperProps: { sx: { maxHeight: 120 } } }}
               >
-                <MenuItem value={0}>Từ thiện</MenuItem>
-                <MenuItem value={1}>Quà lễ</MenuItem>
+                <MenuItem
+                  value={0}
+                  sx={{
+                    [theme.breakpoints.down("md")]: {
+                      fontSize: "2vh",
+                    },
+                  }}
+                >
+                  Từ thiện
+                </MenuItem>
+                <MenuItem
+                  value={1}
+                  sx={{
+                    [theme.breakpoints.down("md")]: {
+                      fontSize: "2vh",
+                    },
+                  }}
+                >
+                  Quà lễ
+                </MenuItem>
+              </Select>
+            </FormControl>
+          ) : (
+            ""
+          )}
+
+          {tranCate1 === 6 ? (
+            <FormControl sx={{ minWidth: 60, height: "40px" }}>
+              <Select
+                displayEmpty
+                inputProps={{ "aria-label": "Without label" }}
+                value={tranCate2}
+                onChange={(e) => setTranCate2(e.target.value)}
+                sx={{
+                  backgroundColor: "white",
+                  width: "100%",
+                  height: "40px",
+                  borderRadius: theme.primary.borderRadius,
+                  marginLeft: "15px",
+                  [theme.breakpoints.down("md")]: {
+                    fontSize: "2vh",
+                    marginLeft: "0px",
+                    marginTop: "10px",
+                  },
+                }}
+                MenuProps={{ PaperProps: { sx: { maxHeight: 120 } } }}
+              >
+                <MenuItem
+                  value={0}
+                  sx={{
+                    [theme.breakpoints.down("md")]: {
+                      fontSize: "2vh",
+                    },
+                  }}
+                >
+                  Tiền mặt
+                </MenuItem>
+                <MenuItem
+                  value={1}
+                  sx={{
+                    [theme.breakpoints.down("md")]: {
+                      fontSize: "2vh",
+                    },
+                  }}
+                >
+                  Trả góp
+                </MenuItem>
+                <MenuItem
+                  value={2}
+                  sx={{
+                    [theme.breakpoints.down("md")]: {
+                      fontSize: "2vh",
+                    },
+                  }}
+                >
+                  Thế chấp
+                </MenuItem>
+                <MenuItem
+                  value={3}
+                  sx={{
+                    [theme.breakpoints.down("md")]: {
+                      fontSize: "2vh",
+                    },
+                  }}
+                >
+                  Thấu chi
+                </MenuItem>
               </Select>
             </FormControl>
           ) : (
@@ -483,7 +807,7 @@ const UpdateTransactionDialog = ({
               fontWeight: 500,
               marginBottom: "5px",
               [theme.breakpoints.down("md")]: {
-                fontSize: theme.primary.smallMobile,
+                fontSize: "2vh",
               },
               "&:hover": theme.primary.hoverDefault,
             }}
@@ -505,12 +829,76 @@ const UpdateTransactionDialog = ({
               }}
               MenuProps={{ PaperProps: { sx: { maxHeight: 120 } } }}
             >
-              <MenuItem value={0}>Giải thưởng</MenuItem>
-              <MenuItem value={1}>Tiền lãi</MenuItem>
-              <MenuItem value={2}>Tiền lương</MenuItem>
-              <MenuItem value={3}>Quà tặng</MenuItem>
-              <MenuItem value={4}>Bán đồ</MenuItem>
-              <MenuItem value={5}>Nguồn thu khác</MenuItem>
+              <MenuItem
+                value={0}
+                sx={{
+                  [theme.breakpoints.down("md")]: {
+                    fontSize: "2vh",
+                  },
+                }}
+              >
+                Giải thưởng
+              </MenuItem>
+              <MenuItem
+                value={1}
+                sx={{
+                  [theme.breakpoints.down("md")]: {
+                    fontSize: "2vh",
+                  },
+                }}
+              >
+                Tiền lãi
+              </MenuItem>
+              <MenuItem
+                value={2}
+                sx={{
+                  [theme.breakpoints.down("md")]: {
+                    fontSize: "2vh",
+                  },
+                }}
+              >
+                Tiền lương
+              </MenuItem>
+              <MenuItem
+                value={3}
+                sx={{
+                  [theme.breakpoints.down("md")]: {
+                    fontSize: "2vh",
+                  },
+                }}
+              >
+                Quà tặng
+              </MenuItem>
+              <MenuItem
+                value={4}
+                sx={{
+                  [theme.breakpoints.down("md")]: {
+                    fontSize: "2vh",
+                  },
+                }}
+              >
+                Bán đồ
+              </MenuItem>
+              <MenuItem
+                value={5}
+                sx={{
+                  [theme.breakpoints.down("md")]: {
+                    fontSize: "2vh",
+                  },
+                }}
+              >
+                Vay nợ
+              </MenuItem>
+              <MenuItem
+                value={6}
+                sx={{
+                  [theme.breakpoints.down("md")]: {
+                    fontSize: "2vh",
+                  },
+                }}
+              >
+                Nguồn thu khác
+              </MenuItem>
             </Select>
           </FormControl>
         </Box>
@@ -524,7 +912,8 @@ const UpdateTransactionDialog = ({
             fontWeight: 500,
             marginBottom: "5px",
             [theme.breakpoints.down("md")]: {
-              fontSize: theme.primary.smallMobile,
+              fontSize: "2vh",
+              marginTop: "10px",
             },
             "&:hover": theme.primary.hoverDefault,
           }}
@@ -543,6 +932,9 @@ const UpdateTransactionDialog = ({
               width: "15%",
               marginRight: "10px",
               borderRadius: theme.primary.borderRadius,
+              [theme.breakpoints.down("md")]: {
+                fontSize: "2vh",
+              },
               "& .MuiOutlinedInput-root": {
                 "& fieldset": {
                   borderRadius: theme.primary.borderRadius,
@@ -572,6 +964,9 @@ const UpdateTransactionDialog = ({
               width: "15%",
               marginRight: "10px",
               borderRadius: theme.primary.borderRadius,
+              [theme.breakpoints.down("md")]: {
+                fontSize: "2vh",
+              },
               "& .MuiOutlinedInput-root": {
                 "& fieldset": {
                   borderRadius: theme.primary.borderRadius,
@@ -620,43 +1015,63 @@ const UpdateTransactionDialog = ({
             }}
           />
         </Box>
-
-        <Box sx={{ marginTop: "10px" }}>
-          <Typography
+      </Box>
+      <Box sx={{ marginTop: "10px" }}>
+        <Typography
+          sx={{
+            fontSize: theme.primary.small,
+            color: theme.primary.main,
+            fontFamily: theme.primary.fontFamily,
+            fontWeight: 500,
+            marginBottom: "5px",
+            [theme.breakpoints.down("md")]: {
+              fontSize: "2vh",
+            },
+            "&:hover": theme.primary.hoverDefault,
+          }}
+          textAlign="left"
+        >
+          Dạng tiền
+        </Typography>
+        <FormControl sx={{ minWidth: 60, height: "40px" }}>
+          <Select
+            displayEmpty
+            inputProps={{ "aria-label": "Without label" }}
+            value={tranMoneyType}
+            onChange={(e) => setTranMoneyType(e.target.value)}
             sx={{
-              fontSize: theme.primary.small,
-              color: theme.primary.main,
-              fontFamily: theme.primary.fontFamily,
-              fontWeight: 500,
-              marginBottom: "5px",
+              backgroundColor: "white",
+              width: "100%",
+              height: "40px",
+              borderRadius: theme.primary.borderRadius,
               [theme.breakpoints.down("md")]: {
-                fontSize: theme.primary.smallMobile,
+                fontSize: "2vh",
               },
-              "&:hover": theme.primary.hoverDefault,
             }}
-            textAlign="left"
+            MenuProps={{ PaperProps: { sx: { maxHeight: 120 } } }}
           >
-            Dạng tiền
-          </Typography>
-          <FormControl sx={{ minWidth: 60, height: "40px" }}>
-            <Select
-              displayEmpty
-              inputProps={{ "aria-label": "Without label" }}
-              value={tranMoneyType}
-              onChange={(e) => setTranMoneyType(e.target.value)}
+            <MenuItem
+              value={0}
               sx={{
-                backgroundColor: "white",
-                width: "100%",
-                height: "40px",
-                borderRadius: theme.primary.borderRadius,
+                [theme.breakpoints.down("md")]: {
+                  fontSize: "2vh",
+                },
               }}
-              MenuProps={{ PaperProps: { sx: { maxHeight: 120 } } }}
             >
-              <MenuItem value={0}>Tiền mặt</MenuItem>
-              <MenuItem value={1}>Tiền gửi ngân hàng</MenuItem>
-            </Select>
-          </FormControl>
-        </Box>
+              Tiền mặt
+            </MenuItem>
+            <MenuItem
+              value={1}
+              sx={{
+                [theme.breakpoints.down("md")]: {
+                  fontSize: "2vh",
+                },
+              }}
+            >
+              Tiền gửi ngân hàng
+            </MenuItem>
+          </Select>
+        </FormControl>
       </Box>
 
       <Button
@@ -676,12 +1091,12 @@ const UpdateTransactionDialog = ({
             fontFamily: theme.primary.fontFamily,
             fontWeight: 600,
             [theme.breakpoints.down("md")]: {
-              fontSize: theme.primary.smallMobile,
+              fontSize: "2vh",
             },
             "&:hover": theme.primary.hoverDefault,
           }}
         >
-          Sửa giao dịch
+          Cập nhật giao dịch
         </Typography>
       </Button>
     </Dialog>

@@ -62,7 +62,7 @@ function App() {
         ) : (
           <Box>
             {curNav === "Trang chủ" ? <Home /> : ""}
-            {curNav === "Sản phẩm" ? <Services /> : ""}
+            {curNav === "Giới thiệu" ? <Services /> : ""}
             {curNav === "Về chúng tôi" ? <AboutUs /> : ""}
             {curNav === "Cộng đồng" ? <Community /> : ""}
             {curNav === "Kế hoạch tài chính" ? (

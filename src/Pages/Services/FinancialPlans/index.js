@@ -22,14 +22,17 @@ import State4 from "../../../assets/4.png";
 import State5 from "../../../assets/5.png";
 import { postApi } from "../../../others/database";
 import { GlobalContext } from "../../../context/GlobalState";
-import { SERVER, TIME } from "../../../constant";
+import { SERVER, CALENDAR } from "../../../constant";
+
+function daysInMonth(month, year) {
+  return new Date(year, month, 0).getDate();
+}
 
 const FinancialPlans = () => {
   const { username } = useContext(GlobalContext);
   const theme = useTheme();
 
-  const [month, setMonth] = useState("03");
-  const [year, setYear] = useState("2024");
+  const [pickyState, setPickyState] = useState(State5);
 
   const [userData, setUserData] = useState([
     {
@@ -70,12 +73,158 @@ const FinancialPlans = () => {
     },
   ]);
 
-  const handleChangeMonth = (e) => {
-    setMonth(e.target.value);
-  };
+  const [calendarData, setCalendarData] = useState([
+    [
+      { number: "00", color: "#BEBEBE" },
+      { number: "00", color: "#BEBEBE" },
+      { number: "00", color: "#BEBEBE" },
+      { number: "00", color: "#BEBEBE" },
+      { number: "00", color: "#BEBEBE" },
+      { number: "00", color: "#BEBEBE" },
+      { number: "00", color: "#BEBEBE" },
+    ],
+    [
+      { number: "00", color: "#BEBEBE" },
+      { number: "00", color: "#BEBEBE" },
+      { number: "00", color: "#BEBEBE" },
+      { number: "00", color: "#BEBEBE" },
+      { number: "00", color: "#BEBEBE" },
+      { number: "00", color: "#BEBEBE" },
+      { number: "00", color: "#BEBEBE" },
+    ],
+    [
+      { number: "00", color: "#BEBEBE" },
+      { number: "00", color: "#BEBEBE" },
+      { number: "00", color: "#BEBEBE" },
+      { number: "00", color: "#BEBEBE" },
+      { number: "00", color: "#BEBEBE" },
+      { number: "00", color: "#BEBEBE" },
+      { number: "00", color: "#BEBEBE" },
+    ],
+    [
+      { number: "00", color: "#BEBEBE" },
+      { number: "00", color: "#BEBEBE" },
+      { number: "00", color: "#BEBEBE" },
+      { number: "00", color: "#BEBEBE" },
+      { number: "00", color: "#BEBEBE" },
+      { number: "00", color: "#BEBEBE" },
+      { number: "00", color: "#BEBEBE" },
+    ],
+    [
+      { number: "00", color: "#BEBEBE" },
+      { number: "00", color: "#BEBEBE" },
+      { number: "00", color: "#BEBEBE" },
+      { number: "00", color: "#BEBEBE" },
+      { number: "00", color: "#BEBEBE" },
+      { number: "00", color: "#BEBEBE" },
+      { number: "00", color: "#BEBEBE" },
+    ],
+  ]);
 
-  const handleChangeYear = (e) => {
-    setYear(e.target.value);
+  const handleCalendarData = (planData) => {
+    let curData = [];
+    let currentTime = getCurrentTime();
+    for (let i = 0; i < CALENDAR.length; ++i) {
+      if (
+        CALENDAR[i].month === currentTime.month &&
+        CALENDAR[i].year === currentTime.year
+      ) {
+        curData = CALENDAR[i];
+      }
+    }
+
+    let daysThisMonth = daysInMonth(currentTime.month, currentTime.year);
+
+    let threshhold1 = Math.floor(planData[0].money / daysThisMonth);
+    let threshhold2 = Math.floor(planData[1].money / daysThisMonth);
+    let threshhold3 = Math.floor(planData[2].money / daysThisMonth);
+    let threshhold4 = Math.floor(planData[3].money / daysThisMonth);
+    let threshhold5 = Math.floor(planData[4].money / daysThisMonth);
+    let threshhold6 = Math.floor(planData[5].money / daysThisMonth);
+
+    let success = 0;
+    let fail = 0;
+
+    let changeMonth = false;
+    for (let i = 0; i < curData.calendar.length; ++i) {
+      for (let j = 0; j < curData.calendar[0].length; ++j) {
+        if (
+          Number(curData.calendar[i][j].number) !== 1 &&
+          changeMonth === false
+        ) {
+          continue;
+        } else if (
+          (Number(curData.calendar[i][j].number) === 1 &&
+            changeMonth === false) ||
+          (Number(curData.calendar[i][j].number) <= currentTime.day &&
+            changeMonth === true)
+        ) {
+          changeMonth = true;
+          postApi(
+            {
+              username: username,
+              day: Number(curData.calendar[i][j].number),
+              month: currentTime.month,
+              year: currentTime.year,
+            },
+            `${SERVER}/transactions/getOne`
+          ).then((res) => {
+            let fund1 = 0;
+            let fund2 = 0;
+            let fund3 = 0;
+            let fund4 = 0;
+            let fund5 = 0;
+            let fund6 = 0;
+            for (let k = 0; k < res.data.history.length; ++k) {
+              if (res.data.history[k].category1 === "Chi tiêu cần thiết")
+                fund1 += res.data.history[k].money;
+              else if (res.data.history[k].category1 === "Tiết kiệm")
+                fund2 += res.data.history[k].money;
+              else if (res.data.history[k].category1 === "Giáo dục")
+                fund3 += res.data.history[k].money;
+              else if (res.data.history[k].category1 === "Hưởng thụ")
+                fund4 += res.data.history[k].money;
+              else if (res.data.history[k].category1 === "Tự do tài chính")
+                fund5 += res.data.history[k].money;
+              else if (res.data.history[k].category1 === "Quà và từ thiện")
+                fund6 += res.data.history[k].money;
+            }
+            if (
+              fund1 > threshhold1 ||
+              fund2 > threshhold2 ||
+              fund3 > threshhold3 ||
+              fund4 > threshhold4 ||
+              fund5 > threshhold5 ||
+              fund6 > threshhold6
+            ) {
+              curData.calendar[i][j] = {
+                number: curData.calendar[i][j].number,
+                color: "#E32636",
+              };
+              fail += 1;
+            } else {
+              curData.calendar[i][j] = {
+                number: curData.calendar[i][j].number,
+                color: "#32de84",
+              };
+              success += 1;
+            }
+          });
+        } else if (
+          Number(curData.calendar[i][j].number) > currentTime.day &&
+          changeMonth === true
+        ) {
+          continue;
+        }
+      }
+    }
+
+    setCalendarData(curData.calendar);
+    if (success >= 3 * fail || success === 0) setPickyState(State5);
+    else if (success >= 2 * fail) setPickyState(State4);
+    else if (success >= fail) setPickyState(State3);
+    else if (success <= fail && success > 0) setPickyState(State2);
+    else setPickyState(State1);
   };
 
   useEffect(() => {
@@ -113,39 +262,41 @@ const FinancialPlans = () => {
               fund6 += data.data[i].history[j].money;
           }
         }
-
-        setUserData([
+        data = [
           {
             name: "Chi tiêu cần thiết",
-            money: userIncome * 0.55,
+            money: Math.floor(userIncome * 0.55),
             current: fund1,
           },
           {
             name: "Tiết kiệm dài hạn",
-            money: userIncome * 0.1,
+            money: Math.floor(userIncome * 0.1),
             current: fund2,
           },
           {
             name: "Quỹ giáo dục",
-            money: userIncome * 0.1,
+            money: Math.floor(userIncome * 0.1),
             current: fund3,
           },
           {
             name: "Hưởng thụ",
-            money: userIncome * 0.1,
+            money: Math.floor(userIncome * 0.1),
             current: fund4,
           },
           {
             name: "Tự do tài chính",
-            money: userIncome * 0.1,
+            money: Math.floor(userIncome * 0.1),
             current: fund5,
           },
           {
             name: "Quỹ từ thiện",
-            money: userIncome * 0.05,
+            money: Math.floor(userIncome * 0.05),
             current: fund6,
           },
-        ]);
+        ];
+
+        handleCalendarData(data);
+        setUserData(data);
       });
     });
   }, []);
@@ -157,7 +308,7 @@ const FinancialPlans = () => {
         minHeight: "50vh",
         marginTop: "50px",
         [theme.breakpoints.down("md")]: {
-          marginBottom: "150px",
+          marginBottom: "50px",
         },
       }}
     >
@@ -261,6 +412,9 @@ const FinancialPlans = () => {
               fontSize: theme.primary.medium,
               fontWeight: 700,
               fontFamily: theme.primary.fontFamily,
+              [theme.breakpoints.down("md")]: {
+                fontSize: "2.5vh",
+              },
             }}
           >
             Mục tiêu tài chính tháng này của
@@ -272,6 +426,9 @@ const FinancialPlans = () => {
               marginLeft: "5px",
               fontWeight: 700,
               fontFamily: theme.primary.fontFamily,
+              [theme.breakpoints.down("md")]: {
+                fontSize: "2.5vh",
+              },
             }}
           >
             bạn!
@@ -307,15 +464,34 @@ const FinancialPlans = () => {
         </Box> */}
         <Grid container sx={{ marginTop: "30px" }}>
           {userData.map((item, idx) => (
-            <Grid xs={4} sx={{ marginBottom: "15px" }}>
+            <Grid xs={6} md={4} sx={{ marginBottom: "15px" }}>
               <Rating
                 name="customized-color"
                 value={item.current / item.money}
                 precision={0.05}
                 max={1}
                 readOnly
-                icon={<SavingsIcon fontSize="inherit" />}
-                emptyIcon={<SavingsIcon fontSize="inherit" />}
+                icon={
+                  <SavingsIcon
+                    fontSize="inherit"
+                    sx={{
+                      color:
+                        item.current > item.money
+                          ? theme.primary.red
+                          : theme.primary.sub,
+                    }}
+                  />
+                }
+                emptyIcon={
+                  <SavingsIcon
+                    fontSize="inherit"
+                    sx={{
+                      [theme.breakpoints.down("md")]: {
+                        fontSize: "20vh",
+                      },
+                    }}
+                  />
+                }
                 sx={{ fontSize: "170px" }}
               ></Rating>
               <Typography
@@ -325,6 +501,9 @@ const FinancialPlans = () => {
                   marginLeft: "5px",
                   fontWeight: 700,
                   fontFamily: theme.primary.fontFamily,
+                  [theme.breakpoints.down("md")]: {
+                    fontSize: "2vh",
+                  },
                 }}
               >
                 {item.name}
@@ -337,6 +516,9 @@ const FinancialPlans = () => {
                     marginLeft: "5px",
                     fontWeight: 700,
                     fontFamily: theme.primary.fontFamily,
+                    [theme.breakpoints.down("md")]: {
+                      fontSize: "1.5vh",
+                    },
                   }}
                 >
                   {numToMoney(item.current)}
@@ -348,6 +530,9 @@ const FinancialPlans = () => {
                     marginLeft: "5px",
                     fontWeight: 700,
                     fontFamily: theme.primary.fontFamily,
+                    [theme.breakpoints.down("md")]: {
+                      fontSize: "1.5vh",
+                    },
                   }}
                 >
                   / {numToMoney(item.money)}
@@ -358,8 +543,8 @@ const FinancialPlans = () => {
         </Grid>
       </Box>
       {/* #Calendar and Picky/ */}
-      {/* <Grid container>
-        <Grid xs={7}>
+      <Grid container>
+        <Grid xs={12} md={7}>
           <Box
             sx={{
               display: "flex",
@@ -378,6 +563,9 @@ const FinancialPlans = () => {
                   color: "white",
                   fontWeight: 600,
                   fontFamily: theme.primary.fontFamily,
+                  [theme.breakpoints.down("md")]: {
+                    fontSize: "2vh",
+                  },
                 }}
                 key={idx}
               >
@@ -385,53 +573,7 @@ const FinancialPlans = () => {
               </Box>
             ))}
           </Box>
-          {[
-            [
-              { number: "26", color: "#BEBEBE" },
-              { number: "27", color: "#BEBEBE" },
-              { number: "28", color: "#BEBEBE" },
-              { number: "29", color: "#BEBEBE" },
-              { number: "01", color: "#32de84" },
-              { number: "02", color: "#32de84" },
-              { number: "03", color: "#E32636" },
-            ],
-            [
-              { number: "04", color: "#32de84" },
-              { number: "05", color: "#E32636" },
-              { number: "06", color: "#32de84" },
-              { number: "07", color: "#32de84" },
-              { number: "08", color: "#32de84" },
-              { number: "09", color: "#32de84" },
-              { number: "10", color: "#E32636" },
-            ],
-            [
-              { number: "11", color: "#E32636" },
-              { number: "12", color: "#E32636" },
-              { number: "13", color: "#32de84" },
-              { number: "14", color: "#BEBEBE" },
-              { number: "15", color: "#BEBEBE" },
-              { number: "16", color: "#BEBEBE" },
-              { number: "17", color: "#BEBEBE" },
-            ],
-            [
-              { number: "18", color: "#BEBEBE" },
-              { number: "19", color: "#BEBEBE" },
-              { number: "20", color: "#BEBEBE" },
-              { number: "21", color: "#BEBEBE" },
-              { number: "22", color: "#BEBEBE" },
-              { number: "23", color: "#BEBEBE" },
-              { number: "24", color: "#BEBEBE" },
-            ],
-            [
-              { number: "25", color: "#BEBEBE" },
-              { number: "26", color: "#BEBEBE" },
-              { number: "27", color: "#BEBEBE" },
-              { number: "28", color: "#BEBEBE" },
-              { number: "29", color: "#BEBEBE" },
-              { number: "30", color: "#BEBEBE" },
-              { number: "31", color: "#BEBEBE" },
-            ],
-          ].map((array, index) => (
+          {calendarData.map((array, index) => (
             <Box
               sx={{
                 display: "flex",
@@ -452,6 +594,9 @@ const FinancialPlans = () => {
                     paddingBottom: "5px",
                     backgroundColor: value.color,
                     borderRadius: "5px",
+                    [theme.breakpoints.down("md")]: {
+                      height: "30px",
+                    },
                   }}
                   key={idx}
                 >
@@ -460,6 +605,9 @@ const FinancialPlans = () => {
                       color: "black",
                       fontWeight: 600,
                       fontFamily: theme.primary.fontFamily,
+                      [theme.breakpoints.down("md")]: {
+                        fontSize: "2vh",
+                      },
                     }}
                   >
                     {value.number}
@@ -469,7 +617,9 @@ const FinancialPlans = () => {
             </Box>
           ))}
           <Box>
-            <Box sx={{ display: "flex", marginTop: "20px" }}>
+            <Box
+              sx={{ display: "flex", marginTop: "20px", alignItems: "center" }}
+            >
               <Box
                 sx={{
                   width: "20px",
@@ -485,12 +635,17 @@ const FinancialPlans = () => {
                   marginLeft: "5px",
                   fontWeight: 700,
                   fontFamily: theme.primary.fontFamily,
+                  [theme.breakpoints.down("md")]: {
+                    fontSize: "1.5vh",
+                  },
                 }}
               >
                 Hoàn thành
               </Typography>
             </Box>
-            <Box sx={{ display: "flex", marginTop: "10px" }}>
+            <Box
+              sx={{ display: "flex", marginTop: "10px", alignItems: "center" }}
+            >
               <Box
                 sx={{
                   width: "20px",
@@ -506,17 +661,20 @@ const FinancialPlans = () => {
                   marginLeft: "5px",
                   fontWeight: 700,
                   fontFamily: theme.primary.fontFamily,
+                  [theme.breakpoints.down("md")]: {
+                    fontSize: "1.5vh",
+                  },
                 }}
               >
                 Không hoàn thành
               </Typography>
             </Box>
           </Box>
-
         </Grid>
 
         <Grid
-          xs={5}
+          xs={12}
+          md={5}
           sx={{
             display: "flex",
             justifyContent: "center",
@@ -529,12 +687,16 @@ const FinancialPlans = () => {
               width: "400px",
               marginLeft: "20px",
               marginTop: "20px",
+              [theme.breakpoints.down("md")]: {
+                width: "90%",
+                marginLeft: 0,
+              },
             }}
-            image={State4}
+            image={pickyState}
             alt="Paella dish"
           />
         </Grid>
-      </Grid> */}
+      </Grid>
     </Container>
   );
 };

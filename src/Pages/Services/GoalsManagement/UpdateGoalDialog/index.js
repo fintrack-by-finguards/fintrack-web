@@ -66,7 +66,7 @@ const UpdateGoalDialog = ({
       PaperProps={{
         sx: {
           width: "500px",
-          height: "470px",
+          height: "450px",
           padding: "30px",
         },
       }}
@@ -77,28 +77,14 @@ const UpdateGoalDialog = ({
           fontSize: theme.primary.medium,
           fontWeight: 700,
           fontFamily: theme.primary.fontFamily,
-        }}
-        textAlign="center"
-      >
-        Sửa tiêu tài chính cá nhân
-      </DialogTitle>
-      <Typography
-        sx={{
-          fontSize: "1.5vh",
-          color: "grey",
-          fontFamily: theme.primary.fontFamily,
-          fontWeight: 500,
-          marginBottom: "5px",
-          fontStyle: "italic",
           [theme.breakpoints.down("md")]: {
-            fontSize: theme.primary.smallMobile,
+            fontSize: "3vh",
           },
-          "&:hover": theme.primary.hoverDefault,
         }}
         textAlign="center"
       >
-        Vui lòng kiểm tra các thông tin ở dưới!
-      </Typography>
+        Mục tiêu tài chính cá nhân
+      </DialogTitle>
       <Box sx={{ marginTop: "10px" }}>
         <Typography
           sx={{
@@ -108,7 +94,7 @@ const UpdateGoalDialog = ({
             fontWeight: 500,
             marginBottom: "5px",
             [theme.breakpoints.down("md")]: {
-              fontSize: theme.primary.smallMobile,
+              fontSize: "2vh",
             },
             "&:hover": theme.primary.hoverDefault,
           }}
@@ -126,6 +112,9 @@ const UpdateGoalDialog = ({
             width: "100%",
             marginRight: "10px",
             borderRadius: theme.primary.borderRadius,
+            [theme.breakpoints.down("md")]: {
+              fontSize: "2vh",
+            },
             "& .MuiOutlinedInput-root": {
               "& fieldset": {
                 borderRadius: theme.primary.borderRadius,
@@ -155,7 +144,7 @@ const UpdateGoalDialog = ({
             fontWeight: 500,
             marginBottom: "5px",
             [theme.breakpoints.down("md")]: {
-              fontSize: theme.primary.smallMobile,
+              fontSize: "2vh",
             },
             "&:hover": theme.primary.hoverDefault,
           }}
@@ -175,7 +164,7 @@ const UpdateGoalDialog = ({
             fontWeight: 500,
             marginBottom: "5px",
             [theme.breakpoints.down("md")]: {
-              fontSize: theme.primary.smallMobile,
+              fontSize: "2vh",
             },
             "&:hover": theme.primary.hoverDefault,
           }}
@@ -219,13 +208,13 @@ const UpdateGoalDialog = ({
             fontWeight: 500,
             marginBottom: "5px",
             [theme.breakpoints.down("md")]: {
-              fontSize: theme.primary.smallMobile,
+              fontSize: "2vh",
             },
             "&:hover": theme.primary.hoverDefault,
           }}
           textAlign="left"
         >
-          Thời gian tiết kiệm
+          Thời gian
         </Typography>
         <Box>
           <TextField
@@ -238,6 +227,9 @@ const UpdateGoalDialog = ({
               width: "30%",
               marginRight: "10px",
               borderRadius: theme.primary.borderRadius,
+              [theme.breakpoints.down("md")]: {
+                fontSize: "2vh",
+              },
               "& .MuiOutlinedInput-root": {
                 "& fieldset": {
                   borderRadius: theme.primary.borderRadius,
@@ -267,11 +259,32 @@ const UpdateGoalDialog = ({
                 width: "100%",
                 height: "40px",
                 borderRadius: theme.primary.borderRadius,
+                [theme.breakpoints.down("md")]: {
+                  fontSize: "2vh",
+                },
               }}
               MenuProps={{ PaperProps: { sx: { maxHeight: 120 } } }}
             >
-              <MenuItem value={0}>Năm</MenuItem>
-              <MenuItem value={1}>Tháng</MenuItem>
+              <MenuItem
+                value={0}
+                sx={{
+                  [theme.breakpoints.down("md")]: {
+                    fontSize: "2vh",
+                  },
+                }}
+              >
+                Năm
+              </MenuItem>
+              <MenuItem
+                value={1}
+                sx={{
+                  [theme.breakpoints.down("md")]: {
+                    fontSize: "2vh",
+                  },
+                }}
+              >
+                Tháng
+              </MenuItem>
             </Select>
           </FormControl>
         </Box>
@@ -285,7 +298,7 @@ const UpdateGoalDialog = ({
               fontWeight: 500,
               marginBottom: "5px",
               [theme.breakpoints.down("md")]: {
-                fontSize: theme.primary.smallMobile,
+                fontSize: "2vh",
               },
               "&:hover": theme.primary.hoverDefault,
             }}
@@ -304,6 +317,9 @@ const UpdateGoalDialog = ({
                 width: "15%",
                 marginRight: "10px",
                 borderRadius: theme.primary.borderRadius,
+                [theme.breakpoints.down("md")]: {
+                  fontSize: "2vh",
+                },
                 "& .MuiOutlinedInput-root": {
                   "& fieldset": {
                     borderRadius: theme.primary.borderRadius,
@@ -331,7 +347,7 @@ const UpdateGoalDialog = ({
                 fontFamily: theme.primary.fontFamily,
                 fontWeight: 500,
                 [theme.breakpoints.down("md")]: {
-                  fontSize: theme.primary.smallMobile,
+                  fontSize: "2vh",
                 },
                 "&:hover": theme.primary.hoverDefault,
               }}
@@ -350,6 +366,9 @@ const UpdateGoalDialog = ({
                 width: "15%",
                 marginRight: "10px",
                 borderRadius: theme.primary.borderRadius,
+                [theme.breakpoints.down("md")]: {
+                  fontSize: "2vh",
+                },
                 "& .MuiOutlinedInput-root": {
                   "& fieldset": {
                     borderRadius: theme.primary.borderRadius,
@@ -377,7 +396,7 @@ const UpdateGoalDialog = ({
                 fontFamily: theme.primary.fontFamily,
                 fontWeight: 500,
                 [theme.breakpoints.down("md")]: {
-                  fontSize: theme.primary.smallMobile,
+                  fontSize: "2vh",
                 },
                 "&:hover": theme.primary.hoverDefault,
               }}
@@ -396,6 +415,10 @@ const UpdateGoalDialog = ({
                 width: "15%",
                 marginRight: "10px",
                 borderRadius: theme.primary.borderRadius,
+                [theme.breakpoints.down("md")]: {
+                  fontSize: "2vh",
+                  width: "30%",
+                },
                 "& .MuiOutlinedInput-root": {
                   "& fieldset": {
                     borderRadius: theme.primary.borderRadius,
@@ -424,6 +447,9 @@ const UpdateGoalDialog = ({
             display: "block",
             margin: "0 auto",
             marginTop: "50px",
+            [theme.breakpoints.down("md")]: {
+              marginTop: "20px",
+            },
           }}
           onClick={submit}
         >
@@ -434,7 +460,7 @@ const UpdateGoalDialog = ({
               fontFamily: theme.primary.fontFamily,
               fontWeight: 600,
               [theme.breakpoints.down("md")]: {
-                fontSize: theme.primary.smallMobile,
+                fontSize: "2vh",
               },
               "&:hover": theme.primary.hoverDefault,
             }}

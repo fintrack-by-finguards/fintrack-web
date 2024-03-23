@@ -41,6 +41,10 @@ const Reasons = () => {
             display: "flex",
             alignItems: "center",
             marginTop: "20px",
+            [theme.breakpoints.down("md")]: {
+              flexDirection: "column",
+              alignItems: "center",
+            },
           }}
         >
           <Typography
@@ -51,7 +55,7 @@ const Reasons = () => {
               color: theme.primary.main,
               marginLeft: "10px",
               [theme.breakpoints.down("md")]: {
-                fontSize: theme.primary.medium,
+                fontSize: "3vh",
               },
               "&:hover": theme.primary.hoverDefault,
             }}
@@ -78,7 +82,8 @@ const Reasons = () => {
 
       <Grid container sx={{ width: "100%" }}>
         <Grid
-          xs={4}
+          xs={12}
+          md={4}
           sx={{
             display: "flex",
             flexDirection: "column",
@@ -94,6 +99,11 @@ const Reasons = () => {
               height: "180px",
               borderRadius: theme.primary.borderRadius,
               position: "relative",
+              [theme.breakpoints.down("md")]: {
+                height: "150px",
+                marginBottom: "15px",
+                width: "80%",
+              },
             }}
           >
             <Box
@@ -108,6 +118,10 @@ const Reasons = () => {
                 position: "absolute",
                 top: -10,
                 left: -10,
+                [theme.breakpoints.down("md")]: {
+                  height: "40px",
+                  width: "40px",
+                },
               }}
             >
               <Typography
@@ -128,6 +142,9 @@ const Reasons = () => {
                 fontWeight: 600,
                 fontFamily: "Montserrat",
                 color: "white",
+                [theme.breakpoints.down("md")]: {
+                  fontSize: "5vh",
+                },
               }}
             />
             <Typography
@@ -136,6 +153,9 @@ const Reasons = () => {
                 fontWeight: 600,
                 fontFamily: "Montserrat",
                 color: "white",
+                [theme.breakpoints.down("md")]: {
+                  fontSize: "2.5vh",
+                },
               }}
             >
               Đồng bộ hoá
@@ -149,6 +169,9 @@ const Reasons = () => {
                 fontFamily: "Montserrat",
                 color: "white",
                 marginTop: "5px",
+                [theme.breakpoints.down("md")]: {
+                  fontSize: "1.5vh",
+                },
               }}
               align="justify"
             >
@@ -164,6 +187,11 @@ const Reasons = () => {
               height: "180px",
               borderRadius: theme.primary.borderRadius,
               position: "relative",
+              [theme.breakpoints.down("md")]: {
+                height: "150px",
+                marginBottom: "15px",
+                width: "80%",
+              },
             }}
           >
             <Box
@@ -178,6 +206,10 @@ const Reasons = () => {
                 position: "absolute",
                 top: -10,
                 left: -10,
+                [theme.breakpoints.down("md")]: {
+                  height: "40px",
+                  width: "40px",
+                },
               }}
             >
               <Typography
@@ -198,6 +230,9 @@ const Reasons = () => {
                 fontWeight: 600,
                 fontFamily: "Montserrat",
                 color: "white",
+                [theme.breakpoints.down("md")]: {
+                  fontSize: "5vh",
+                },
               }}
             />
             <Typography
@@ -206,6 +241,9 @@ const Reasons = () => {
                 fontWeight: 600,
                 fontFamily: "Montserrat",
                 color: "white",
+                [theme.breakpoints.down("md")]: {
+                  fontSize: "2.5vh",
+                },
               }}
             >
               Không bận tâm
@@ -219,6 +257,9 @@ const Reasons = () => {
                 fontFamily: "Montserrat",
                 color: "white",
                 marginTop: "5px",
+                [theme.breakpoints.down("md")]: {
+                  fontSize: "1.5vh",
+                },
               }}
               align="justify"
             >
@@ -234,6 +275,11 @@ const Reasons = () => {
               height: "180px",
               borderRadius: theme.primary.borderRadius,
               position: "relative",
+              [theme.breakpoints.down("md")]: {
+                height: "150px",
+                marginBottom: "15px",
+                width: "80%",
+              },
             }}
           >
             <Box
@@ -248,6 +294,10 @@ const Reasons = () => {
                 position: "absolute",
                 top: -10,
                 left: -10,
+                [theme.breakpoints.down("md")]: {
+                  height: "40px",
+                  width: "40px",
+                },
               }}
             >
               <Typography
@@ -268,6 +318,9 @@ const Reasons = () => {
                 fontWeight: 600,
                 fontFamily: "Montserrat",
                 color: "white",
+                [theme.breakpoints.down("md")]: {
+                  fontSize: "5vh",
+                },
               }}
             />
             <Typography
@@ -276,6 +329,9 @@ const Reasons = () => {
                 fontWeight: 600,
                 fontFamily: "Montserrat",
                 color: "white",
+                [theme.breakpoints.down("md")]: {
+                  fontSize: "2.5vh",
+                },
               }}
             >
               Tự do tài chính
@@ -289,6 +345,9 @@ const Reasons = () => {
                 fontFamily: "Montserrat",
                 color: "white",
                 marginTop: "5px",
+                [theme.breakpoints.down("md")]: {
+                  fontSize: "1.5vh",
+                },
               }}
               align="justify"
             >
@@ -298,7 +357,8 @@ const Reasons = () => {
           </Box>
         </Grid>
         <Grid
-          xs={4}
+          xs={12}
+          md={4}
           sx={{
             display: "flex",
             flexDirection: "column",
@@ -316,7 +376,8 @@ const Reasons = () => {
           />
         </Grid>
         <Grid
-          xs={4}
+          xs={12}
+          md={4}
           sx={{
             display: "flex",
             flexDirection: "column",
@@ -332,6 +393,12 @@ const Reasons = () => {
               height: "180px",
               borderRadius: theme.primary.borderRadius,
               position: "relative",
+              [theme.breakpoints.down("md")]: {
+                height: "150px",
+                marginBottom: "15px",
+                width: "80%",
+                marginTop: "15px",
+              },
             }}
           >
             <Box
@@ -346,6 +413,10 @@ const Reasons = () => {
                 position: "absolute",
                 top: -10,
                 right: -10,
+                [theme.breakpoints.down("md")]: {
+                  height: "40px",
+                  width: "40px",
+                },
               }}
             >
               <Typography
@@ -366,6 +437,9 @@ const Reasons = () => {
                 fontWeight: 600,
                 fontFamily: "Montserrat",
                 color: "white",
+                [theme.breakpoints.down("md")]: {
+                  fontSize: "5vh",
+                },
               }}
             />
             <Typography
@@ -374,6 +448,9 @@ const Reasons = () => {
                 fontWeight: 600,
                 fontFamily: "Montserrat",
                 color: "white",
+                [theme.breakpoints.down("md")]: {
+                  fontSize: "2.5vh",
+                },
               }}
             >
               Ghi chép tiện lợi
@@ -387,6 +464,9 @@ const Reasons = () => {
                 fontFamily: "Montserrat",
                 color: "white",
                 marginTop: "5px",
+                [theme.breakpoints.down("md")]: {
+                  fontSize: "1.5vh",
+                },
               }}
               align="justify"
             >
@@ -402,6 +482,11 @@ const Reasons = () => {
               height: "180px",
               borderRadius: theme.primary.borderRadius,
               position: "relative",
+              [theme.breakpoints.down("md")]: {
+                height: "150px",
+                marginBottom: "15px",
+                width: "80%",
+              },
             }}
           >
             <Box
@@ -416,6 +501,10 @@ const Reasons = () => {
                 position: "absolute",
                 top: -10,
                 right: -10,
+                [theme.breakpoints.down("md")]: {
+                  height: "40px",
+                  width: "40px",
+                },
               }}
             >
               <Typography
@@ -436,6 +525,9 @@ const Reasons = () => {
                 fontWeight: 600,
                 fontFamily: "Montserrat",
                 color: "white",
+                [theme.breakpoints.down("md")]: {
+                  fontSize: "5vh",
+                },
               }}
             />
             <Typography
@@ -444,6 +536,9 @@ const Reasons = () => {
                 fontWeight: 600,
                 fontFamily: "Montserrat",
                 color: "white",
+                [theme.breakpoints.down("md")]: {
+                  fontSize: "2.5vh",
+                },
               }}
             >
               Lộ trình cá nhân hoá
@@ -457,6 +552,9 @@ const Reasons = () => {
                 fontFamily: "Montserrat",
                 color: "white",
                 marginTop: "5px",
+                [theme.breakpoints.down("md")]: {
+                  fontSize: "1.5vh",
+                },
               }}
               align="justify"
             >
@@ -472,6 +570,11 @@ const Reasons = () => {
               height: "180px",
               borderRadius: theme.primary.borderRadius,
               position: "relative",
+              [theme.breakpoints.down("md")]: {
+                height: "150px",
+                marginBottom: "15px",
+                width: "80%",
+              },
             }}
           >
             <Box
@@ -486,6 +589,10 @@ const Reasons = () => {
                 position: "absolute",
                 top: -10,
                 right: -10,
+                [theme.breakpoints.down("md")]: {
+                  height: "40px",
+                  width: "40px",
+                },
               }}
             >
               <Typography
@@ -506,6 +613,9 @@ const Reasons = () => {
                 fontWeight: 600,
                 fontFamily: "Montserrat",
                 color: "white",
+                [theme.breakpoints.down("md")]: {
+                  fontSize: "5vh",
+                },
               }}
             />
             <Typography
@@ -514,6 +624,9 @@ const Reasons = () => {
                 fontWeight: 600,
                 fontFamily: "Montserrat",
                 color: "white",
+                [theme.breakpoints.down("md")]: {
+                  fontSize: "2.5vh",
+                },
               }}
             >
               Hỗ trợ 24/7
@@ -527,6 +640,9 @@ const Reasons = () => {
                 fontFamily: "Montserrat",
                 color: "white",
                 marginTop: "5px",
+                [theme.breakpoints.down("md")]: {
+                  fontSize: "1.5vh",
+                },
               }}
               align="justify"
             >

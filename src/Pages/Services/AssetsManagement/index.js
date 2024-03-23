@@ -39,7 +39,7 @@ const AssetsManagement = () => {
           display: "flex",
           overflow: "hidden",
           overflowX: "scroll",
-          height: "40px",
+          height: "50px",
           width: "80%",
           margin: "0 auto",
           marginTop: "10px",
@@ -68,6 +68,9 @@ const AssetsManagement = () => {
                 fontSize: theme.primary.small,
                 fontWeight: 600,
                 fontFamily: theme.primary.fontFamily,
+                [theme.breakpoints.down("md")]: {
+                  fontSize: "2vh",
+                },
               }}
             >
               {(data.month < 10 ? "0" + data.month : data.month) +
@@ -90,6 +93,11 @@ const AssetsManagement = () => {
           marginTop: "10px",
           padding: "5px",
           marginBottom: "10px",
+          [theme.breakpoints.down("md")]: {
+            height: "50px",
+            marginTop: "20px",
+            marginBottom: "20px",
+          },
         }}
       >
         {createArray(getDays(choseYear, choseMonth)).map((data, id) => (
@@ -108,6 +116,9 @@ const AssetsManagement = () => {
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
+              [theme.breakpoints.down("md")]: {
+                width: "50px",
+              },
             }}
           >
             <Typography
@@ -116,6 +127,9 @@ const AssetsManagement = () => {
                 fontSize: theme.primary.small,
                 fontWeight: 600,
                 fontFamily: theme.primary.fontFamily,
+                [theme.breakpoints.down("md")]: {
+                  fontSize: "2vh",
+                },
               }}
             >
               {data + 1}
@@ -124,12 +138,12 @@ const AssetsManagement = () => {
         ))}
       </Box>
       <Grid container>
-        <Grid xs={8}>
+        <Grid xs={12} md={8}>
           <Dashboard day={displayDay} month={choseMonth} year={choseYear} />
 
           <AssetsChart day={displayDay} month={choseMonth} year={choseYear} />
         </Grid>
-        <Grid xs={4}>
+        <Grid xs={12} md={4}>
           <Fluctuations month={choseMonth} year={choseYear} />
         </Grid>
       </Grid>

@@ -18,6 +18,11 @@ const EmptyPage = () => {
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
+        [theme.breakpoints.down("md")]: {
+          width: "80%",
+          padding: "30px",
+          height: "40vh",
+        },
       }}
     >
       <Typography
@@ -28,7 +33,7 @@ const EmptyPage = () => {
           color: "white",
           "&:hover": theme.primary.hoverDefault,
           [theme.breakpoints.down("md")]: {
-            fontSize: theme.primary.smallMobile,
+            fontSize: "2vh",
           },
         }}
         textAlign={"justify"}
@@ -37,7 +42,14 @@ const EmptyPage = () => {
       </Typography>
 
       <LockOpenIcon
-        sx={{ fontSize: "200px", color: "white", marginTop: "30px" }}
+        sx={{
+          fontSize: "200px",
+          color: "white",
+          marginTop: "30px",
+          [theme.breakpoints.down("md")]: {
+            fontSize: "20vh",
+          },
+        }}
       />
     </Container>
   );

@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useState, useEffect } from "react";
 import DialogTitle from "@mui/material/DialogTitle";
 import Dialog from "@mui/material/Dialog";
 import { useTheme } from "@mui/material/styles";
@@ -21,6 +22,20 @@ const GoalInDetail = ({ openDialog, handleCloseDialog, goal }) => {
     handleCloseDialog();
   };
 
+  const [isMobile, setIsMobile] = useState(false);
+
+  const handleResize = () => {
+    if (window.innerWidth < 720) {
+      setIsMobile(true);
+    } else {
+      setIsMobile(false);
+    }
+  };
+
+  useEffect(() => {
+    handleResize();
+  }, []);
+
   return (
     <Dialog
       onClose={handleClose}
@@ -39,6 +54,9 @@ const GoalInDetail = ({ openDialog, handleCloseDialog, goal }) => {
           fontSize: theme.primary.medium,
           fontWeight: 700,
           fontFamily: theme.primary.fontFamily,
+          [theme.breakpoints.down("md")]: {
+            fontSize: "2.5vh",
+          },
         }}
         textAlign="center"
       >
@@ -50,6 +68,9 @@ const GoalInDetail = ({ openDialog, handleCloseDialog, goal }) => {
           alignItems: "center",
           justifyContent: "center",
           borderRadius: theme.primary.borderRadius,
+          [theme.breakpoints.down("md")]: {
+            flexDirection: "column",
+          },
         }}
         boxShadow={3}
       >
@@ -57,9 +78,15 @@ const GoalInDetail = ({ openDialog, handleCloseDialog, goal }) => {
           component="img"
           sx={{
             width: "200px",
-            height: "200px",
+            height: "260px",
             borderTopLeftRadius: theme.primary.borderRadius,
             borderBottomLeftRadius: theme.primary.borderRadius,
+            [theme.breakpoints.down("md")]: {
+              width: "100%",
+              borderTopRightRadius: theme.primary.borderRadius,
+              borderBottomLeftRadius: 0,
+              maxHeight: "250px",
+            },
           }}
           image={goal.img}
           alt="Paella dish"
@@ -79,6 +106,9 @@ const GoalInDetail = ({ openDialog, handleCloseDialog, goal }) => {
                 fontSize: "17px",
                 fontWeight: 700,
                 fontFamily: theme.primary.fontFamily,
+                [theme.breakpoints.down("md")]: {
+                  fontSize: "3vh",
+                },
               }}
               textAlign="left"
             >
@@ -105,6 +135,9 @@ const GoalInDetail = ({ openDialog, handleCloseDialog, goal }) => {
               sx={{
                 color: theme.primary.main,
                 fontSize: "12px",
+                [theme.breakpoints.down("md")]: {
+                  fontSize: "2vh",
+                },
               }}
             />
 
@@ -115,6 +148,9 @@ const GoalInDetail = ({ openDialog, handleCloseDialog, goal }) => {
                 fontWeight: 600,
                 fontFamily: theme.primary.fontFamily,
                 marginLeft: "5px",
+                [theme.breakpoints.down("md")]: {
+                  fontSize: "2vh",
+                },
               }}
             >
               Số tiền:
@@ -127,6 +163,9 @@ const GoalInDetail = ({ openDialog, handleCloseDialog, goal }) => {
                 fontWeight: 500,
                 fontFamily: theme.primary.fontFamily,
                 marginLeft: "5px",
+                [theme.breakpoints.down("md")]: {
+                  fontSize: "2vh",
+                },
               }}
             >
               {numToMoney(goal.money)}
@@ -145,6 +184,9 @@ const GoalInDetail = ({ openDialog, handleCloseDialog, goal }) => {
               sx={{
                 color: theme.primary.main,
                 fontSize: "12px",
+                [theme.breakpoints.down("md")]: {
+                  fontSize: "2vh",
+                },
               }}
             />
 
@@ -155,6 +197,9 @@ const GoalInDetail = ({ openDialog, handleCloseDialog, goal }) => {
                 fontWeight: 600,
                 fontFamily: theme.primary.fontFamily,
                 marginLeft: "5px",
+                [theme.breakpoints.down("md")]: {
+                  fontSize: "2vh",
+                },
               }}
             >
               Thời gian:
@@ -167,6 +212,9 @@ const GoalInDetail = ({ openDialog, handleCloseDialog, goal }) => {
                 fontWeight: 500,
                 fontFamily: theme.primary.fontFamily,
                 marginLeft: "5px",
+                [theme.breakpoints.down("md")]: {
+                  fontSize: "2vh",
+                },
               }}
             >
               {goal.time + " " + (goal.unit === 0 ? "năm" : "tháng")}
@@ -185,6 +233,9 @@ const GoalInDetail = ({ openDialog, handleCloseDialog, goal }) => {
               sx={{
                 color: theme.primary.main,
                 fontSize: "12px",
+                [theme.breakpoints.down("md")]: {
+                  fontSize: "2vh",
+                },
               }}
             />
 
@@ -195,6 +246,9 @@ const GoalInDetail = ({ openDialog, handleCloseDialog, goal }) => {
                 fontWeight: 600,
                 fontFamily: theme.primary.fontFamily,
                 marginLeft: "5px",
+                [theme.breakpoints.down("md")]: {
+                  fontSize: "2vh",
+                },
               }}
             >
               Bắt đầu:
@@ -207,6 +261,9 @@ const GoalInDetail = ({ openDialog, handleCloseDialog, goal }) => {
                 fontWeight: 500,
                 fontFamily: theme.primary.fontFamily,
                 marginLeft: "5px",
+                [theme.breakpoints.down("md")]: {
+                  fontSize: "2vh",
+                },
               }}
             >
               {toDay(goal.day, goal.month, goal.year)}
@@ -225,6 +282,9 @@ const GoalInDetail = ({ openDialog, handleCloseDialog, goal }) => {
               sx={{
                 color: theme.primary.main,
                 fontSize: "12px",
+                [theme.breakpoints.down("md")]: {
+                  fontSize: "2vh",
+                },
               }}
             />
 
@@ -235,6 +295,9 @@ const GoalInDetail = ({ openDialog, handleCloseDialog, goal }) => {
                 fontWeight: 600,
                 fontFamily: theme.primary.fontFamily,
                 marginLeft: "5px",
+                [theme.breakpoints.down("md")]: {
+                  fontSize: "2vh",
+                },
               }}
             >
               Kết thúc:
@@ -247,6 +310,9 @@ const GoalInDetail = ({ openDialog, handleCloseDialog, goal }) => {
                 fontWeight: 500,
                 fontFamily: theme.primary.fontFamily,
                 marginLeft: "5px",
+                [theme.breakpoints.down("md")]: {
+                  fontSize: "2vh",
+                },
               }}
             >
               {getEndDay(goal.day, goal.month, goal.year, goal.unit, goal.time)}
@@ -265,6 +331,9 @@ const GoalInDetail = ({ openDialog, handleCloseDialog, goal }) => {
               sx={{
                 color: theme.primary.main,
                 fontSize: "12px",
+                [theme.breakpoints.down("md")]: {
+                  fontSize: "2vh",
+                },
               }}
             />
 
@@ -275,6 +344,9 @@ const GoalInDetail = ({ openDialog, handleCloseDialog, goal }) => {
                 fontWeight: 600,
                 fontFamily: theme.primary.fontFamily,
                 marginLeft: "5px",
+                [theme.breakpoints.down("md")]: {
+                  fontSize: "2vh",
+                },
               }}
             >
               Tiến độ:
@@ -287,6 +359,9 @@ const GoalInDetail = ({ openDialog, handleCloseDialog, goal }) => {
                 fontWeight: 600,
                 fontFamily: theme.primary.fontFamily,
                 marginLeft: "5px",
+                [theme.breakpoints.down("md")]: {
+                  fontSize: "2vh",
+                },
               }}
             >
               {numToMoney(goal.progress)}
@@ -333,6 +408,10 @@ const GoalInDetail = ({ openDialog, handleCloseDialog, goal }) => {
           fontSize: theme.primary.medium,
           fontWeight: 700,
           fontFamily: theme.primary.fontFamily,
+          [theme.breakpoints.down("md")]: {
+            fontSize: "2vh",
+            marginTop: "20px",
+          },
         }}
         textAlign="center"
       >
@@ -349,131 +428,172 @@ const GoalInDetail = ({ openDialog, handleCloseDialog, goal }) => {
             display: "flex",
             alignItems: "center",
             padding: "10px",
+            [theme.breakpoints.down("md")]: {
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
+            },
           }}
           boxShadow={3}
         >
           <Box
             sx={{
-              backgroundColor: "#192841",
-              width: "30px",
-              height: "30px",
-              borderRadius: "50px",
               display: "flex",
-              justifyContent: "center",
               alignItems: "center",
+              [theme.breakpoints.down("md")]: {
+                marginLeft: "30px",
+              },
             }}
           >
-            <Typography
+            <Box
               sx={{
-                fontSize: "2.5vh",
-                fontWeight: 600,
-                fontFamily: "Montserrat",
-                color: "white",
+                backgroundColor: "#192841",
+                width: "30px",
+                height: "30px",
+                borderRadius: "50px",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
               }}
             >
-              {idx + 1}
-            </Typography>
-          </Box>
-
-          <SavingsIcon
-            sx={{
-              color: theme.primary.sub,
-              fontSize: "8vh",
-              marginLeft: "20px",
-            }}
-          />
-
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "start",
-              alignItems: "start",
-              marginLeft: "20px",
-              width: "250px",
-            }}
-          >
-            <Box sx={{ display: "flex", justifyContent: "start" }}>
               <Typography
                 sx={{
-                  color: "#FFB000",
-                  fontSize: "1.7vh",
+                  fontSize: "2.5vh",
                   fontWeight: 600,
                   fontFamily: "Montserrat",
-                  width: "80px",
-                }}
-                textAlign="left"
-              >
-                Tên:
-              </Typography>
-              <Typography
-                sx={{
-                  color: "#192841",
-                  fontSize: "1.7vh",
-                  fontWeight: 600,
-                  fontFamily: "Montserrat",
+                  color: "white",
                 }}
               >
-                {tranx.name}
+                {idx + 1}
               </Typography>
             </Box>
-            <Box sx={{ display: "flex", justifyContent: "start" }}>
-              <Typography
+
+            <Box sx={{ display: isMobile ? "none" : "block" }}>
+              <SavingsIcon
                 sx={{
-                  color: "#FFB000",
-                  fontSize: "1.7vh",
-                  fontWeight: 600,
-                  fontFamily: "Montserrat",
-                  width: "80px",
+                  color: theme.primary.sub,
+                  fontSize: "8vh",
+                  marginLeft: "20px",
                 }}
-                textAlign="left"
-              >
-                Dạng:
-              </Typography>
-              <Typography
-                sx={{
-                  color: "#192841",
-                  fontSize: "1.7vh",
-                  fontWeight: 600,
-                  fontFamily: "Montserrat",
-                }}
-              >
-                {tranx.moneytype === 0 ? "Tiền mặt" : "Tiền gửi ngân hàng"}
-              </Typography>
+              />
             </Box>
-            <Box sx={{ display: "flex", justifyContent: "start" }}>
-              <Typography
-                sx={{
-                  color: "#FFB000",
-                  fontSize: "1.7vh",
-                  fontWeight: 600,
-                  fontFamily: "Montserrat",
-                  width: "80px",
-                }}
-                textAlign="left"
-              >
-                Thời gian:
-              </Typography>
-              <Typography
-                sx={{
-                  color: "#192841",
-                  fontSize: "1.7vh",
-                  fontWeight: 600,
-                  fontFamily: "Montserrat",
-                }}
-              >
-                {(tranx.hour < 10 ? "0" + tranx.hour : tranx.hour) +
-                  ":" +
-                  (tranx.minute < 10 ? "0" + tranx.minute : tranx.minute) +
-                  ":" +
-                  (tranx.second < 10 ? "0" + tranx.second : tranx.second) +
-                  " " +
-                  (tranx.day < 10 ? "0" + tranx.day : tranx.day) +
-                  "/" +
-                  (tranx.month < 10 ? "0" + tranx.month : tranx.month) +
-                  "/" +
-                  (tranx.year < 10 ? "0" + tranx.year : tranx.year)}
-              </Typography>
+
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "start",
+                alignItems: "start",
+                marginLeft: "20px",
+                width: "250px",
+                [theme.breakpoints.down("md")]: {
+                  width: "200px",
+                },
+              }}
+            >
+              <Box sx={{ display: "flex", justifyContent: "start" }}>
+                <Typography
+                  sx={{
+                    color: "#FFB000",
+                    fontSize: "1.7vh",
+                    fontWeight: 600,
+                    fontFamily: "Montserrat",
+                    width: "80px",
+                    [theme.breakpoints.down("md")]: {
+                      fontSize: "1.5vh",
+                      width: "60px",
+                    },
+                  }}
+                  textAlign="left"
+                >
+                  Tên:
+                </Typography>
+                <Typography
+                  sx={{
+                    color: "#192841",
+                    fontSize: "1.7vh",
+                    fontWeight: 600,
+                    fontFamily: "Montserrat",
+                    [theme.breakpoints.down("md")]: {
+                      fontSize: "1.5vh",
+                    },
+                  }}
+                >
+                  {tranx.name}
+                </Typography>
+              </Box>
+              <Box sx={{ display: "flex", justifyContent: "start" }}>
+                <Typography
+                  sx={{
+                    color: "#FFB000",
+                    fontSize: "1.7vh",
+                    fontWeight: 600,
+                    fontFamily: "Montserrat",
+                    width: "80px",
+                    [theme.breakpoints.down("md")]: {
+                      fontSize: "1.5vh",
+                      width: "60px",
+                    },
+                  }}
+                  textAlign="left"
+                >
+                  Dạng:
+                </Typography>
+                <Typography
+                  sx={{
+                    color: "#192841",
+                    fontSize: "1.7vh",
+                    fontWeight: 600,
+                    fontFamily: "Montserrat",
+                    [theme.breakpoints.down("md")]: {
+                      fontSize: "1.5vh",
+                    },
+                  }}
+                >
+                  {tranx.moneytype === 0 ? "Tiền mặt" : "Tiền gửi ngân hàng"}
+                </Typography>
+              </Box>
+              <Box sx={{ display: "flex", justifyContent: "start" }}>
+                <Typography
+                  sx={{
+                    color: "#FFB000",
+                    fontSize: "1.7vh",
+                    fontWeight: 600,
+                    fontFamily: "Montserrat",
+                    width: "80px",
+                    [theme.breakpoints.down("md")]: {
+                      fontSize: "1.5vh",
+                      width: "60px",
+                    },
+                  }}
+                  textAlign="left"
+                >
+                  Thời gian:
+                </Typography>
+                <Typography
+                  sx={{
+                    color: "#192841",
+                    fontSize: "1.7vh",
+                    fontWeight: 600,
+                    fontFamily: "Montserrat",
+                    [theme.breakpoints.down("md")]: {
+                      fontSize: "1.5vh",
+                    },
+                  }}
+                >
+                  {(tranx.hour < 10 ? "0" + tranx.hour : tranx.hour) +
+                    ":" +
+                    (tranx.minute < 10 ? "0" + tranx.minute : tranx.minute) +
+                    ":" +
+                    (tranx.second < 10 ? "0" + tranx.second : tranx.second) +
+                    " " +
+                    (tranx.day < 10 ? "0" + tranx.day : tranx.day) +
+                    "/" +
+                    (tranx.month < 10 ? "0" + tranx.month : tranx.month) +
+                    "/" +
+                    (tranx.year < 10 ? "0" + tranx.year : tranx.year)}
+                </Typography>
+              </Box>
             </Box>
           </Box>
           <Typography
@@ -484,8 +604,11 @@ const GoalInDetail = ({ openDialog, handleCloseDialog, goal }) => {
               fontFamily: "Montserrat",
               marginLeft: "5px",
               width: "160px",
+              [theme.breakpoints.down("md")]: {
+                marginTop: "10px",
+              },
             }}
-            textAlign="left"
+            textAlign={isMobile ? "center" : "left"}
           >
             {numToMoney(tranx.money)}
           </Typography>
@@ -510,6 +633,9 @@ const GoalInDetail = ({ openDialog, handleCloseDialog, goal }) => {
               fontSize: "2vh",
               fontWeight: 600,
               fontFamily: "Montserrat",
+              [theme.breakpoints.down("md")]: {
+                fontSize: "2vh",
+              },
             }}
           >
             Không có dữ liệu về giao dịch

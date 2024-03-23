@@ -36,6 +36,7 @@ export function getCurrentTime() {
     hour: d.getHours(),
     minute: d.getMinutes(),
     second: d.getSeconds(),
+    dayInWeek: d.getDay(),
   };
 }
 

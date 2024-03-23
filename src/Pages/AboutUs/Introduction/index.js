@@ -25,8 +25,27 @@ const Introduction = () => {
   });
 
   return (
-    <Grid container sx={{ marginTop: "30px", padding: "50px" }}>
-      <Grid xs={6}>
+    <Grid
+      container
+      sx={{
+        marginTop: "30px",
+        padding: "50px",
+        [theme.breakpoints.down("md")]: {
+          padding: "10px",
+        },
+      }}
+    >
+      <Grid
+        xs={12}
+        md={6}
+        sx={{
+          [theme.breakpoints.down("md")]: {
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+          },
+        }}
+      >
         <Box
           sx={{
             display: "flex",
@@ -41,7 +60,7 @@ const Introduction = () => {
               marginLeft: "10px",
               "&:hover": theme.primary.hoverDefault,
               [theme.breakpoints.down("md")]: {
-                fontSize: theme.primary.medium,
+                fontSize: "3vh",
               },
             }}
           >
@@ -103,7 +122,8 @@ const Introduction = () => {
             fontSize: "3vh",
             color: theme.primary.main,
             [theme.breakpoints.down("md")]: {
-              fontSize: theme.primary.medium,
+              fontSize: "1.7vh",
+              fonWeight: 600,
             },
             "&:hover": theme.primary.hoverDefault,
           }}
@@ -119,7 +139,9 @@ const Introduction = () => {
             padding: "15px",
             color: theme.primary.main,
             [theme.breakpoints.down("md")]: {
-              fontSize: theme.primary.medium,
+              fontSize: "1.5vh",
+              paddingLeft: "30px",
+              paddingRight: "30px",
             },
             "&:hover": theme.primary.hoverDefault,
           }}
@@ -142,7 +164,15 @@ const Introduction = () => {
               },
             }}
           >
-            <CircleIcon sx={{ color: theme.primary.main, fontSize: "8px" }} />
+            <CircleIcon
+              sx={{
+                color: theme.primary.main,
+                fontSize: "8px",
+                [theme.breakpoints.down("md")]: {
+                  fontSize: "1.5vh",
+                },
+              }}
+            />
             <Typography
               sx={{
                 fontFamily: theme.primary.fontFamily,
@@ -152,7 +182,7 @@ const Introduction = () => {
                 "&:hover": theme.primary.hoverDefault,
                 marginLeft: "10px",
                 [theme.breakpoints.down("md")]: {
-                  fontSize: "1.2vh",
+                  fontSize: "1.5vh",
                 },
               }}
               textAlign="left"
@@ -171,7 +201,15 @@ const Introduction = () => {
               },
             }}
           >
-            <CircleIcon sx={{ color: theme.primary.main, fontSize: "8px" }} />
+            <CircleIcon
+              sx={{
+                color: theme.primary.main,
+                fontSize: "8px",
+                [theme.breakpoints.down("md")]: {
+                  fontSize: "1.5vh",
+                },
+              }}
+            />
             <Typography
               sx={{
                 fontFamily: theme.primary.fontFamily,
@@ -181,7 +219,7 @@ const Introduction = () => {
                 "&:hover": theme.primary.hoverDefault,
                 marginLeft: "10px",
                 [theme.breakpoints.down("md")]: {
-                  fontSize: "1.2vh",
+                  fontSize: "1.5vh",
                 },
               }}
               textAlign="left"
@@ -199,7 +237,15 @@ const Introduction = () => {
               },
             }}
           >
-            <CircleIcon sx={{ color: theme.primary.main, fontSize: "8px" }} />
+            <CircleIcon
+              sx={{
+                color: theme.primary.main,
+                fontSize: "8px",
+                [theme.breakpoints.down("md")]: {
+                  fontSize: "1.5vh",
+                },
+              }}
+            />
             <Typography
               sx={{
                 fontFamily: theme.primary.fontFamily,
@@ -209,7 +255,7 @@ const Introduction = () => {
                 "&:hover": theme.primary.hoverDefault,
                 marginLeft: "10px",
                 [theme.breakpoints.down("md")]: {
-                  fontSize: "1.2vh",
+                  fontSize: "1.5vh",
                 },
               }}
               textAlign="left"
@@ -227,7 +273,15 @@ const Introduction = () => {
               },
             }}
           >
-            <CircleIcon sx={{ color: theme.primary.main, fontSize: "8px" }} />
+            <CircleIcon
+              sx={{
+                color: theme.primary.main,
+                fontSize: "8px",
+                [theme.breakpoints.down("md")]: {
+                  fontSize: "1.5vh",
+                },
+              }}
+            />
             <Typography
               sx={{
                 fontFamily: theme.primary.fontFamily,
@@ -237,7 +291,7 @@ const Introduction = () => {
                 "&:hover": theme.primary.hoverDefault,
                 marginLeft: "10px",
                 [theme.breakpoints.down("md")]: {
-                  fontSize: "1.2vh",
+                  fontSize: "1.5vh",
                 },
               }}
               textAlign="left"
@@ -255,7 +309,15 @@ const Introduction = () => {
               },
             }}
           >
-            <CircleIcon sx={{ color: theme.primary.main, fontSize: "8px" }} />
+            <CircleIcon
+              sx={{
+                color: theme.primary.main,
+                fontSize: "8px",
+                [theme.breakpoints.down("md")]: {
+                  fontSize: "1.5vh",
+                },
+              }}
+            />
             <Typography
               sx={{
                 fontFamily: theme.primary.fontFamily,
@@ -265,7 +327,7 @@ const Introduction = () => {
                 "&:hover": theme.primary.hoverDefault,
                 marginLeft: "10px",
                 [theme.breakpoints.down("md")]: {
-                  fontSize: "1.2vh",
+                  fontSize: "1.5vh",
                 },
               }}
               textAlign="left"
@@ -275,12 +337,15 @@ const Introduction = () => {
           </Box>
         </Box>
       </Grid>
-      <Grid xs={6} sx={{ display: "flex", alignItems: "center" }}>
+      <Grid xs={12} md={6} sx={{ display: "flex", alignItems: "center" }}>
         <CardMedia
           component="img"
           sx={{
-            width: "100%",
-            minHeight: "200px",
+            width: "90%",
+            [theme.breakpoints.down("md")]: {
+              margin: "0 auto",
+              marginTop: "20px",
+            },
           }}
           image={AboutUs1}
           alt="Paella dish"

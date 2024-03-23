@@ -6,12 +6,14 @@ import { getCurrentTime, inputMoneyToNum } from "../../Pages/Functions/text";
 import { SERVER } from "../../constant/index";
 import { postApi } from "../../others/database";
 import { GlobalContext } from "../../context/GlobalState";
+import { useSnackbar } from "notistack";
 import NumberInput from "../NumberInput";
 
 const ProvideInformation = ({ provideDone, setProvideDone, setCurNav }) => {
   const currentTime = getCurrentTime();
   const theme = useTheme();
   const { username } = useContext(GlobalContext);
+  const { enqueueSnackbar } = useSnackbar();
 
   const [start, setStart] = useState(false);
   const [income, setIncome] = useState(0);
@@ -61,6 +63,7 @@ const ProvideInformation = ({ provideDone, setProvideDone, setCurNav }) => {
         username: username,
         name: userData.data.name,
         birthday: userData.data.birthday,
+        createday: userData.data.createday,
         job: userData.data.job,
         university: userData.data.university,
         income: income !== "" ? inputMoneyToNum(income) : 0,
@@ -68,8 +71,20 @@ const ProvideInformation = ({ provideDone, setProvideDone, setCurNav }) => {
       },
       `${SERVER}/user/update`
     ).then((res) => {
-      setProvideDone(!provideDone);
-      setCurNav("Trang chủ");
+      console.log(res);
+      if (res.status === "success") {
+        setProvideDone(!provideDone);
+        setCurNav("Trang chủ");
+        enqueueSnackbar("Cung cấp thông tin thành công!", {
+          variant: "success",
+          autoHideDuration: 5000,
+        });
+      } else {
+        enqueueSnackbar("Tạo tài khoản thất bại!", {
+          variant: "error",
+          autoHideDuration: 5000,
+        });
+      }
     });
   };
 
@@ -83,6 +98,11 @@ const ProvideInformation = ({ provideDone, setProvideDone, setCurNav }) => {
         width: "100%",
         borderRadius: theme.primary.borderRadius,
         boxShadow: start ? 3 : 0,
+        [theme.breakpoints.down("md")]: {
+          width: "80%",
+          padding: "10px",
+          minHeight: "40vh",
+        },
       }}
     >
       {!start ? (
@@ -91,6 +111,9 @@ const ProvideInformation = ({ provideDone, setProvideDone, setCurNav }) => {
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
+            [theme.breakpoints.down("md")]: {
+              padding: "20px",
+            },
           }}
         >
           <Typography
@@ -101,7 +124,7 @@ const ProvideInformation = ({ provideDone, setProvideDone, setCurNav }) => {
               color: "white",
               "&:hover": theme.primary.hoverDefault,
               [theme.breakpoints.down("md")]: {
-                fontSize: theme.primary.smallMobile,
+                fontSize: "2vh",
               },
             }}
             textAlign={"justify"}
@@ -109,7 +132,15 @@ const ProvideInformation = ({ provideDone, setProvideDone, setCurNav }) => {
             Vui lòng cung cấp các thông tin tài chính cơ bản!
           </Typography>
           <LockOpenIcon
-            sx={{ fontSize: "200px", color: "white", marginTop: "50px" }}
+            sx={{
+              fontSize: "200px",
+              color: "white",
+              marginTop: "50px",
+              [theme.breakpoints.down("md")]: {
+                fontSize: "15vh",
+                marginTop: "10px",
+              },
+            }}
           />
           <Button
             sx={{
@@ -119,6 +150,9 @@ const ProvideInformation = ({ provideDone, setProvideDone, setCurNav }) => {
               fontSize: "2.5vh",
               fontWeight: 600,
               marginTop: "20px",
+              [theme.breakpoints.down("md")]: {
+                fontSize: "2vh",
+              },
             }}
             onClick={() => setStart(true)}
           >
@@ -130,6 +164,10 @@ const ProvideInformation = ({ provideDone, setProvideDone, setCurNav }) => {
           sx={{
             paddingLeft: "100px",
             paddingRight: "100px",
+            [theme.breakpoints.down("md")]: {
+              padding: "10px",
+              height: "100%",
+            },
           }}
         >
           <Typography
@@ -173,7 +211,8 @@ const ProvideInformation = ({ provideDone, setProvideDone, setCurNav }) => {
               color: theme.primary.main,
               "&:hover": theme.primary.hoverDefault,
               [theme.breakpoints.down("md")]: {
-                fontSize: theme.primary.smallMobile,
+                fontSize: "1.5vh",
+                marginTop: "20px",
               },
             }}
             textAlign={"justify"}
@@ -186,6 +225,9 @@ const ProvideInformation = ({ provideDone, setProvideDone, setCurNav }) => {
               display: "flex",
               flexDirection: "column",
               alignItems: "start",
+              [theme.breakpoints.down("md")]: {
+                marginTop: "10px",
+              },
             }}
           >
             <Typography
@@ -196,13 +238,13 @@ const ProvideInformation = ({ provideDone, setProvideDone, setCurNav }) => {
                 fontWeight: 500,
                 marginBottom: "5px",
                 [theme.breakpoints.down("md")]: {
-                  fontSize: theme.primary.smallMobile,
+                  fontSize: "1.5vh",
                 },
                 "&:hover": theme.primary.hoverDefault,
               }}
               textAlign="left"
             >
-              Thu nhập của bạn là (đơn vị: đ)
+              Thu nhập của bạn bao gồm cả trợ cấp từ gia đình là (đơn vị: đ)
             </Typography>
             <NumberInput value={income} onChange={setIncome} />
           </Box>
@@ -216,7 +258,8 @@ const ProvideInformation = ({ provideDone, setProvideDone, setCurNav }) => {
               marginTop: "50px",
               "&:hover": theme.primary.hoverDefault,
               [theme.breakpoints.down("md")]: {
-                fontSize: theme.primary.smallMobile,
+                fontSize: "1.5vh",
+                marginTop: "20px",
               },
             }}
             textAlign={"justify"}
@@ -230,6 +273,9 @@ const ProvideInformation = ({ provideDone, setProvideDone, setCurNav }) => {
               display: "flex",
               flexDirection: "column",
               alignItems: "start",
+              [theme.breakpoints.down("md")]: {
+                marginTop: "10px",
+              },
             }}
           >
             <Typography
@@ -240,7 +286,7 @@ const ProvideInformation = ({ provideDone, setProvideDone, setCurNav }) => {
                 fontWeight: 500,
                 marginBottom: "5px",
                 [theme.breakpoints.down("md")]: {
-                  fontSize: theme.primary.smallMobile,
+                  fontSize: "1.5vh",
                 },
                 "&:hover": theme.primary.hoverDefault,
               }}
@@ -257,6 +303,9 @@ const ProvideInformation = ({ provideDone, setProvideDone, setCurNav }) => {
               display: "flex",
               flexDirection: "column",
               alignItems: "start",
+              [theme.breakpoints.down("md")]: {
+                marginTop: "10px",
+              },
             }}
           >
             <Typography
@@ -267,7 +316,7 @@ const ProvideInformation = ({ provideDone, setProvideDone, setCurNav }) => {
                 fontWeight: 500,
                 marginBottom: "5px",
                 [theme.breakpoints.down("md")]: {
-                  fontSize: theme.primary.smallMobile,
+                  fontSize: "1.5vh",
                 },
                 "&:hover": theme.primary.hoverDefault,
               }}
@@ -284,6 +333,9 @@ const ProvideInformation = ({ provideDone, setProvideDone, setCurNav }) => {
               display: "flex",
               flexDirection: "column",
               alignItems: "start",
+              [theme.breakpoints.down("md")]: {
+                marginTop: "10px",
+              },
             }}
           >
             <Typography
@@ -294,7 +346,7 @@ const ProvideInformation = ({ provideDone, setProvideDone, setCurNav }) => {
                 fontWeight: 500,
                 marginBottom: "5px",
                 [theme.breakpoints.down("md")]: {
-                  fontSize: theme.primary.smallMobile,
+                  fontSize: "1.5vh",
                 },
                 "&:hover": theme.primary.hoverDefault,
               }}
@@ -311,6 +363,9 @@ const ProvideInformation = ({ provideDone, setProvideDone, setCurNav }) => {
               display: "flex",
               flexDirection: "column",
               alignItems: "start",
+              [theme.breakpoints.down("md")]: {
+                marginTop: "10px",
+              },
             }}
           >
             <Typography
@@ -321,7 +376,7 @@ const ProvideInformation = ({ provideDone, setProvideDone, setCurNav }) => {
                 fontWeight: 500,
                 marginBottom: "5px",
                 [theme.breakpoints.down("md")]: {
-                  fontSize: theme.primary.smallMobile,
+                  fontSize: "1.5vh",
                 },
                 "&:hover": theme.primary.hoverDefault,
               }}
@@ -338,6 +393,9 @@ const ProvideInformation = ({ provideDone, setProvideDone, setCurNav }) => {
               display: "flex",
               flexDirection: "column",
               alignItems: "start",
+              [theme.breakpoints.down("md")]: {
+                marginTop: "10px",
+              },
             }}
           >
             <Typography
@@ -348,7 +406,7 @@ const ProvideInformation = ({ provideDone, setProvideDone, setCurNav }) => {
                 fontWeight: 500,
                 marginBottom: "5px",
                 [theme.breakpoints.down("md")]: {
-                  fontSize: theme.primary.smallMobile,
+                  fontSize: "1.5vh",
                 },
                 "&:hover": theme.primary.hoverDefault,
               }}
@@ -368,7 +426,8 @@ const ProvideInformation = ({ provideDone, setProvideDone, setCurNav }) => {
               marginTop: "50px",
               "&:hover": theme.primary.hoverDefault,
               [theme.breakpoints.down("md")]: {
-                fontSize: theme.primary.smallMobile,
+                fontSize: "2vh",
+                marginTop: "20px",
               },
             }}
             textAlign={"justify"}
@@ -382,6 +441,9 @@ const ProvideInformation = ({ provideDone, setProvideDone, setCurNav }) => {
               display: "flex",
               flexDirection: "column",
               alignItems: "start",
+              [theme.breakpoints.down("md")]: {
+                marginTop: "10px",
+              },
             }}
           >
             <Typography
@@ -392,7 +454,7 @@ const ProvideInformation = ({ provideDone, setProvideDone, setCurNav }) => {
                 fontWeight: 500,
                 marginBottom: "5px",
                 [theme.breakpoints.down("md")]: {
-                  fontSize: theme.primary.smallMobile,
+                  fontSize: "1.5vh",
                 },
                 "&:hover": theme.primary.hoverDefault,
               }}
@@ -409,6 +471,9 @@ const ProvideInformation = ({ provideDone, setProvideDone, setCurNav }) => {
               display: "flex",
               flexDirection: "column",
               alignItems: "start",
+              [theme.breakpoints.down("md")]: {
+                marginTop: "10px",
+              },
             }}
           >
             <Typography
@@ -419,7 +484,7 @@ const ProvideInformation = ({ provideDone, setProvideDone, setCurNav }) => {
                 fontWeight: 500,
                 marginBottom: "5px",
                 [theme.breakpoints.down("md")]: {
-                  fontSize: theme.primary.smallMobile,
+                  fontSize: "1.5vh",
                 },
                 "&:hover": theme.primary.hoverDefault,
               }}
@@ -435,6 +500,9 @@ const ProvideInformation = ({ provideDone, setProvideDone, setCurNav }) => {
               display: "flex",
               flexDirection: "column",
               alignItems: "start",
+              [theme.breakpoints.down("md")]: {
+                marginTop: "10px",
+              },
             }}
           >
             <Typography
@@ -445,7 +513,7 @@ const ProvideInformation = ({ provideDone, setProvideDone, setCurNav }) => {
                 fontWeight: 500,
                 marginBottom: "5px",
                 [theme.breakpoints.down("md")]: {
-                  fontSize: theme.primary.smallMobile,
+                  fontSize: "1.5vh",
                 },
                 "&:hover": theme.primary.hoverDefault,
               }}
@@ -461,6 +529,9 @@ const ProvideInformation = ({ provideDone, setProvideDone, setCurNav }) => {
               display: "flex",
               flexDirection: "column",
               alignItems: "start",
+              [theme.breakpoints.down("md")]: {
+                marginTop: "10px",
+              },
             }}
           >
             <Typography
@@ -471,7 +542,7 @@ const ProvideInformation = ({ provideDone, setProvideDone, setCurNav }) => {
                 fontWeight: 500,
                 marginBottom: "5px",
                 [theme.breakpoints.down("md")]: {
-                  fontSize: theme.primary.smallMobile,
+                  fontSize: "1.5vh",
                 },
                 "&:hover": theme.primary.hoverDefault,
               }}
@@ -489,6 +560,10 @@ const ProvideInformation = ({ provideDone, setProvideDone, setCurNav }) => {
               fontSize: "2.5vh",
               fontWeight: 600,
               marginTop: "50px",
+              [theme.breakpoints.down("md")]: {
+                marginTop: "20px",
+                fontSize: "2vh",
+              },
             }}
             onClick={() => handleSubmit()}
           >

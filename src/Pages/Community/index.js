@@ -198,7 +198,8 @@ const Community = () => {
             {content.map((item, id) => (
               <Grid
                 item
-                xs={3}
+                xs={12}
+                md={3}
                 sx={{
                   marginTop: "30px",
                   paddingLeft: "10px",
@@ -241,7 +242,12 @@ const Community = () => {
                       }}
                     >
                       <AccountCircleIcon
-                        sx={{ fontSize: theme.primary.medium }}
+                        sx={{
+                          fontSize: theme.primary.medium,
+                          [theme.breakpoints.down("md")]: {
+                            fontSize: "3vh",
+                          },
+                        }}
                       />
                       <Typography
                         sx={{
@@ -251,7 +257,7 @@ const Community = () => {
                           marginLeft: "5px",
                           "&:hover": theme.primary.hoverDefault,
                           [theme.breakpoints.down("md")]: {
-                            fontSize: theme.primary.medium,
+                            fontSize: "2vh",
                           },
                         }}
                       >
@@ -266,7 +272,14 @@ const Community = () => {
                           width: "50px",
                         }}
                       >
-                        <CommentIcon sx={{ fontSize: theme.primary.medium }} />
+                        <CommentIcon
+                          sx={{
+                            fontSize: theme.primary.medium,
+                            [theme.breakpoints.down("md")]: {
+                              fontSize: "3vh",
+                            },
+                          }}
+                        />
                         <Typography
                           sx={{
                             fontFamily: theme.primary.fontFamily,
@@ -275,7 +288,7 @@ const Community = () => {
                             marginLeft: "5px",
                             "&:hover": theme.primary.hoverDefault,
                             [theme.breakpoints.down("md")]: {
-                              fontSize: theme.primary.medium,
+                              fontSize: "2vh",
                             },
                           }}
                         >
@@ -290,7 +303,12 @@ const Community = () => {
                         }}
                       >
                         <FavoriteBorderIcon
-                          sx={{ fontSize: theme.primary.medium }}
+                          sx={{
+                            fontSize: theme.primary.medium,
+                            [theme.breakpoints.down("md")]: {
+                              fontSize: "3vh",
+                            },
+                          }}
                         />
                         <Typography
                           sx={{
@@ -300,7 +318,7 @@ const Community = () => {
                             marginLeft: "5px",
                             "&:hover": theme.primary.hoverDefault,
                             [theme.breakpoints.down("md")]: {
-                              fontSize: theme.primary.medium,
+                              fontSize: "2vh",
                             },
                           }}
                         >
@@ -327,7 +345,7 @@ const Community = () => {
                         marginLeft: "5px",
                         "&:hover": theme.primary.hoverDefault,
                         [theme.breakpoints.down("md")]: {
-                          fontSize: theme.primary.medium,
+                          fontSize: "3vh",
                         },
                       }}
                       px={2}
@@ -354,7 +372,7 @@ const Community = () => {
                         marginBottom: "10px",
                         "&:hover": theme.primary.hoverDefault,
                         [theme.breakpoints.down("md")]: {
-                          fontSize: theme.primary.medium,
+                          fontSize: "2vh",
                         },
                       }}
                       px={2}

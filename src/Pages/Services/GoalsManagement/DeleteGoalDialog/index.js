@@ -45,6 +45,9 @@ const DeleteGoalDialog = ({
           fontSize: theme.primary.medium,
           fontWeight: 700,
           fontFamily: theme.primary.fontFamily,
+          [theme.breakpoints.down("md")]: {
+            fontSize: "2vh",
+          },
         }}
         textAlign="center"
       >
@@ -68,7 +71,7 @@ const DeleteGoalDialog = ({
               fontFamily: theme.primary.fontFamily,
               fontWeight: 600,
               [theme.breakpoints.down("md")]: {
-                fontSize: theme.primary.smallMobile,
+                fontSize: "1.7vh",
               },
               "&:hover": theme.primary.hoverDefault,
             }}
@@ -83,7 +86,7 @@ const DeleteGoalDialog = ({
               fontFamily: theme.primary.fontFamily,
               fontWeight: 600,
               [theme.breakpoints.down("md")]: {
-                fontSize: theme.primary.smallMobile,
+                fontSize: "1.7vh",
               },
               "&:hover": theme.primary.hoverDefault,
             }}
@@ -102,7 +105,7 @@ const DeleteGoalDialog = ({
               fontFamily: theme.primary.fontFamily,
               fontWeight: 600,
               [theme.breakpoints.down("md")]: {
-                fontSize: theme.primary.smallMobile,
+                fontSize: "1.7vh",
               },
               "&:hover": theme.primary.hoverDefault,
             }}
@@ -117,7 +120,7 @@ const DeleteGoalDialog = ({
               fontFamily: theme.primary.fontFamily,
               fontWeight: 600,
               [theme.breakpoints.down("md")]: {
-                fontSize: theme.primary.smallMobile,
+                fontSize: "1.7vh",
               },
               "&:hover": theme.primary.hoverDefault,
             }}
@@ -136,7 +139,7 @@ const DeleteGoalDialog = ({
               fontFamily: theme.primary.fontFamily,
               fontWeight: 600,
               [theme.breakpoints.down("md")]: {
-                fontSize: theme.primary.smallMobile,
+                fontSize: "1.7vh",
               },
               "&:hover": theme.primary.hoverDefault,
             }}
@@ -151,7 +154,7 @@ const DeleteGoalDialog = ({
               fontFamily: theme.primary.fontFamily,
               fontWeight: 600,
               [theme.breakpoints.down("md")]: {
-                fontSize: theme.primary.smallMobile,
+                fontSize: "1.7vh",
               },
               "&:hover": theme.primary.hoverDefault,
             }}
@@ -170,7 +173,7 @@ const DeleteGoalDialog = ({
               fontFamily: theme.primary.fontFamily,
               fontWeight: 600,
               [theme.breakpoints.down("md")]: {
-                fontSize: theme.primary.smallMobile,
+                fontSize: "1.7vh",
               },
               "&:hover": theme.primary.hoverDefault,
             }}
@@ -185,7 +188,7 @@ const DeleteGoalDialog = ({
               fontFamily: theme.primary.fontFamily,
               fontWeight: 600,
               [theme.breakpoints.down("md")]: {
-                fontSize: theme.primary.smallMobile,
+                fontSize: "1.7vh",
               },
               "&:hover": theme.primary.hoverDefault,
             }}
@@ -204,7 +207,7 @@ const DeleteGoalDialog = ({
               fontFamily: theme.primary.fontFamily,
               fontWeight: 600,
               [theme.breakpoints.down("md")]: {
-                fontSize: theme.primary.smallMobile,
+                fontSize: "1.7vh",
               },
               "&:hover": theme.primary.hoverDefault,
             }}
@@ -219,7 +222,7 @@ const DeleteGoalDialog = ({
               fontFamily: theme.primary.fontFamily,
               fontWeight: 600,
               [theme.breakpoints.down("md")]: {
-                fontSize: theme.primary.smallMobile,
+                fontSize: "1.7vh",
               },
               "&:hover": theme.primary.hoverDefault,
             }}
@@ -238,7 +241,7 @@ const DeleteGoalDialog = ({
               fontFamily: theme.primary.fontFamily,
               fontWeight: 600,
               [theme.breakpoints.down("md")]: {
-                fontSize: theme.primary.smallMobile,
+                fontSize: "1.7vh",
               },
               "&:hover": theme.primary.hoverDefault,
             }}
@@ -253,7 +256,7 @@ const DeleteGoalDialog = ({
               fontFamily: theme.primary.fontFamily,
               fontWeight: 600,
               [theme.breakpoints.down("md")]: {
-                fontSize: theme.primary.smallMobile,
+                fontSize: "1.7vh",
               },
               "&:hover": theme.primary.hoverDefault,
             }}
@@ -281,12 +284,12 @@ const DeleteGoalDialog = ({
             fontFamily: theme.primary.fontFamily,
             fontWeight: 600,
             [theme.breakpoints.down("md")]: {
-              fontSize: theme.primary.smallMobile,
+              fontSize: "1.7vh",
             },
             "&:hover": theme.primary.hoverDefault,
           }}
         >
-          Xoá giao dịch
+          Xoá mục tiêu
         </Typography>
       </Button>
     </Dialog>

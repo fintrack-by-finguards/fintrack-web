@@ -246,6 +246,9 @@ const GoalsManagement = () => {
             fontSize: theme.primary.medium,
             fontWeight: 700,
             fontFamily: theme.primary.fontFamily,
+            [theme.breakpoints.down("md")]: {
+              fontSize: "2.5vh",
+            },
           }}
         >
           Quản lý mục tiêu tài chính của
@@ -257,6 +260,9 @@ const GoalsManagement = () => {
             marginLeft: "5px",
             fontWeight: 700,
             fontFamily: theme.primary.fontFamily,
+            [theme.breakpoints.down("md")]: {
+              fontSize: "2.5vh",
+            },
           }}
         >
           bạn!
@@ -269,6 +275,11 @@ const GoalsManagement = () => {
           display: "flex",
           justifyContent: "space-between",
           width: "100%",
+          [theme.breakpoints.down("md")]: {
+            width: "90%",
+            margin: "0 auto",
+            marginTop: "30px",
+          },
         }}
       >
         <Box
@@ -277,6 +288,9 @@ const GoalsManagement = () => {
             justifyContent: "start",
             marginLeft: "20px",
             alignItems: "center",
+            [theme.breakpoints.down("md")]: {
+              marginLeft: 0,
+            },
           }}
         >
           <Button
@@ -295,6 +309,9 @@ const GoalsManagement = () => {
                 fontSize: theme.primary.small,
                 fontWeight: 700,
                 fontFamily: theme.primary.fontFamily,
+                [theme.breakpoints.down("md")]: {
+                  fontSize: "2vh",
+                },
               }}
             >
               Tất cả
@@ -314,6 +331,9 @@ const GoalsManagement = () => {
                 fontSize: theme.primary.small,
                 fontWeight: 700,
                 fontFamily: theme.primary.fontFamily,
+                [theme.breakpoints.down("md")]: {
+                  fontSize: "2vh",
+                },
               }}
             >
               Ngắn hạn
@@ -333,6 +353,9 @@ const GoalsManagement = () => {
                 fontSize: theme.primary.small,
                 fontWeight: 700,
                 fontFamily: theme.primary.fontFamily,
+                [theme.breakpoints.down("md")]: {
+                  fontSize: "2vh",
+                },
               }}
             >
               Trung hạn
@@ -352,6 +375,9 @@ const GoalsManagement = () => {
                 fontSize: theme.primary.small,
                 fontWeight: 700,
                 fontFamily: theme.primary.fontFamily,
+                [theme.breakpoints.down("md")]: {
+                  fontSize: "2vh",
+                },
               }}
             >
               Dài hạn
@@ -378,15 +404,20 @@ const GoalsManagement = () => {
       >
         {goalData.data.map((goal, idx) => (
           <Grid
-            xs={5}
+            xs={10}
+            md={5}
             boxShadow={3}
             sx={{
-              height: "260px",
+              minHeight: "260px",
               backgroundColor: "white",
               borderRadius: theme.primary.borderRadius,
               display: "flex",
               position: "relative",
-              marginTop: "30px",
+              marginTop: "20px",
+              [theme.breakpoints.down("md")]: {
+                flexDirection: "column",
+                marginTop: "40px",
+              },
             }}
             key={idx}
           >
@@ -397,6 +428,11 @@ const GoalsManagement = () => {
                 height: "260px",
                 borderTopLeftRadius: theme.primary.borderRadius,
                 borderBottomLeftRadius: theme.primary.borderRadius,
+                [theme.breakpoints.down("md")]: {
+                  width: "100%",
+                  borderTopRightRadius: theme.primary.borderRadius,
+                  borderBottomLeftRadius: 0,
+                },
               }}
               image={goal.img}
               alt="Paella dish"
@@ -415,6 +451,9 @@ const GoalsManagement = () => {
                     fontSize: "17px",
                     fontWeight: 700,
                     fontFamily: theme.primary.fontFamily,
+                    [theme.breakpoints.down("md")]: {
+                      fontSize: "3vh",
+                    },
                   }}
                   textAlign="left"
                 >
@@ -428,7 +467,12 @@ const GoalsManagement = () => {
                   }}
                 >
                   <DeleteIcon
-                    sx={{ color: "grey" }}
+                    sx={{
+                      color: "grey",
+                      [theme.breakpoints.down("md")]: {
+                        fontSize: "4vh",
+                      },
+                    }}
                     onClick={() => handleOpenDelete(goal._id)}
                   />
                   <DeleteGoalDialog
@@ -438,7 +482,13 @@ const GoalsManagement = () => {
                     data={goal}
                   />
                   <ChangeCircleIcon
-                    sx={{ color: "grey", marginLeft: "5px" }}
+                    sx={{
+                      color: "grey",
+                      marginLeft: "5px",
+                      [theme.breakpoints.down("md")]: {
+                        fontSize: "4vh",
+                      },
+                    }}
                     onClick={() => handleOpenUpdate(goal._id)}
                   />
                   <UpdateGoalDialog
@@ -462,6 +512,9 @@ const GoalsManagement = () => {
                   sx={{
                     color: theme.primary.main,
                     fontSize: "12px",
+                    [theme.breakpoints.down("md")]: {
+                      fontSize: "2vh",
+                    },
                   }}
                 />
 
@@ -472,6 +525,9 @@ const GoalsManagement = () => {
                     fontWeight: 600,
                     fontFamily: theme.primary.fontFamily,
                     marginLeft: "5px",
+                    [theme.breakpoints.down("md")]: {
+                      fontSize: "2vh",
+                    },
                   }}
                 >
                   Số tiền:
@@ -484,6 +540,9 @@ const GoalsManagement = () => {
                     fontWeight: 500,
                     fontFamily: theme.primary.fontFamily,
                     marginLeft: "5px",
+                    [theme.breakpoints.down("md")]: {
+                      fontSize: "2vh",
+                    },
                   }}
                 >
                   {numToMoney(goal.money)}
@@ -496,12 +555,18 @@ const GoalsManagement = () => {
                   marginLeft: "10px",
                   alignItems: "center",
                   marginTop: "5px",
+                  [theme.breakpoints.down("md")]: {
+                    fontSize: "2vh",
+                  },
                 }}
               >
                 <FiberManualRecordIcon
                   sx={{
                     color: theme.primary.main,
                     fontSize: "12px",
+                    [theme.breakpoints.down("md")]: {
+                      fontSize: "2vh",
+                    },
                   }}
                 />
 
@@ -512,6 +577,9 @@ const GoalsManagement = () => {
                     fontWeight: 600,
                     fontFamily: theme.primary.fontFamily,
                     marginLeft: "5px",
+                    [theme.breakpoints.down("md")]: {
+                      fontSize: "2vh",
+                    },
                   }}
                 >
                   Thời gian:
@@ -524,6 +592,9 @@ const GoalsManagement = () => {
                     fontWeight: 500,
                     fontFamily: theme.primary.fontFamily,
                     marginLeft: "5px",
+                    [theme.breakpoints.down("md")]: {
+                      fontSize: "2vh",
+                    },
                   }}
                 >
                   {goal.time + " " + (goal.unit === 0 ? "năm" : "tháng")}
@@ -542,6 +613,9 @@ const GoalsManagement = () => {
                   sx={{
                     color: theme.primary.main,
                     fontSize: "12px",
+                    [theme.breakpoints.down("md")]: {
+                      fontSize: "2vh",
+                    },
                   }}
                 />
 
@@ -552,6 +626,9 @@ const GoalsManagement = () => {
                     fontWeight: 600,
                     fontFamily: theme.primary.fontFamily,
                     marginLeft: "5px",
+                    [theme.breakpoints.down("md")]: {
+                      fontSize: "2vh",
+                    },
                   }}
                 >
                   Bắt đầu:
@@ -564,6 +641,9 @@ const GoalsManagement = () => {
                     fontWeight: 500,
                     fontFamily: theme.primary.fontFamily,
                     marginLeft: "5px",
+                    [theme.breakpoints.down("md")]: {
+                      fontSize: "2vh",
+                    },
                   }}
                 >
                   {toDay(goal.day, goal.month, goal.year)}
@@ -582,6 +662,9 @@ const GoalsManagement = () => {
                   sx={{
                     color: theme.primary.main,
                     fontSize: "12px",
+                    [theme.breakpoints.down("md")]: {
+                      fontSize: "2vh",
+                    },
                   }}
                 />
 
@@ -592,6 +675,9 @@ const GoalsManagement = () => {
                     fontWeight: 600,
                     fontFamily: theme.primary.fontFamily,
                     marginLeft: "5px",
+                    [theme.breakpoints.down("md")]: {
+                      fontSize: "2vh",
+                    },
                   }}
                 >
                   Kết thúc:
@@ -604,6 +690,9 @@ const GoalsManagement = () => {
                     fontWeight: 500,
                     fontFamily: theme.primary.fontFamily,
                     marginLeft: "5px",
+                    [theme.breakpoints.down("md")]: {
+                      fontSize: "2vh",
+                    },
                   }}
                 >
                   {getEndDay(
@@ -628,6 +717,9 @@ const GoalsManagement = () => {
                   sx={{
                     color: theme.primary.main,
                     fontSize: "12px",
+                    [theme.breakpoints.down("md")]: {
+                      fontSize: "2vh",
+                    },
                   }}
                 />
 
@@ -638,6 +730,9 @@ const GoalsManagement = () => {
                     fontWeight: 600,
                     fontFamily: theme.primary.fontFamily,
                     marginLeft: "5px",
+                    [theme.breakpoints.down("md")]: {
+                      fontSize: "2vh",
+                    },
                   }}
                 >
                   Tiến độ:
@@ -650,6 +745,9 @@ const GoalsManagement = () => {
                     fontWeight: 600,
                     fontFamily: theme.primary.fontFamily,
                     marginLeft: "5px",
+                    [theme.breakpoints.down("md")]: {
+                      fontSize: "2vh",
+                    },
                   }}
                 >
                   {numToMoney(goal.progress)}
@@ -672,6 +770,9 @@ const GoalsManagement = () => {
                     borderRadius: theme.primary.borderRadius,
                     color: theme.primary.sub,
                     width: "200px",
+                    [theme.breakpoints.down("md")]: {
+                      fontSize: "2vh",
+                    },
                   }}
                 />
 
@@ -682,6 +783,9 @@ const GoalsManagement = () => {
                     fontWeight: 600,
                     fontFamily: theme.primary.fontFamily,
                     marginLeft: "5px",
+                    [theme.breakpoints.down("md")]: {
+                      fontSize: "2vh",
+                    },
                   }}
                 >
                   {(goal.progress / goal.money) * 100 + "%"}
@@ -743,7 +847,7 @@ const GoalsManagement = () => {
                       fontStyle: "italic",
                       "&:hover": theme.primary.hoverDefault,
                       [theme.breakpoints.down("md")]: {
-                        fontSize: theme.primary.medium,
+                        fontSize: "1.5vh",
                       },
                       color: theme.primary.main,
                     }}

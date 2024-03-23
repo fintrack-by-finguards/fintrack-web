@@ -87,7 +87,14 @@ const PostDetail = ({ data, setPostId }) => {
             width: "100px",
           }}
         >
-          <AccountCircleIcon sx={{ fontSize: theme.primary.medium }} />
+          <AccountCircleIcon
+            sx={{
+              fontSize: theme.primary.medium,
+              [theme.breakpoints.down("md")]: {
+                fontSize: "3vh",
+              },
+            }}
+          />
           <Typography
             sx={{
               fontFamily: theme.primary.fontFamily,
@@ -96,7 +103,7 @@ const PostDetail = ({ data, setPostId }) => {
               marginLeft: "5px",
               "&:hover": theme.primary.hoverDefault,
               [theme.breakpoints.down("md")]: {
-                fontSize: theme.primary.medium,
+                fontSize: "2vh",
               },
             }}
           >
@@ -111,7 +118,14 @@ const PostDetail = ({ data, setPostId }) => {
               width: "50px",
             }}
           >
-            <CommentIcon sx={{ fontSize: theme.primary.medium }} />
+            <CommentIcon
+              sx={{
+                fontSize: theme.primary.medium,
+                [theme.breakpoints.down("md")]: {
+                  fontSize: "3vh",
+                },
+              }}
+            />
             <Typography
               sx={{
                 fontFamily: theme.primary.fontFamily,
@@ -120,7 +134,7 @@ const PostDetail = ({ data, setPostId }) => {
                 marginLeft: "5px",
                 "&:hover": theme.primary.hoverDefault,
                 [theme.breakpoints.down("md")]: {
-                  fontSize: theme.primary.medium,
+                  fontSize: "2vh",
                 },
               }}
             >
@@ -134,7 +148,14 @@ const PostDetail = ({ data, setPostId }) => {
               width: "50px",
             }}
           >
-            <FavoriteBorderIcon sx={{ fontSize: theme.primary.medium }} />
+            <FavoriteBorderIcon
+              sx={{
+                fontSize: theme.primary.medium,
+                [theme.breakpoints.down("md")]: {
+                  fontSize: "3vh",
+                },
+              }}
+            />
             <Typography
               sx={{
                 fontFamily: theme.primary.fontFamily,
@@ -143,7 +164,7 @@ const PostDetail = ({ data, setPostId }) => {
                 marginLeft: "5px",
                 "&:hover": theme.primary.hoverDefault,
                 [theme.breakpoints.down("md")]: {
-                  fontSize: theme.primary.medium,
+                  fontSize: "2vh",
                 },
               }}
             >
@@ -162,7 +183,7 @@ const PostDetail = ({ data, setPostId }) => {
           marginLeft: "5px",
           "&:hover": theme.primary.hoverDefault,
           [theme.breakpoints.down("md")]: {
-            fontSize: theme.primary.medium,
+            fontSize: "3vh",
           },
         }}
       >
@@ -179,7 +200,7 @@ const PostDetail = ({ data, setPostId }) => {
               marginLeft: "5px",
               "&:hover": theme.primary.hoverDefault,
               [theme.breakpoints.down("md")]: {
-                fontSize: theme.primary.medium,
+                fontSize: "2vh",
               },
             }}
             key={id}

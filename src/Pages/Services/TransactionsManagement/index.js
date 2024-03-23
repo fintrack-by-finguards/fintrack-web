@@ -57,6 +57,10 @@ const TransactionsManagement = () => {
     });
   }, [displayDay, choseMonth, choseYear, resetPage]);
 
+  useEffect(() => {
+    handleResize();
+  }, []);
+
   const handleAddTrans = (
     _name,
     _cate1,
@@ -503,6 +507,16 @@ const TransactionsManagement = () => {
     setEndDay(data);
   };
 
+  const [isMobile, setIsMobile] = useState(false);
+
+  const handleResize = () => {
+    if (window.innerWidth < 720) {
+      setIsMobile(true);
+    } else {
+      setIsMobile(false);
+    }
+  };
+
   return (
     <Container
       sx={{
@@ -534,6 +548,9 @@ const TransactionsManagement = () => {
               fontSize: theme.primary.medium,
               fontWeight: 700,
               fontFamily: theme.primary.fontFamily,
+              [theme.breakpoints.down("md")]: {
+                fontSize: "2vh",
+              },
             }}
           >
             Cùng
@@ -545,6 +562,9 @@ const TransactionsManagement = () => {
               marginLeft: "5px",
               fontWeight: 700,
               fontFamily: theme.primary.fontFamily,
+              [theme.breakpoints.down("md")]: {
+                fontSize: "2vh",
+              },
             }}
           >
             FinTrack
@@ -556,6 +576,9 @@ const TransactionsManagement = () => {
               marginLeft: "5px",
               fontWeight: 700,
               fontFamily: theme.primary.fontFamily,
+              [theme.breakpoints.down("md")]: {
+                fontSize: "2vh",
+              },
             }}
           >
             quản lý chi tiêu của
@@ -567,6 +590,9 @@ const TransactionsManagement = () => {
               marginLeft: "5px",
               fontWeight: 700,
               fontFamily: theme.primary.fontFamily,
+              [theme.breakpoints.down("md")]: {
+                fontSize: "2vh",
+              },
             }}
           >
             bạn!
@@ -581,7 +607,7 @@ const TransactionsManagement = () => {
           display: "flex",
           overflow: "hidden",
           overflowX: "scroll",
-          height: "40px",
+          height: "50px",
           width: "80%",
           margin: "0 auto",
           marginTop: "10px",
@@ -610,6 +636,9 @@ const TransactionsManagement = () => {
                 fontSize: theme.primary.small,
                 fontWeight: 600,
                 fontFamily: theme.primary.fontFamily,
+                [theme.breakpoints.down("md")]: {
+                  fontSize: "2vh",
+                },
               }}
             >
               {(data.month < 10 ? "0" + data.month : data.month) +
@@ -631,6 +660,11 @@ const TransactionsManagement = () => {
           margin: "0 auto",
           marginTop: "10px",
           padding: "5px",
+          [theme.breakpoints.down("md")]: {
+            height: "50px",
+            marginTop: "20px",
+            marginBottom: "20px",
+          },
         }}
       >
         {createArray(getDays(choseYear, choseMonth)).map((data, id) => (
@@ -649,6 +683,9 @@ const TransactionsManagement = () => {
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
+              [theme.breakpoints.down("md")]: {
+                width: "50px",
+              },
             }}
           >
             <Typography
@@ -666,7 +703,14 @@ const TransactionsManagement = () => {
       </Box>
 
       <Box
-        sx={{ display: "flex", justifyContent: "center", marginTop: "10px" }}
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          marginTop: "10px",
+          [theme.breakpoints.down("md")]: {
+            flexDirection: "column",
+          },
+        }}
       >
         <Carousel
           item={displayHis}
@@ -685,6 +729,11 @@ const TransactionsManagement = () => {
             justifyContent: "start",
             width: "200px",
             marginLeft: "20px",
+            [theme.breakpoints.down("md")]: {
+              flexDirection: "row",
+              width: "90%",
+              justifyContent: "space-between",
+            },
           }}
         >
           <Box
@@ -694,6 +743,11 @@ const TransactionsManagement = () => {
               borderRadius: "8px",
               marginTop: "10px",
               padding: "20px",
+              [theme.breakpoints.down("md")]: {
+                width: "40%",
+                display: "block",
+                padding: "5px",
+              },
             }}
             boxShadow={4}
           >
@@ -725,6 +779,11 @@ const TransactionsManagement = () => {
               borderRadius: "8px",
               marginTop: "10px",
               padding: "20px",
+              [theme.breakpoints.down("md")]: {
+                width: "40%",
+                display: "block",
+                padding: "5px",
+              },
             }}
             boxShadow={4}
           >
@@ -801,7 +860,7 @@ const TransactionsManagement = () => {
               marginRight: "10px",
               "&:hover": theme.primary.hoverDefault,
               [theme.breakpoints.down("md")]: {
-                fontSize: theme.primary.medium,
+                fontSize: "2vh",
               },
             }}
           >
@@ -818,11 +877,22 @@ const TransactionsManagement = () => {
                 width: "100%",
                 height: "40px",
                 borderRadius: theme.primary.borderRadius,
+                [theme.breakpoints.down("md")]: {
+                  fontSize: "2vh",
+                },
               }}
               MenuProps={{ PaperProps: { sx: { maxHeight: 120 } } }}
             >
               {createArray(31).map((value, id) => (
-                <MenuItem value={toDateString(value + 1)} key={id}>
+                <MenuItem
+                  value={toDateString(value + 1)}
+                  key={id}
+                  sx={{
+                    [theme.breakpoints.down("md")]: {
+                      fontSize: "2vh",
+                    },
+                  }}
+                >
                   {toDateString(value + 1)}
                 </MenuItem>
               ))}
@@ -838,9 +908,7 @@ const TransactionsManagement = () => {
               marginLeft: "5px",
               "&:hover": theme.primary.hoverDefault,
               [theme.breakpoints.down("md")]: {
-                fontSize: theme.primary.smallMobile,
-                marginBottom: "10px",
-                marginRight: "0px",
+                fontSize: "2vh",
               },
             }}
           >
@@ -857,24 +925,49 @@ const TransactionsManagement = () => {
                 width: "100%",
                 height: "40px",
                 borderRadius: theme.primary.borderRadius,
+                [theme.breakpoints.down("md")]: {
+                  fontSize: "2vh",
+                },
               }}
               MenuProps={{ PaperProps: { sx: { maxHeight: 120 } } }}
             >
               {createArray(31).map((value, id) => (
-                <MenuItem value={toDateString(value + 1)} key={id}>
+                <MenuItem
+                  value={toDateString(value + 1)}
+                  key={id}
+                  sx={{
+                    [theme.breakpoints.down("md")]: {
+                      fontSize: "2vh",
+                    },
+                  }}
+                >
                   {toDateString(value + 1)}
                 </MenuItem>
               ))}
             </Select>
           </FormControl>
         </Box>
-        <TransactionsChart
-          startDay={startDay}
-          endDay={endDay}
-          choseMonth={choseMonth}
-          choseYear={choseYear}
-          resetPage={resetPage}
-        />
+        {isMobile ? (
+          <TransactionsChart
+            startDay={startDay}
+            endDay={endDay}
+            choseMonth={choseMonth}
+            choseYear={choseYear}
+            resetPage={resetPage}
+            width={300}
+            height={400}
+          />
+        ) : (
+          <TransactionsChart
+            startDay={startDay}
+            endDay={endDay}
+            choseMonth={choseMonth}
+            choseYear={choseYear}
+            resetPage={resetPage}
+            width={900}
+            height={400}
+          />
+        )}
       </Box>
     </Container>
   );

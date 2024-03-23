@@ -96,7 +96,7 @@ const Impressive = () => {
       </Box>
 
       <Grid container sx={{ width: "100%" }}>
-        <Grid xs={4} sx={{ display: "flex", justifyContent: "center" }}>
+        <Grid xs={12} md={4} sx={{ display: "flex", justifyContent: "center" }}>
           <Box
             sx={{
               backgroundColor: theme.primary.main,
@@ -109,6 +109,10 @@ const Impressive = () => {
               paddingRight: "10px",
               alignItems: "center",
               borderRadius: theme.primary.borderRadius,
+              [theme.breakpoints.down("md")]: {
+                height: "100px",
+                marginBottom: "15px",
+              },
             }}
           >
             <Box sx={{ display: "flex", alignItems: "center" }}>
@@ -120,8 +124,7 @@ const Impressive = () => {
                   color: theme.primary.sub,
                   "&:hover": theme.primary.hoverDefault,
                   [theme.breakpoints.down("md")]: {
-                    fontSize: "11px",
-                    width: "100%",
+                    fontSize: "4vh",
                   },
                 }}
                 textAlign="center"
@@ -129,7 +132,14 @@ const Impressive = () => {
                 {appData.transaction}
               </Typography>
               <PeopleIcon
-                sx={{ color: "white", fontSize: "12vh", marginLeft: "10px" }}
+                sx={{
+                  color: "white",
+                  fontSize: "12vh",
+                  marginLeft: "10px",
+                  [theme.breakpoints.down("md")]: {
+                    fontSize: "6vh",
+                  },
+                }}
               />
             </Box>
             <Typography
@@ -140,8 +150,7 @@ const Impressive = () => {
                 color: "white",
                 "&:hover": theme.primary.hoverDefault,
                 [theme.breakpoints.down("md")]: {
-                  fontSize: "11px",
-                  width: "100%",
+                  fontSize: "2.5vh",
                 },
               }}
               textAlign="center"
@@ -151,7 +160,7 @@ const Impressive = () => {
           </Box>
         </Grid>
 
-        <Grid xs={4} sx={{ display: "flex", justifyContent: "center" }}>
+        <Grid xs={12} md={4} sx={{ display: "flex", justifyContent: "center" }}>
           <Box
             sx={{
               backgroundColor: theme.primary.main,
@@ -164,6 +173,10 @@ const Impressive = () => {
               paddingRight: "10px",
               alignItems: "center",
               borderRadius: theme.primary.borderRadius,
+              [theme.breakpoints.down("md")]: {
+                height: "100px",
+                marginBottom: "15px",
+              },
             }}
           >
             <Box sx={{ display: "flex", alignItems: "center" }}>
@@ -175,8 +188,7 @@ const Impressive = () => {
                   color: theme.primary.sub,
                   "&:hover": theme.primary.hoverDefault,
                   [theme.breakpoints.down("md")]: {
-                    fontSize: "11px",
-                    width: "100%",
+                    fontSize: "4vh",
                   },
                 }}
                 textAlign="center"
@@ -184,7 +196,14 @@ const Impressive = () => {
                 {appData.transaction}
               </Typography>
               <PaymentIcon
-                sx={{ color: "white", fontSize: "12vh", marginLeft: "10px" }}
+                sx={{
+                  color: "white",
+                  fontSize: "12vh",
+                  marginLeft: "10px",
+                  [theme.breakpoints.down("md")]: {
+                    fontSize: "6vh",
+                  },
+                }}
               />
             </Box>
             <Typography
@@ -195,8 +214,7 @@ const Impressive = () => {
                 color: "white",
                 "&:hover": theme.primary.hoverDefault,
                 [theme.breakpoints.down("md")]: {
-                  fontSize: "11px",
-                  width: "100%",
+                  fontSize: "2.5vh",
                 },
               }}
               textAlign="center"
@@ -206,7 +224,7 @@ const Impressive = () => {
           </Box>
         </Grid>
 
-        <Grid xs={4} sx={{ display: "flex", justifyContent: "center" }}>
+        <Grid xs={12} md={4} sx={{ display: "flex", justifyContent: "center" }}>
           <Box
             sx={{
               backgroundColor: theme.primary.main,
@@ -219,6 +237,10 @@ const Impressive = () => {
               paddingRight: "10px",
               alignItems: "center",
               borderRadius: theme.primary.borderRadius,
+              [theme.breakpoints.down("md")]: {
+                height: "100px",
+                marginBottom: "15px",
+              },
             }}
           >
             <Box sx={{ display: "flex", alignItems: "center" }}>
@@ -230,8 +252,7 @@ const Impressive = () => {
                   color: theme.primary.sub,
                   "&:hover": theme.primary.hoverDefault,
                   [theme.breakpoints.down("md")]: {
-                    fontSize: "11px",
-                    width: "100%",
+                    fontSize: "4vh",
                   },
                 }}
                 textAlign="center"
@@ -239,7 +260,14 @@ const Impressive = () => {
                 {appData.goal}
               </Typography>
               <FlagIcon
-                sx={{ color: "white", fontSize: "12vh", marginLeft: "10px" }}
+                sx={{
+                  color: "white",
+                  fontSize: "12vh",
+                  marginLeft: "10px",
+                  [theme.breakpoints.down("md")]: {
+                    fontSize: "6vh",
+                  },
+                }}
               />
             </Box>
             <Typography
@@ -250,8 +278,7 @@ const Impressive = () => {
                 color: "white",
                 "&:hover": theme.primary.hoverDefault,
                 [theme.breakpoints.down("md")]: {
-                  fontSize: "11px",
-                  width: "100%",
+                  fontSize: "2.5vh",
                 },
               }}
               textAlign="center"

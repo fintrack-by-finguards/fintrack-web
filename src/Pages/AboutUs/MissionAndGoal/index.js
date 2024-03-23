@@ -55,7 +55,8 @@ const MissionAndGoal = () => {
       </Box>
       <Grid container sx={{ width: "100%" }}>
         <Grid
-          xs={6}
+          xs={12}
+          md={6}
           sx={{
             display: "flex",
             flexDirection: "column",
@@ -96,7 +97,7 @@ const MissionAndGoal = () => {
               width: "60%",
               color: theme.primary.main,
               [theme.breakpoints.down("md")]: {
-                fontSize: theme.primary.medium,
+                fontSize: "1.5vh",
               },
               "&:hover": theme.primary.hoverDefault,
             }}
@@ -118,7 +119,8 @@ const MissionAndGoal = () => {
         </Grid>
 
         <Grid
-          xs={6}
+          xs={12}
+          md={6}
           sx={{
             display: "flex",
             flexDirection: "column",
@@ -159,7 +161,7 @@ const MissionAndGoal = () => {
               width: "60%",
               color: theme.primary.main,
               [theme.breakpoints.down("md")]: {
-                fontSize: theme.primary.medium,
+                fontSize: "1.5vh",
               },
               "&:hover": theme.primary.hoverDefault,
             }}

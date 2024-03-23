@@ -68,6 +68,9 @@ const CreateGoalDialog = ({ openDialog, handleCloseDialog, createGoal }) => {
           fontSize: theme.primary.medium,
           fontWeight: 700,
           fontFamily: theme.primary.fontFamily,
+          [theme.breakpoints.down("md")]: {
+            fontSize: "3vh",
+          },
         }}
         textAlign="center"
       >
@@ -82,7 +85,7 @@ const CreateGoalDialog = ({ openDialog, handleCloseDialog, createGoal }) => {
             fontWeight: 500,
             marginBottom: "5px",
             [theme.breakpoints.down("md")]: {
-              fontSize: theme.primary.smallMobile,
+              fontSize: "2vh",
             },
             "&:hover": theme.primary.hoverDefault,
           }}
@@ -100,6 +103,9 @@ const CreateGoalDialog = ({ openDialog, handleCloseDialog, createGoal }) => {
             width: "100%",
             marginRight: "10px",
             borderRadius: theme.primary.borderRadius,
+            [theme.breakpoints.down("md")]: {
+              fontSize: "2vh",
+            },
             "& .MuiOutlinedInput-root": {
               "& fieldset": {
                 borderRadius: theme.primary.borderRadius,
@@ -129,7 +135,7 @@ const CreateGoalDialog = ({ openDialog, handleCloseDialog, createGoal }) => {
             fontWeight: 500,
             marginBottom: "5px",
             [theme.breakpoints.down("md")]: {
-              fontSize: theme.primary.smallMobile,
+              fontSize: "2vh",
             },
             "&:hover": theme.primary.hoverDefault,
           }}
@@ -149,7 +155,7 @@ const CreateGoalDialog = ({ openDialog, handleCloseDialog, createGoal }) => {
             fontWeight: 500,
             marginBottom: "5px",
             [theme.breakpoints.down("md")]: {
-              fontSize: theme.primary.smallMobile,
+              fontSize: "2vh",
             },
             "&:hover": theme.primary.hoverDefault,
           }}
@@ -193,7 +199,7 @@ const CreateGoalDialog = ({ openDialog, handleCloseDialog, createGoal }) => {
             fontWeight: 500,
             marginBottom: "5px",
             [theme.breakpoints.down("md")]: {
-              fontSize: theme.primary.smallMobile,
+              fontSize: "2vh",
             },
             "&:hover": theme.primary.hoverDefault,
           }}
@@ -212,6 +218,9 @@ const CreateGoalDialog = ({ openDialog, handleCloseDialog, createGoal }) => {
               width: "30%",
               marginRight: "10px",
               borderRadius: theme.primary.borderRadius,
+              [theme.breakpoints.down("md")]: {
+                fontSize: "2vh",
+              },
               "& .MuiOutlinedInput-root": {
                 "& fieldset": {
                   borderRadius: theme.primary.borderRadius,
@@ -241,11 +250,32 @@ const CreateGoalDialog = ({ openDialog, handleCloseDialog, createGoal }) => {
                 width: "100%",
                 height: "40px",
                 borderRadius: theme.primary.borderRadius,
+                [theme.breakpoints.down("md")]: {
+                  fontSize: "2vh",
+                },
               }}
               MenuProps={{ PaperProps: { sx: { maxHeight: 120 } } }}
             >
-              <MenuItem value={0}>Năm</MenuItem>
-              <MenuItem value={1}>Tháng</MenuItem>
+              <MenuItem
+                value={0}
+                sx={{
+                  [theme.breakpoints.down("md")]: {
+                    fontSize: "2vh",
+                  },
+                }}
+              >
+                Năm
+              </MenuItem>
+              <MenuItem
+                value={1}
+                sx={{
+                  [theme.breakpoints.down("md")]: {
+                    fontSize: "2vh",
+                  },
+                }}
+              >
+                Tháng
+              </MenuItem>
             </Select>
           </FormControl>
         </Box>
@@ -257,6 +287,9 @@ const CreateGoalDialog = ({ openDialog, handleCloseDialog, createGoal }) => {
             display: "block",
             margin: "0 auto",
             marginTop: "50px",
+            [theme.breakpoints.down("md")]: {
+              marginTop: "20px",
+            },
           }}
           onClick={submit}
         >
@@ -267,7 +300,7 @@ const CreateGoalDialog = ({ openDialog, handleCloseDialog, createGoal }) => {
               fontFamily: theme.primary.fontFamily,
               fontWeight: 600,
               [theme.breakpoints.down("md")]: {
-                fontSize: theme.primary.smallMobile,
+                fontSize: "2vh",
               },
               "&:hover": theme.primary.hoverDefault,
             }}

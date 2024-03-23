@@ -22,15 +22,22 @@ function range(min, max) {
   return arr;
 }
 
-const options = (totalExpensesData, totalReceiveData, startDay, endDay) => {
+const options = (
+  totalExpensesData,
+  totalReceiveData,
+  startDay,
+  endDay,
+  width,
+  height
+) => {
   return {
     chart: {
       type: "column",
       plotBackgroundColor: null,
       plotBorderWidth: null,
       plotShadow: false,
-      width: 900,
-      height: 400,
+      width: width,
+      height: height,
     },
     title: {
       text: "",
@@ -81,6 +88,8 @@ const TransactionsChart = ({
   choseMonth,
   choseYear,
   resetPage,
+  width,
+  height,
 }) => {
   const [totalExpensesData, setTotalExpensesData] = useState([
     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
@@ -132,7 +141,14 @@ const TransactionsChart = ({
   return (
     <HighchartsReact
       highcharts={Highcharts}
-      options={options(totalExpensesData, totalReceiveData, sDay, eDay)}
+      options={options(
+        totalExpensesData,
+        totalReceiveData,
+        sDay,
+        eDay,
+        width,
+        height
+      )}
     />
   );
 };

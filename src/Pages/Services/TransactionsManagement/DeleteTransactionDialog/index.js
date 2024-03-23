@@ -32,6 +32,9 @@ const DeleteTransactionDialog = ({
           width: "520px",
           height: "320px",
           padding: "30px",
+          [theme.breakpoints.down("md")]: {
+            padding: "10px",
+          },
         },
       }}
     >
@@ -41,6 +44,9 @@ const DeleteTransactionDialog = ({
           fontSize: theme.primary.medium,
           fontWeight: 700,
           fontFamily: theme.primary.fontFamily,
+          [theme.breakpoints.down("md")]: {
+            fontSize: "2vh",
+          },
         }}
         textAlign="center"
       >
@@ -53,6 +59,9 @@ const DeleteTransactionDialog = ({
           flexDirection: "column",
           width: "60%",
           margin: "0 auto",
+          [theme.breakpoints.down("md")]: {
+            width: "80%",
+          },
         }}
       >
         <Box sx={{ display: "flex", marginTop: "20px" }}>
@@ -64,7 +73,8 @@ const DeleteTransactionDialog = ({
               fontFamily: theme.primary.fontFamily,
               fontWeight: 600,
               [theme.breakpoints.down("md")]: {
-                fontSize: theme.primary.smallMobile,
+                fontSize: "1.5vh",
+                width: "80px",
               },
               "&:hover": theme.primary.hoverDefault,
             }}
@@ -79,7 +89,7 @@ const DeleteTransactionDialog = ({
               fontFamily: theme.primary.fontFamily,
               fontWeight: 600,
               [theme.breakpoints.down("md")]: {
-                fontSize: theme.primary.smallMobile,
+                fontSize: "1.5vh",
               },
               "&:hover": theme.primary.hoverDefault,
             }}
@@ -98,7 +108,8 @@ const DeleteTransactionDialog = ({
               fontFamily: theme.primary.fontFamily,
               fontWeight: 600,
               [theme.breakpoints.down("md")]: {
-                fontSize: theme.primary.smallMobile,
+                fontSize: "1.5vh",
+                width: "80px",
               },
               "&:hover": theme.primary.hoverDefault,
             }}
@@ -113,7 +124,7 @@ const DeleteTransactionDialog = ({
               fontFamily: theme.primary.fontFamily,
               fontWeight: 600,
               [theme.breakpoints.down("md")]: {
-                fontSize: theme.primary.smallMobile,
+                fontSize: "1.5vh",
               },
               "&:hover": theme.primary.hoverDefault,
             }}
@@ -133,7 +144,8 @@ const DeleteTransactionDialog = ({
               fontFamily: theme.primary.fontFamily,
               fontWeight: 600,
               [theme.breakpoints.down("md")]: {
-                fontSize: theme.primary.smallMobile,
+                fontSize: "1.5vh",
+                width: "80px",
               },
               "&:hover": theme.primary.hoverDefault,
             }}
@@ -148,7 +160,7 @@ const DeleteTransactionDialog = ({
               fontFamily: theme.primary.fontFamily,
               fontWeight: 600,
               [theme.breakpoints.down("md")]: {
-                fontSize: theme.primary.smallMobile,
+                fontSize: "1.5vh",
               },
               "&:hover": theme.primary.hoverDefault,
             }}
@@ -167,7 +179,8 @@ const DeleteTransactionDialog = ({
               fontFamily: theme.primary.fontFamily,
               fontWeight: 600,
               [theme.breakpoints.down("md")]: {
-                fontSize: theme.primary.smallMobile,
+                fontSize: "1.5vh",
+                width: "80px",
               },
               "&:hover": theme.primary.hoverDefault,
             }}
@@ -182,7 +195,7 @@ const DeleteTransactionDialog = ({
               fontFamily: theme.primary.fontFamily,
               fontWeight: 600,
               [theme.breakpoints.down("md")]: {
-                fontSize: theme.primary.smallMobile,
+                fontSize: "1.5vh",
               },
               "&:hover": theme.primary.hoverDefault,
             }}
@@ -213,7 +226,8 @@ const DeleteTransactionDialog = ({
               fontFamily: theme.primary.fontFamily,
               fontWeight: 600,
               [theme.breakpoints.down("md")]: {
-                fontSize: theme.primary.smallMobile,
+                fontSize: "1.5vh",
+                width: "80px",
               },
               "&:hover": theme.primary.hoverDefault,
             }}
@@ -228,7 +242,7 @@ const DeleteTransactionDialog = ({
               fontFamily: theme.primary.fontFamily,
               fontWeight: 600,
               [theme.breakpoints.down("md")]: {
-                fontSize: theme.primary.smallMobile,
+                fontSize: "1.5vh",
               },
               "&:hover": theme.primary.hoverDefault,
             }}
@@ -246,6 +260,9 @@ const DeleteTransactionDialog = ({
           display: "block",
           margin: "0 auto",
           marginTop: "20px",
+          [theme.breakpoints.down("md")]: {
+            marginTop: "40px",
+          },
         }}
         onClick={submit}
       >
@@ -256,7 +273,7 @@ const DeleteTransactionDialog = ({
             fontFamily: theme.primary.fontFamily,
             fontWeight: 600,
             [theme.breakpoints.down("md")]: {
-              fontSize: theme.primary.smallMobile,
+              fontSize: "2vh",
             },
             "&:hover": theme.primary.hoverDefault,
           }}

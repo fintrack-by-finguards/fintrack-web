@@ -45,19 +45,31 @@ const Dashboard = ({ day, month, year }) => {
         alignItems: "center",
         margin: "0 auto",
         marginBottom: "30px",
+        [theme.breakpoints.down("md")]: {
+          height: "150px",
+        },
       }}
       boxShadow={3}
     >
       <Grid container>
         <Grid
-          xs={4}
+          md={4}
+          xs={6}
           sx={{
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
           }}
         >
-          <PaidIcon sx={{ color: theme.primary.sub, fontSize: "80px" }} />
+          <PaidIcon
+            sx={{
+              color: theme.primary.sub,
+              fontSize: "80px",
+              [theme.breakpoints.down("md")]: {
+                fontSize: "8vh",
+              },
+            }}
+          />
           <Box
             sx={{
               display: "flex",
@@ -72,6 +84,9 @@ const Dashboard = ({ day, month, year }) => {
                 fontSize: "2.2vh",
                 fontWeight: 700,
                 fontFamily: theme.primary.fontFamily,
+                [theme.breakpoints.down("md")]: {
+                  fontSize: "2vh",
+                },
               }}
             >
               Tổng tài sản
@@ -82,6 +97,9 @@ const Dashboard = ({ day, month, year }) => {
                 fontSize: "2.2vh",
                 fontWeight: 700,
                 fontFamily: theme.primary.fontFamily,
+                [theme.breakpoints.down("md")]: {
+                  fontSize: "2vh",
+                },
               }}
             >
               {numToMoney(totalAssets)}
@@ -90,14 +108,23 @@ const Dashboard = ({ day, month, year }) => {
         </Grid>
 
         <Grid
-          xs={4}
+          md={4}
+          xs={6}
           sx={{
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
           }}
         >
-          <ErrorIcon sx={{ color: theme.primary.red, fontSize: "80px" }} />
+          <ErrorIcon
+            sx={{
+              color: theme.primary.red,
+              fontSize: "80px",
+              [theme.breakpoints.down("md")]: {
+                fontSize: "8vh",
+              },
+            }}
+          />
           <Box
             sx={{
               display: "flex",
@@ -112,6 +139,9 @@ const Dashboard = ({ day, month, year }) => {
                 fontSize: "2.2vh",
                 fontWeight: 700,
                 fontFamily: theme.primary.fontFamily,
+                [theme.breakpoints.down("md")]: {
+                  fontSize: "2vh",
+                },
               }}
             >
               Tổng nợ
@@ -122,6 +152,9 @@ const Dashboard = ({ day, month, year }) => {
                 fontSize: "2.2vh",
                 fontWeight: 700,
                 fontFamily: theme.primary.fontFamily,
+                [theme.breakpoints.down("md")]: {
+                  fontSize: "2vh",
+                },
               }}
             >
               {numToMoney(totalDebt)}
@@ -130,15 +163,25 @@ const Dashboard = ({ day, month, year }) => {
         </Grid>
 
         <Grid
-          xs={4}
+          md={4}
+          xs={12}
           sx={{
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
+            [theme.breakpoints.down("md")]: {
+              marginTop: "10px",
+            },
           }}
         >
           <AccountBalanceWalletIcon
-            sx={{ color: theme.primary.green, fontSize: "80px" }}
+            sx={{
+              color: theme.primary.green,
+              fontSize: "80px",
+              [theme.breakpoints.down("md")]: {
+                fontSize: "8vh",
+              },
+            }}
           />
           <Box
             sx={{
@@ -154,6 +197,9 @@ const Dashboard = ({ day, month, year }) => {
                 fontSize: "2.2vh",
                 fontWeight: 700,
                 fontFamily: theme.primary.fontFamily,
+                [theme.breakpoints.down("md")]: {
+                  fontSize: "2vh",
+                },
               }}
             >
               Tài sản ròng
@@ -164,6 +210,9 @@ const Dashboard = ({ day, month, year }) => {
                 fontSize: "2.2vh",
                 fontWeight: 700,
                 fontFamily: theme.primary.fontFamily,
+                [theme.breakpoints.down("md")]: {
+                  fontSize: "2vh",
+                },
               }}
             >
               {numToMoney(totalAssets - totalDebt)}

@@ -112,15 +112,15 @@ const options1 = (data) => {
   };
 };
 
-const options2 = (startDay, endDay, data, totalData) => {
+const options2 = (startDay, endDay, data, totalData, height, width) => {
   return {
     chart: {
       type: "column",
       plotBackgroundColor: null,
       plotBorderWidth: null,
       plotShadow: false,
-      width: 700,
-      height: 300,
+      width: width,
+      height: height,
     },
     title: {
       text: "",
@@ -408,9 +408,23 @@ const AssetsChart = ({ day, month, year }) => {
     });
   }, [day, month, year]);
 
+  useEffect(() => {
+    handleResize();
+  }, []);
+
   const { username } = useContext(GlobalContext);
 
   const theme = useTheme();
+
+  const [isMobile, setIsMobile] = useState(false);
+
+  const handleResize = () => {
+    if (window.innerWidth < 720) {
+      setIsMobile(true);
+    } else {
+      setIsMobile(false);
+    }
+  };
 
   return (
     <Box
@@ -421,7 +435,13 @@ const AssetsChart = ({ day, month, year }) => {
       }}
     >
       <Box
-        sx={{ height: "300px", borderRadius: theme.primary.borderRadius }}
+        sx={{
+          height: "300px",
+          borderRadius: theme.primary.borderRadius,
+          [theme.breakpoints.down("md")]: {
+            height: "650px",
+          },
+        }}
         boxShadow={3}
       >
         <Typography
@@ -431,6 +451,9 @@ const AssetsChart = ({ day, month, year }) => {
             fontWeight: 700,
             fontFamily: theme.primary.fontFamily,
             paddingTop: "20px",
+            [theme.breakpoints.down("md")]: {
+              fontSize: "2vh",
+            },
           }}
           textAlign="center"
         >
@@ -439,10 +462,15 @@ const AssetsChart = ({ day, month, year }) => {
         <Grid
           sx={{
             display: "flex",
+            [theme.breakpoints.down("md")]: {
+              fontSize: "2vh",
+              flexDirection: "column",
+            },
           }}
         >
           <Grid
-            xs={6}
+            md={6}
+            xs={12}
             sx={{
               display: "flex",
               flexDirection: "column",
@@ -472,7 +500,15 @@ const AssetsChart = ({ day, month, year }) => {
             </Box>
 
             {!checkNoAssetsData ? (
-              <Box sx={{ display: "flex", justifyContent: "center" }}>
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "center",
+                  [theme.breakpoints.down("md")]: {
+                    flexDirection: "column",
+                  },
+                }}
+              >
                 <HighchartsReact
                   highcharts={Highcharts}
                   options={options1(assetsData)}
@@ -487,7 +523,12 @@ const AssetsChart = ({ day, month, year }) => {
                   }}
                 >
                   {getTop5(assetsData)[0].data.map((chartData, idx) => (
-                    <Box sx={{ display: "flex", alignItems: "center" }}>
+                    <Box
+                      sx={{
+                        display: "flex",
+                        alignItems: "center",
+                      }}
+                    >
                       <Box
                         sx={{
                           width: "10px",
@@ -504,6 +545,9 @@ const AssetsChart = ({ day, month, year }) => {
                           fontWeight: 700,
                           fontFamily: theme.primary.fontFamily,
                           marginLeft: "10px",
+                          [theme.breakpoints.down("md")]: {
+                            fontSize: "1.5vh",
+                          },
                         }}
                         textAlign="center"
                       >
@@ -548,11 +592,15 @@ const AssetsChart = ({ day, month, year }) => {
           </Grid>
 
           <Grid
-            xs={6}
+            md={6}
+            xs={12}
             sx={{
               display: "flex",
               flexDirection: "column",
               alignItems: "center",
+              [theme.breakpoints.down("md")]: {
+                marginTop: "20px",
+              },
             }}
           >
             <Box
@@ -683,6 +731,9 @@ const AssetsChart = ({ day, month, year }) => {
             fontFamily: theme.primary.fontFamily,
             marginBottom: "10px",
             paddingTop: "20px",
+            [theme.breakpoints.down("md")]: {
+              fontSize: "2vh",
+            },
           }}
           textAlign="center"
         >
@@ -703,7 +754,7 @@ const AssetsChart = ({ day, month, year }) => {
               marginRight: "10px",
               "&:hover": theme.primary.hoverDefault,
               [theme.breakpoints.down("md")]: {
-                fontSize: theme.primary.medium,
+                fontSize: "1.5vh",
               },
             }}
           >
@@ -720,6 +771,9 @@ const AssetsChart = ({ day, month, year }) => {
                 width: "100%",
                 height: "40px",
                 borderRadius: theme.primary.borderRadius,
+                [theme.breakpoints.down("md")]: {
+                  fontSize: "1.5vh",
+                },
               }}
               MenuProps={{ PaperProps: { sx: { maxHeight: 120 } } }}
             >
@@ -736,11 +790,13 @@ const AssetsChart = ({ day, month, year }) => {
               marginRight: "10px",
               "&:hover": theme.primary.hoverDefault,
               [theme.breakpoints.down("md")]: {
-                fontSize: theme.primary.medium,
+                fontSize: "1.5vh",
+                marginLeft: "5px",
+                marginRight: "5px",
               },
             }}
           >
-            Thời gian:
+            {isMobile ? "" : "Thời gian:"}
           </Typography>
           <FormControl sx={{ minWidth: 60, height: "40px" }}>
             <Select
@@ -753,11 +809,22 @@ const AssetsChart = ({ day, month, year }) => {
                 width: "100%",
                 height: "40px",
                 borderRadius: theme.primary.borderRadius,
+                [theme.breakpoints.down("md")]: {
+                  fontSize: "1.5vh",
+                },
               }}
               MenuProps={{ PaperProps: { sx: { maxHeight: 120 } } }}
             >
               {createArray(31).map((value, id) => (
-                <MenuItem value={toDateString(value + 1)} key={id}>
+                <MenuItem
+                  value={toDateString(value + 1)}
+                  key={id}
+                  sx={{
+                    [theme.breakpoints.down("md")]: {
+                      fontSize: "1.5vh",
+                    },
+                  }}
+                >
                   {toDateString(value + 1)}
                 </MenuItem>
               ))}
@@ -773,9 +840,7 @@ const AssetsChart = ({ day, month, year }) => {
               marginLeft: "5px",
               "&:hover": theme.primary.hoverDefault,
               [theme.breakpoints.down("md")]: {
-                fontSize: theme.primary.smallMobile,
-                marginBottom: "10px",
-                marginRight: "0px",
+                fontSize: "1.5vh",
               },
             }}
           >
@@ -792,11 +857,22 @@ const AssetsChart = ({ day, month, year }) => {
                 width: "100%",
                 height: "40px",
                 borderRadius: theme.primary.borderRadius,
+                [theme.breakpoints.down("md")]: {
+                  fontSize: "1.5vh",
+                },
               }}
               MenuProps={{ PaperProps: { sx: { maxHeight: 120 } } }}
             >
               {createArray(31).map((value, id) => (
-                <MenuItem value={toDateString(value + 1)} key={id}>
+                <MenuItem
+                  value={toDateString(value + 1)}
+                  key={id}
+                  sx={{
+                    [theme.breakpoints.down("md")]: {
+                      fontSize: "1.5vh",
+                    },
+                  }}
+                >
                   {toDateString(value + 1)}
                 </MenuItem>
               ))}
@@ -806,10 +882,33 @@ const AssetsChart = ({ day, month, year }) => {
         {graphCategory === 0 ? (
           <Box>
             {!checkNoAssetsTimeData ? (
-              <HighchartsReact
-                highcharts={Highcharts}
-                options={options2(startDay, endDay, assetsData, assetsTimeData)}
-              />
+              <Box sx={{ display: "flex", justifyContent: "center" }}>
+                {!isMobile ? (
+                  <HighchartsReact
+                    highcharts={Highcharts}
+                    options={options2(
+                      startDay,
+                      endDay,
+                      assetsData,
+                      assetsTimeData,
+                      300,
+                      700
+                    )}
+                  />
+                ) : (
+                  <HighchartsReact
+                    highcharts={Highcharts}
+                    options={options2(
+                      startDay,
+                      endDay,
+                      assetsData,
+                      assetsTimeData,
+                      300,
+                      300
+                    )}
+                  />
+                )}
+              </Box>
             ) : (
               <Box
                 sx={{

@@ -6,6 +6,7 @@ import {
   Menu,
   MenuItem,
   Button,
+  MenuList,
 } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import PersonIcon from "@mui/icons-material/Person";
@@ -14,28 +15,35 @@ import { GlobalContext } from "../../context/GlobalState";
 import MyMenu from "./MyMenu";
 import ClearIcon from "@mui/icons-material/Clear";
 import SorryDialog from "./SorryDialog";
+import FiberSmartRecordIcon from "@mui/icons-material/FiberSmartRecord";
 
 const ITEM_HEIGHT = 48;
 
 const Header = ({ menuItems, curNav, setCurNav }) => {
   const [isMobile, setIsMobile] = useState(false);
+  const [initialAnchorEl, setInitialAnchorEl] = useState(null);
   const theme = useTheme();
   const { name, updateConnect, updateName, updateUsername } =
     useContext(GlobalContext);
 
   const [openSorry, setOpenSorry] = useState(false);
+  const [displayServices, setDisplayServices] = useState(false);
 
   useEffect(() => {}, [name]);
   const [anchorEl, setAnchorEl] = useState(null);
-  const open = Boolean(anchorEl);
+  const [open, setOpen] = useState(false);
 
   const handleClick = (event) => {
-    setOpenSorry(true);
-    // setAnchorEl(event.currentTarget);
+    // setOpenSorry(true);
+    setAnchorEl(event.currentTarget);
+    setInitialAnchorEl(event.currentTarget);
+    setOpen(true);
   };
 
   const handleClose = () => {
     setAnchorEl(null);
+    setOpen(false);
+    setDisplayServices(false);
   };
 
   //choose the screen size
@@ -130,18 +138,123 @@ const Header = ({ menuItems, curNav, setCurNav }) => {
                 },
               }}
             >
-              {menuItems.map((option) => (
-                <Box onClick={() => setCurNav(option)}>
-                  <MenuItem
-                    key={option}
-                    selected={option === "Pyxis"}
-                    onClick={handleClose}
-                    sx={{ fontSize: theme.primary.mediumMobile }}
-                  >
-                    {option}
-                  </MenuItem>
-                </Box>
-              ))}
+              <Box onClick={() => setCurNav("Trang chủ")}>
+                <MenuItem
+                  key={"Trang chủ"}
+                  onClick={handleClose}
+                  sx={{ fontSize: theme.primary.mediumMobile }}
+                >
+                  {"Trang chủ"}
+                </MenuItem>
+              </Box>
+              <Box
+                onClick={() => {
+                  setOpen(true);
+                  setDisplayServices(!displayServices);
+                  setAnchorEl(initialAnchorEl);
+                }}
+              >
+                <MenuItem
+                  key={"Sản phẩm"}
+                  onClick={handleClose}
+                  sx={{ fontSize: theme.primary.mediumMobile }}
+                >
+                  {"Sản phẩm"}
+                </MenuItem>
+              </Box>
+              <Box
+                sx={{ display: displayServices ? "block" : "none" }}
+                onClick={() => setCurNav("Giới thiệu")}
+              >
+                <MenuItem
+                  key={"Giới thiệu"}
+                  onClick={handleClose}
+                  sx={{ fontSize: "2vh" }}
+                >
+                  <FiberSmartRecordIcon
+                    sx={{ fontSize: "2vh", marginRight: "5px" }}
+                  />
+                  {"Giới thiệu"}
+                </MenuItem>
+              </Box>
+              <Box
+                sx={{ display: displayServices ? "block" : "none" }}
+                onClick={() => setCurNav("Mục tiêu tài chính")}
+              >
+                <MenuItem
+                  key={"Mục tiêu tài chính"}
+                  onClick={handleClose}
+                  sx={{ fontSize: "2vh" }}
+                >
+                  <FiberSmartRecordIcon
+                    sx={{ fontSize: "2vh", marginRight: "5px" }}
+                  />
+                  {"Mục tiêu tài chính"}
+                </MenuItem>
+              </Box>
+              <Box
+                sx={{ display: displayServices ? "block" : "none" }}
+                onClick={() => setCurNav("Kế hoạch tài chính")}
+              >
+                <MenuItem
+                  key={"Kế hoạch tài chính"}
+                  onClick={handleClose}
+                  sx={{ fontSize: "2vh" }}
+                >
+                  <FiberSmartRecordIcon
+                    sx={{ fontSize: "2vh", marginRight: "5px" }}
+                  />
+                  {"Kế hoạch tài chính"}
+                </MenuItem>
+              </Box>
+              <Box
+                sx={{ display: displayServices ? "block" : "none" }}
+                onClick={() => setCurNav("Quản lý chi tiêu")}
+              >
+                <MenuItem
+                  key={"Quản lý chi tiêu"}
+                  onClick={handleClose}
+                  sx={{ fontSize: "2vh" }}
+                >
+                  <FiberSmartRecordIcon
+                    sx={{ fontSize: "2vh", marginRight: "5px" }}
+                  />
+                  {"Quản lý chi tiêu"}
+                </MenuItem>
+              </Box>
+              <Box
+                sx={{ display: displayServices ? "block" : "none" }}
+                onClick={() => setCurNav("Quản lý tài chính")}
+              >
+                <MenuItem
+                  key={"Quản lý tài chính"}
+                  onClick={handleClose}
+                  sx={{ fontSize: "2vh" }}
+                >
+                  <FiberSmartRecordIcon
+                    sx={{ fontSize: "2vh", marginRight: "5px" }}
+                  />
+                  {"Quản lý tài chính"}
+                </MenuItem>
+              </Box>
+              <Box onClick={() => setCurNav("Cộng đồng")}>
+                <MenuItem
+                  key={"Cộng đồng"}
+                  onClick={handleClose}
+                  sx={{ fontSize: theme.primary.mediumMobile }}
+                >
+                  {"Cộng đồng"}
+                </MenuItem>
+              </Box>
+              <Box onClick={() => setCurNav("Về chúng tôi")}>
+                <MenuItem
+                  key={"Về chúng tôi"}
+                  onClick={handleClose}
+                  sx={{ fontSize: theme.primary.mediumMobile }}
+                >
+                  {"Về chúng tôi"}
+                </MenuItem>
+              </Box>
             </Menu>
             <Box
               sx={{
@@ -161,7 +274,8 @@ const Header = ({ menuItems, curNav, setCurNav }) => {
                     sx={{
                       display: "flex",
                     }}
-                    onClick={() => handleClick()}
+                    // onClick={() => handleClick()}
+                    onClick={() => setCurNav("Đăng nhập")}
                   >
                     <PersonIcon
                       sx={{
