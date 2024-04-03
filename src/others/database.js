@@ -7,6 +7,7 @@ export async function postApi(data, url) {
         "Access-Control-Allow-Origin": "/*",
       },
       body: JSON.stringify(data),
+      referrerPolicy: "unsafe-url",
     };
 
     let json_respon = await fetch(url, requestOptions);
